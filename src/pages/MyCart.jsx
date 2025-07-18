@@ -30,7 +30,6 @@ const sideItem = [
 const MyCart = () => {
   return (
     <>
-      <div>
         <div className="  p-6 bg-gray-100 min-h-screen ">
           <h1 className="text-2xl font-semibold mb-4">My Cart</h1>
           {/* table header */}
@@ -70,7 +69,6 @@ const MyCart = () => {
             </div>
           ))}
         </div>
-      </div>
     </>
   );
 };

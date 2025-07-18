@@ -32,7 +32,7 @@ const ViewDetails = () => {
           <img
             src="https://rukminim2.flixcart.com/image/704/844/xif0q/mobile/x/5/2/-original-imah4jywyma4j8vy.jpeg?q=90&crop=false"
             alt="iPhone"
-            className="min-w-[250px] min-h-[250px] max-w-[550px] object-cover rounded"
+            className="min-w-[150px] min-h-[250px] max-w-[550px] object-cover rounded"
           />
         </div>
 

@@ -18,10 +18,10 @@ import ViewDetails from "./pages/ViewDetails";
 function App() {
   return (
     <Router>
-      <div className="">
-        <Sidebar></Sidebar>
+      <div className="flex flex-row">
+        <div><Sidebar></Sidebar></div> 
 
-        <div className="flex-1 p-4 ml-64">
+        <div className="flex-1">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/suppliers" element={<Suppliers />} />
