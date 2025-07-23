@@ -24,7 +24,7 @@ import Subscription from "./pages/Subscription";
 import RecycleBin from "./pages/RecycleBin";
 import Settings from "./pages/Settings";
 import ViewDetails from "./pages/ViewDetails";
-
+ 
 // ✅ Layout wrapper for sidebar-enabled pages
 const LayoutWithSidebar = ({ children }) => (
   <div className="flex flex-row h-screen">
