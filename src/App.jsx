@@ -1,9 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+// Layouts
 import Sidebar from "./Sidebar";
 
-// Pages \\192.168.1.48\
+// Auth Pages
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
+// Dashboard Pages
 import Dashboard from "./pages/Dasboard";
 import Suppliers from "./pages/Suppliers";
 import BuyProducts from "./pages/BuyProducts";
@@ -15,30 +25,48 @@ import RecycleBin from "./pages/RecycleBin";
 import Settings from "./pages/Settings";
 import ViewDetails from "./pages/ViewDetails";
 
-function App() {
+// ✅ Layout wrapper for sidebar-enabled pages
+const LayoutWithSidebar = ({ children }) => (
+  <div className="flex flex-row h-screen">
+    <Sidebar />
+    <div className="flex-1 overflow-y-auto">{children}</div>
+  </div>
+);
+
+// ✅ All routes go here
+const App = () => {
   return (
     <Router>
-      <div className="flex flex-row">
-        <div><Sidebar></Sidebar></div> 
+      <Routes>
+        {/* Auth Routes */}
+        <Route path="/" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
 
-        <div className="flex-1">
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/suppliers" element={<Suppliers />} />
-            <Route path="/buy-products" element={<BuyProducts />} />
-            <Route path="/my-cart" element={<MyCart />} />
-            <Route path="/view-details" element={<ViewDetails />} />
-            <Route path="/order-history" element={<OrderHistory />} />
-            <Route path="/delivery-status" element={<DeliveryStatus />} />
-            <Route path="/subscription" element={<Subscription />} />
-            <Route path="/recycle-bin" element={<RecycleBin />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </div>
-      </div>
+        {/* Sidebar Layout Pages */}
+        {[
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/suppliers", element: <Suppliers /> },
+          { path: "/buy-products", element: <BuyProducts /> },
+          { path: "/my-cart", element: <MyCart /> },
+          { path: "/order-history", element: <OrderHistory /> },
+          { path: "/delivery-status", element: <DeliveryStatus /> },
+          { path: "/subscription", element: <Subscription /> },
+          { path: "/recycle-bin", element: <RecycleBin /> },
+          { path: "/settings", element: <Settings /> },
+          { path: "/view-details", element: <ViewDetails /> },
+        ].map(({ path, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={<LayoutWithSidebar>{element}</LayoutWithSidebar>}
+          />
+        ))}
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </Router>
   );
-}
+};
 
 export default App;
-// rohit singh
