@@ -10,8 +10,8 @@ import {
 import Sidebar from "./Sidebar";
 
 // Auth Pages
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignIn from "./login/SignIn";
+import SignUp from "./login/SignUp";
 
 // Dashboard Pages
 import Dashboard from "./pages/Dasboard";

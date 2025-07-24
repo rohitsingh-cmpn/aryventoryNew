@@ -85,7 +85,7 @@ const Dashboard = () => {
                 <img
                   src="https://miro.medium.com/v2/resize:fit:1252/0*x97kZzRE731bh44K.jpg"
                   alt="reward"
-                  className="rounded-xl w-full h-full object-cover"
+                  className="rounded-xl w-full h-full object-contain"
                 />
               </div>
             </div>
