@@ -16,7 +16,7 @@ const SidebarItem = ({ icon, label, route, isopen }) => {
         }
       `}
     >
-      <span className="text-lg">{icon}</span>
+      <span className="text-lg  ">{icon}</span>
       {isopen && <span className="text-nowrap overflow-hidden ">{label}</span>}
     </Link>
   );

@@ -1,5 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import {
+  FaGift,
+  FaShoppingBag,
+  FaMoneyBillWave,
+  FaTimes,
+  FaHandRock,
+  FaBox,
+} from "react-icons/fa";
 
 // Reusable StatCard component
 const StatCard = ({
@@ -41,38 +49,42 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Delivery & Request Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
-            <StatCard icon="📦" label="Pending Delivery" value="80" />
-            <StatCard icon="📝" label="Pending Request" value="60" />
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 text-orange-500 font-semibold">
+            <StatCard icon={<FaBox />} label="Pending Delivery" value="80" />
+            <StatCard
+              icon={<FaHandRock />}
+              label="Pending Request"
+              value="60"
+            />
           </div>
 
           {/* Reward Summary */}
           <div className="lg:col-span-3 bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-6">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Reward Summary</h3>
-              <button className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+              <button className="bg-[#F89320] text-white px-4 py-2 rounded-lg hover:bg-orange-300 transition">
                 View
               </button>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Reward Cards */}
-              <div className="grid grid-cols-2 gap-4 flex-1">
-                <StatCard icon="🎁" label="Total Reward" value="₹150" />
+              <div className="grid grid-cols-2 gap-4 flex-1 bg-white text-orange-500 font-semibold">
+                <StatCard icon={<FaGift />} label="Total Reward" value="₹150" />
                 <StatCard
-                  icon="🛍️"
+                  icon={<FaShoppingBag />}
                   label="Total Shopkeeper"
                   value="₹60"
                   bg="bg-violet-200"
                 />
                 <StatCard
-                  icon="💰"
+                  icon={<FaMoneyBillWave />}
                   label="Paid"
                   value="₹80"
                   bg="bg-green-200"
                 />
                 <StatCard
-                  icon="❌"
+                  icon={<FaTimes />}
                   label="Unpaid"
                   value="₹60"
                   bg="bg-red-200"
@@ -81,7 +93,7 @@ const Dashboard = () => {
               </div>
 
               {/* Reward Image */}
-              <div className="w-full  lg:w-[300px] xl:w-[400px] 2xl:w-[500px]">
+              <div className="w-full  lg:w-[250px] xl:w-[350px] 2xl:w-[500px]">
                 <img
                   src="https://miro.medium.com/v2/resize:fit:1252/0*x97kZzRE731bh44K.jpg"
                   alt="reward"

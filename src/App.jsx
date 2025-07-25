@@ -24,6 +24,7 @@ import Subscription from "./pages/Subscription";
 import RecycleBin from "./pages/RecycleBin";
 import Settings from "./pages/Settings";
 import ViewDetails from "./pages/ViewDetails";
+import OrderRequest from "./pages/OrderRequest";
  
 // ✅ Layout wrapper for sidebar-enabled pages
 const LayoutWithSidebar = ({ children }) => (
@@ -49,6 +50,7 @@ const App = () => {
           { path: "/buy-products", element: <BuyProducts /> },
           { path: "/my-cart", element: <MyCart /> },
           { path: "/order-history", element: <OrderHistory /> },
+          { path: "/order-request", element: <OrderRequest /> },
           { path: "/delivery-status", element: <DeliveryStatus /> },
           { path: "/subscription", element: <Subscription /> },
           { path: "/recycle-bin", element: <RecycleBin /> },

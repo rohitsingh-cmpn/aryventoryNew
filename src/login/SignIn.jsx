@@ -10,12 +10,21 @@ const SignIn = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 1000); // 1 sec for smooth slide
-    return () => clearInterval(interval);
-  }, [images.length]);
+ useEffect(() => {
+   console.log("useEffect triggered");
+
+   const interval = setInterval(() => {
+     setCurrentIndex((prev) => {
+       (prev + 1) % images.length;
+      //  console.log("Changing to index:", nextIndex);
+      //  return nextIndex;
+     });
+   }, 3000);
+
+   return () => clearInterval(interval);
+ }, [images.length]);
+
+
 
   return (
     <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center px-2">
@@ -59,9 +68,10 @@ const SignIn = () => {
             {images.map((_, index) => (
               <span
                 key={index}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index ? "bg-black w-6" : "bg-white w-3"
+                className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${
+                  currentIndex === index ? "bg-[#F89320] w-6" : "bg-white w-3"
                 }`}
+                onClick={() => setCurrentIndex(index)}
               ></span>
             ))}
           </div>
@@ -77,10 +87,8 @@ const SignIn = () => {
             />
           </div>
 
-          <h2 className="text-3xl font-bold mb-2 text-center text-orange-500">
-            Sign In
-          </h2>
-          <p className="text-center text-gray-500 mb-6">
+          <h2 className="text-2xl text-left font-semibold mb-2  ">Sign In</h2>
+          <p className="text-left text-gray-500 mb-6">
             Welcome back! Please enter your credentials.
           </p>
 
@@ -109,33 +117,31 @@ const SignIn = () => {
                 className="text-right text-sm mt-1"
                 onClick={() => alert("This feature is coming soon!")}
               >
-                <button className="text-orange-500  rounded-full hover:underline">
+                <button className="text-orange-500  rounded-full hover:underline hover:text-orange-300 cursor-pointer ">
                   <u>Forgot Password?</u>
                 </button>
               </div>
             </div>
 
-            <div>
+            <div className="">
               <label className="block text-sm text-gray-600 mb-1">
                 Select Role
               </label>
-              <select className="w-full px-4 py-2 border border-gray-300 rounded-full bg-white text-gray-700 hover:border-orange-300 focus:border-orange-500 focus:outline-none transition">
-                <option >
-                  Select role
-                </option>
+              <select className="w-full px-4 mr-4  py-2 border border-gray-300 rounded-full bg-blue text-gray-700 hover:border-orange-300 focus:border-orange-500 focus:outline-none transition">
+                <option>Select role</option>
                 <option>Shopkeeper</option>
                 <option>Staff</option>
                 <option>Supplier</option>
               </select>
             </div>
 
-            <button className="w-full py-2  mt-3 bg-orange-400 hover:bg-orange-500 text-white  rounded-full transition">
+            <button className="w-full py-2  mt-3 bg-[#F89320] hover:bg-orange-300 text-white  rounded-full transition cursor-pointer">
               Sign In
             </button>
             <div className="ml-2 text-sm text-center text-gray-500 mt-2">
               <p>
-                Note: This web app is designed for existing users.
-                Kindly sign in to proceed.
+                Note: This web app is designed for registered users. Please sign
+                in to proceed.
               </p>
             </div>
           </div>
