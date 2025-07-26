@@ -20,9 +20,9 @@ const sideItem = [
   { icon: <FaTruck />, label: "Suppliers", route: "/suppliers" },
   { icon: <FaCartPlus />, label: "Buy Products", route: "/buy-products" },
   { icon: <FaShoppingBag />, label: "My Cart", route: "/my-cart" },
-  { icon: <FaHistory />, label: "Order History", route: "/order-history" },
   { icon: <FaHandRock />, label: "Order Request", route: "/order-request" },
-  { icon: <FaBox />, label: "Delivery", route: "/delivery-status" },
+  { icon: <FaHistory />, label: "Order History", route: "/order-history" },
+  { icon: <FaBox />, label: "Delivery Status", route: "/delivery-status" },
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
   // { icon: <FaCogs />, label: "Settings", route: "/settings" },
@@ -35,7 +35,7 @@ const Sidebar = () => {
   }
   return (
     <div
-      className={`  p-2  h-screen  transition-all duration-300 ease-in-out 
+      className={`  p-2  min-h-screen  transition-all duration-300 ease-in-out 
           ${isOpened ? " w-68 " : " w-23.5 translate-x-0"}`}
     >
       <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 shadow-lg flex flex-col justify-between">
@@ -43,7 +43,7 @@ const Sidebar = () => {
           {/* Logo and title */}
           <div className="flex  items-center gap-3 h-14 mb-6">
             <img
-              src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
+              src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Profile"
               className="w-10 h-10 rounded-full  border border-white"
             />
@@ -81,7 +81,7 @@ const Sidebar = () => {
           <div className="flex  gap-2 items-center">
             {" "}
             <img
-              src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
+              src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />

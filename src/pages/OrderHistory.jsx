@@ -41,7 +41,7 @@ const GraphWithSelect = () => {
   const [range, setRange] = useState("daily");
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl  mx-auto">
       <div className="flex justify-end mb-4">
         <select
           value={range}

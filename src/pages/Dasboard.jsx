@@ -17,7 +17,7 @@ const StatCard = ({
   bg = "bg-white",
   textColor = "text-black",
 }) => (
-  <div className={`flex flex-col ${bg} p-4 rounded-2xl w-full shadow-sm`}>
+  <div className={`flex flex-col ${bg} p-4 rounded-2xl w-full shadow-sm justify-between xl:p-8`}>
     <div className="flex justify-end text-xl mb-2">{icon}</div>
     <div>
       <span className="text-sm text-gray-600 whitespace-nowrap truncate">
