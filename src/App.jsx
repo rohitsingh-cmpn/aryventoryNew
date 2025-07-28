@@ -25,6 +25,7 @@ import RecycleBin from "./pages/RecycleBin";
 import Settings from "./pages/Settings";
 import ViewDetails from "./pages/ViewDetails";
 import OrderRequest from "./pages/OrderRequest";
+import AddInventory from "./pages/AddInventory";
  
 // ✅ Layout wrapper for sidebar-enabled pages
 const LayoutWithSidebar = ({ children }) => (
@@ -56,6 +57,8 @@ const App = () => {
           { path: "/recycle-bin", element: <RecycleBin /> },
           { path: "/settings", element: <Settings /> },
           { path: "/view-details", element: <ViewDetails /> },
+          { path: "/add-inventory", element: <AddInventory/>}
+
         ].map(({ path, element }) => (
           <Route
             key={path}

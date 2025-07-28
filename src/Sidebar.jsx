@@ -11,6 +11,7 @@ import {
   FaCreditCard,
   FaTrash,
   FaCogs
+  
 } from "react-icons/fa";
 
 import SidebarItem from "./SidebarItem";
@@ -25,7 +26,8 @@ const sideItem = [
   { icon: <FaBox />, label: "Delivery Status", route: "/delivery-status" },
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
-  // { icon: <FaCogs />, label: "Settings", route: "/settings" },
+
+  { icon: <FaCartPlus />, label: "Add Inventory", route: "/add-inventory" },
 ];
 
 const Sidebar = () => {
@@ -36,7 +38,7 @@ const Sidebar = () => {
   return (
     <div
       className={`  p-2  min-h-screen  transition-all duration-300 ease-in-out 
-          ${isOpened ? " w-68 " : " w-23.5 translate-x-0"}`}
+          ${isOpened ? " w-68 " : " w-22 translate-x-0"}`}
     >
       <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 shadow-lg flex flex-col justify-between">
         <div>
