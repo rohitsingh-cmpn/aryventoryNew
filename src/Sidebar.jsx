@@ -80,7 +80,7 @@ const Sidebar = () => {
         <div className="mt-4 flex-col flex gap-2">
           <SidebarItem icon={<FaCogs />} label={"Settings"} route="/settings" />
 
-          <div className="flex  gap-2 items-center">
+          <div className="flex gap-2 items-center">
             {" "}
             <img
               src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"

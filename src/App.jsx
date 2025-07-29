@@ -16,7 +16,7 @@ import SignUp from "./login/SignUp";
 // Dashboard Pages
 import Dashboard from "./pages/Dasboard";
 import Suppliers from "./pages/Suppliers";
-import BuyProducts from "./pages/BuyProducts";
+// import BuyProducts from "./pages/BuyProducts";
 import MyCart from "./pages/MyCart";
 import OrderHistory from "./pages/OrderHistory";
 import DeliveryStatus from "./pages/DeliveryStatus";
@@ -48,7 +48,7 @@ const App = () => {
         {[
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/suppliers", element: <Suppliers /> },
-          { path: "/buy-products", element: <BuyProducts /> },
+          // { path: "/buy-products", element: <BuyProducts /> },
           { path: "/my-cart", element: <MyCart /> },
           { path: "/order-history", element: <OrderHistory /> },
           { path: "/order-request", element: <OrderRequest /> },

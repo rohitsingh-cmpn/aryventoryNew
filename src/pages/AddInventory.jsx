@@ -1,110 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { MdOutlineCameraAlt } from "react-icons/md";
 import AddInventoryForm from "../components/AddInventoryForm";
+import AddBrandModal from "../components/AddBrandModal";
+import AddCategoryModal from "../components/AddCategoryModal";
 import {
-  FaMobileAlt,
-  FaLaptop,
-  FaDesktop,
-  FaTabletAlt,
-  FaTv,
-  FaCamera,
-  FaHeadphones,
-  FaClock,
-  FaVolumeUp,
-  FaKeyboard,
-  FaMouse,
-  FaPrint,
-  FaGamepad,
-  FaUsb,
-  FaWifi,
-  FaLightbulb,
-  FaMicrophoneAlt,
-  FaHelicopter,
-  FaBatteryFull,
-  FaVrCardboard,
-} from "react-icons/fa";
+  Smartphone,
+  Laptop,
+  Monitor,
+  Tablet,
+  Tv,
+  Camera,
+  Headphones,
+  Watch,
+  Volume2,
+  Keyboard,
+  Mouse,
+  Printer,
+  Gamepad2,
+  Usb,
+  Wifi,
+  Lightbulb,
+  Mic,
+  Bone,
+  Battery,
+  Headset,
+  Plus,
+} from "lucide-react";
 
-import {
-  
-  FaPlus ,
-} from "react-icons/fa";
-
-const gadgetIcons = [
-  {
-    label: "Mobile",
-    icon: <FaMobileAlt className="text-3xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Laptop",
-    icon: <FaLaptop className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Desktop",
-    icon: <FaDesktop className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Tablet",
-    icon: <FaTabletAlt className="text-4xl text-gray-400 mb-2" />,
-  },
-  { label: "TV", icon: <FaTv className="text-4xl text-gray-400 mb-2" /> },
-  {
-    label: "Camera",
-    icon: <FaCamera className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Headphones",
-    icon: <FaHeadphones className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Smartwatch",
-    icon: <FaClock className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Speaker",
-    icon: <FaVolumeUp className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Keyboard",
-    icon: <FaKeyboard className="text-4xl text-gray-400 mb-2" />,
-  },
-  { label: "Mouse", icon: <FaMouse className="text-4xl text-gray-400 mb-2" /> },
-  {
-    label: "Printer",
-    icon: <FaPrint className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Gamepad",
-    icon: <FaGamepad className="text-4xl text-gray-400 mb-2" />,
-  },
-  { label: "USB", icon: <FaUsb className="text-4xl text-gray-400 mb-2" /> },
-  {
-    label: "Wi-Fi Router",
-    icon: <FaWifi className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Smart Bulb",
-    icon: <FaLightbulb className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Mic",
-    icon: <FaMicrophoneAlt className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Drone",
-    icon: <FaHelicopter className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "Power Bank",
-    icon: <FaBatteryFull className="text-4xl text-gray-400 mb-2" />,
-  },
-  {
-    label: "VR Headset",
-    icon: <FaVrCardboard className="text-4xl text-gray-400 mb-2" />,
-  },
-]; 
+const gadgetIcons = {
+  Mobile: <Smartphone className="text-4xl text-gray-400 mb-2" />,
+  Watch: <Watch className="text-4xl text-gray-400 mb-2" />,
+  Tablet: <Tablet className="text-4xl text-gray-400 mb-2" />,
+  Speaker: <Volume2 className="text-4xl text-gray-400 mb-2" />,
+  "Mobile Cover": <Smartphone className="text-4xl text-gray-400 mb-2" />,
+  "Power Bank": <Battery className="text-4xl text-gray-400 mb-2" />,
+  Laptop: <Laptop className="text-4xl text-gray-400 mb-2" />,
+  Headphone: <Headphones className="text-4xl text-gray-400 mb-2" />,
+  Earphone: <Headphones className="text-4xl text-gray-400 mb-2" />,
+  Charger: <Battery className="text-4xl text-gray-400 mb-2" />,
+  TV: <Tv className="text-4xl text-gray-400 mb-2" />,
+  Desktop: <Monitor className="text-4xl text-gray-400 mb-2" />,
+  Camera: <Camera className="text-4xl text-gray-400 mb-2" />,
+  Keyboard: <Keyboard className="text-4xl text-gray-400 mb-2" />,
+  Mouse: <Mouse className="text-4xl text-gray-400 mb-2" />,
+  Printer: <Printer className="text-4xl text-gray-400 mb-2" />,
+  Gamepad: <Gamepad2 className="text-4xl text-gray-400 mb-2" />,
+  USB: <Usb className="text-4xl text-gray-400 mb-2" />,
+  "Wi-Fi Router": <Wifi className="text-4xl text-gray-400 mb-2" />,
+  "Smart Bulb": <Lightbulb className="text-4xl text-gray-400 mb-2" />,
+  Mic: <Mic className="text-4xl text-gray-400 mb-2" />,
+  Drone: <Bone className="text-4xl text-gray-400 mb-2" />,
+  "VR Headset": <Headset className="text-4xl text-gray-400 mb-2" />,
+};
 
 const AddInventory = () => {
+  const [currentStep, setCurrentStep] = useState("category");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [isAddBrandModalOpen, setIsAddBrandModalOpen] = useState(false);
+  const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+
   const categories = [
     "Mobile",
     "Watch",
@@ -119,7 +74,7 @@ const AddInventory = () => {
     "TV",
   ];
 
-  const brands = [
+  const [brands, setBrands] = useState([
     "Ambrane",
     "Apple",
     "Asus",
@@ -127,101 +82,180 @@ const AddInventory = () => {
     "Boat",
     "Canon",
     "Dell",
-    "Ambrane",
-    "Apple",
-    "Asus",
-    "Blue Star",
-    "Boat",
-    "Canon",
-    "Dell",
+    "Samsung",
+    "Sony",
+    "LG",
+    "Xiaomi",
+    "OnePlus",
+  ]);
 
-  ];
+  const [manageableCategories, setManageableCategories] = useState([
+    {
+      name: "Mobile Water Proof Pouch",
+      icon: <Smartphone className="text-4xl text-gray-400 mb-2" />,
+    },
+    {
+      name: "Plastic Mobile Stand",
+      icon: <Monitor className="text-4xl text-gray-400 mb-2" />,
+    },
+    {
+      name: "Gaming Sleeve",
+      icon: <Gamepad2 className="text-4xl text-gray-400 mb-2" />,
+    },
+    {
+      name: "Rain Card",
+      icon: <Camera className="text-4xl text-gray-400 mb-2" />,
+    },
+    {
+      name: "Wire Protector",
+      icon: <Usb className="text-4xl text-gray-400 mb-2" />,
+    },
+    {
+      name: "Car Stand",
+      icon: <Monitor className="text-4xl text-gray-400 mb-2" />,
+    },
+  ]);
 
-  const manageableCategories = [
-    "Mobile Water Proof Pouch",
-    "Plastic Mobile Stand",
-    "Gaming Sleeve",
-    "Rain Card",
-    "Wire Protector",
-    "Car Stand",
-    "Manager Category",
-  ];
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setCurrentStep("brand");
+  };
+
+  const handleBrandSelect = (brand) => {
+    setSelectedBrand(brand);
+    setCurrentStep("form");
+  };
+
+  const handleAddBrand = (brandName) => {
+    console.log(brandName);
+    setBrands((prev) => [...prev, brandName]);
+  };
+
+  const handleAddCategory = (newCategory) => {
+    setManageableCategories((prev) => [...prev, newCategory]);
+    setIsAddCategoryModalOpen(false);
+  };
+
+  const handleBack = () => {
+    if (currentStep === "brand") {
+      setCurrentStep("category");
+      setSelectedCategory("");
+    } else if (currentStep === "form") {
+      setCurrentStep("brand");
+      setSelectedBrand("");
+    }
+  };
+
+  const getStepTitle = () => {
+    if (currentStep === "category") return "Add Inventory - Select Category";
+    if (currentStep === "brand")
+      return `Add Inventory - Select Brand for ${selectedCategory}`;
+    if (currentStep === "form")
+      return `Add Inventory - ${selectedCategory} | ${selectedBrand}`;
+    return "Add Inventory";
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-2 ">
-      <Navbar
-        header="Add Inventory"
-        searchVisible={true}
-        className="font-bold text-2xl"
-      />
+    <div className="">
+      <div className="min-h-screen bg-gray-100 p-2 lg:p-4">
+        <Navbar
+          header={getStepTitle()}
+          searchVisible={false}
+          className="font-bold text-xl lg:text-2xl"
+          onBack={handleBack}
+          showBackButton={currentStep !== "category"}
+        />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 ">
-        {/* Column 1 - Select Category */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Select Category</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
-            {categories.map((item) => (
+        {/* Step Views */}
+        {currentStep === "category" && (
+          <>
+            <h2 className="text-lg font-semibold mb-2">Select Category</h2>
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-6">
+              {categories.map((item) => (
+                <button
+                  key={item}
+                  className="p-4 rounded-lg bg-white flex flex-col items-center text-sm shadow hover:shadow-md transition focus:border border-orange-300"
+                  onClick={() => handleCategorySelect(item)}
+                >
+                  {gadgetIcons[item] || (
+                    <Smartphone className="text-4xl text-gray-400 mb-2" />
+                  )}
+                  <span className="text-center">{item}</span>
+                </button>
+              ))}
+            </div>
+
+            <h2 className="text-lg font-semibold mb-2">Manageable Category</h2>
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+              {manageableCategories.map((item) => (
+                <button
+                  key={item.name}
+                  className="p-4 rounded-lg bg-white flex flex-col items-center text-sm shadow hover:shadow-md transition focus:border border-orange-300"
+                  onClick={() => handleCategorySelect(item.name)}
+                >
+                  {item.icon}
+                  <span className="text-center">{item.name}</span>
+                </button>
+              ))}
               <button
-                key={item}
-                className="p-4 rounded-lg bg-white flex flex-col items-center text-sm  shadow hover:shadow-md transition focus:border border-orange-300"
+                className="p-4 rounded-lg flex flex-col items-center text-sm border-[3px] border-dashed border-gray-300 shadow hover:shadow-md transition focus:outline-none"
+                onClick={() => setIsAddCategoryModalOpen(true)}
               >
-                <FaMobileAlt className="text-5xl text-gray-300 mb-2" />
-                <span className="text-center">{item}</span>
-              </button>
-            ))}
-          </div>
-          {/* Manageable Category */}
-          <h2 className="text-lg font-semibold mt-6 mb-2">
-            Manageable Category
-          </h2>
-          <div className="grid grid-cols-3 sm:grid-cols-5  gap-3">
-            {manageableCategories.map((item) => (
-              <button
-                key={item}
-                className="p-4 rounded-lg bg-white flex flex-col items-center text-sm  shadow hover:shadow-md transition focus:border border-orange-300"
-              >
-                <FaMobileAlt className="text-5xl text-gray-300 mb-2" />
-                <span className="text-center">{item}</span>
-              </button>
-            ))}
-            <button
-              className="p-4 rounded-lg flex flex-col items-center text-sm
-             border-[3px] border-dashed border-gray-300 
-             shadow hover:shadow-md transition focus:outline-none"
-            >
-              <FaPlus className="text-5xl text-gray-300 mb-2" />
-              <span className="text-center">Manage Category</span>
-            </button>
-          </div>
-        </div>
-        {/* Column 2 - Add Inventory*/}
-        
-          <div>
-            <div className="flex mt-3 justify-between items-center mb-2">
-              <h2 className="text-lg font-semibold">Add Inventory</h2>
-              <button className="bg-[#F89320] text-white px-2 py-1 rounded hover:bg-orange-300">
-                +Add
+                <Plus className="text-5xl text-gray-300 mb-2" />
+                <span className="text-center">Manage Category</span>
               </button>
             </div>
-            <div className="bg-white p-3 rounded-xl shadow  space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          </>
+        )}
+
+        {currentStep === "brand" && (
+          <>
+            <div className="flex mt-3 justify-between items-center mb-2">
+              <h2 className="text-lg font-semibold">Select Brand</h2>
+              <button
+                className="bg-[#F89320] text-white px-2 py-1 rounded hover:bg-orange-300"
+                onClick={() => setIsAddBrandModalOpen(true)}
+              >
+                + Add Brand
+              </button>
+            </div>
+            <div className="bg-white p-3 rounded-xl shadow space-y-2 max-h-[300px] overflow-y-auto">
               {brands.map((brand) => (
                 <div
                   key={brand}
-                  className=" p-3 rounded-2xl px-5 text-md bg-gray-100 cursor-pointer truncate"
+                  onClick={() => handleBrandSelect(brand)}
+                  className="p-3 rounded-2xl px-5 text-md bg-gray-100 cursor-pointer truncate"
                 >
                   {brand}
                 </div>
               ))}
             </div>
+            <AddBrandModal
+              isOpen={isAddBrandModalOpen}
+              onClose={() => setIsAddBrandModalOpen(false)}
+              onAddBrand={handleAddBrand}
+            />
+          </>
+        )}
+
+        {currentStep === "form" && (
+          <div className="flex-1 mt-4">
+            <AddInventoryForm
+              selectedCategory={selectedCategory}
+              selectedBrand={selectedBrand}
+              onBack={handleBack}
+              onReset={handleBack}
+            />
           </div>
+        )}
 
-          
-        
-
-        {/* Column 3 - Form */}
-        <div className="flex-1 mt-3 ">
-          <AddInventoryForm />
-        </div>
+        {/* Add Category Modal */}
+        {isAddCategoryModalOpen && (
+          <AddCategoryModal
+            onClose={() => setIsAddCategoryModalOpen(false)}
+            onAdd={handleAddCategory}
+          />
+        )}
       </div>
     </div>
   );

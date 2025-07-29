@@ -1,159 +1,285 @@
-import React from "react";
-import { FaBarcode, FaBox, FaPlus } from "react-icons/fa";
-import { MdOutlineImage } from "react-icons/md";
-import { IoMdArrowDropdown } from "react-icons/io";
+import React, { useState } from "react";
+import { Upload, Package } from "lucide-react";
 
-const AddInventoryForm = () => {
+const AddInventoryForm = ({
+  selectedCategory = "",
+  selectedBrand = "",
+  onReset,
+}) => {
+  const [formData, setFormData] = useState({
+    sku: "",
+    barcode: "",
+    category: selectedCategory,
+    brand: selectedBrand,
+    productModel: "",
+    productColor: "",
+    productQuantity: "",
+    productPrice: "",
+    purchasePrice: "",
+    chargingPort: "",
+    batteryCapacity: "",
+    productDescription: "",
+    supplierName: "",
+    phoneNumber: "",
+  });
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      sku: "",
+      barcode: "",
+      category: "",
+      brand: "",
+      productModel: "",
+      productColor: "",
+      productQuantity: "",
+      productPrice: "",
+      purchasePrice: "",
+      chargingPort: "",
+      batteryCapacity: "",
+      productDescription: "",
+      supplierName: "",
+      phoneNumber: "",
+    });
+    setImagePreview(null);
+    if (onReset) onReset();
+  };
+
   return (
-    <div className="bg-white rounded-xl p-4 shadow w-full mt- ">
+    <div className="bg-white rounded-xl shadow-lg p-6">
       <h2 className="text-lg font-semibold mb-4">Add Inventory</h2>
 
-      {/* Upload Image */}
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center text-gray-400 text-sm cursor-pointer mb-4">
-        <MdOutlineImage className="text-3xl mb-2" />
-        <span>Click here to upload image</span>
-      </div>
-
-      {/* Input Fields */}
-      <div className="space-y-3">
-        {/* SKU / Barcode 1 */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBarcode className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="SKU / Barcode Number*"
-            className="w-full outline-none text-sm"
-          />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Image Upload */}
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+          {imagePreview ? (
+            <div className="relative">
+              <img
+                src={imagePreview}
+                alt="Product preview"
+                className="max-w-full h-32 mx-auto object-contain rounded"
+              />
+              <button
+                type="button"
+                onClick={() => setImagePreview(null)}
+                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
+              >
+                ×
+              </button>
+            </div>
+          ) : (
+            <div>
+              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-500 text-sm mb-2">
+                Click here to upload image
+              </p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+                id="imageUpload"
+              />
+              <label
+                htmlFor="imageUpload"
+                className="cursor-pointer text-orange-500 hover:text-orange-600"
+              >
+                Choose file
+              </label>
+            </div>
+          )}
         </div>
 
-        {/* SKU / Barcode 2 */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBarcode className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="SKU / Barcode Number*"
-            className="w-full outline-none text-sm"
-          />
-        </div>
-
-        {/* Category & Brand */}
-        <div className="flex gap-2">
-          <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2 w-1/2">
-            <FaBox className="text-gray-400 mr-2" />
-            <span className="text-sm text-gray-700">Charger</span>
+        {/* Form Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <input
+              type="text"
+              name="sku"
+              value={formData.sku}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              placeholder="SKU / Barcode Number*"
+              required
+            />
           </div>
-          <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2 w-1/2 justify-between">
-            <span className="text-sm text-gray-500">Brand</span>
-            <IoMdArrowDropdown className="text-gray-400" />
+
+          <div>
+            <input
+              type="text"
+              name="barcode"
+              value={formData.barcode}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              placeholder="Barcode Number*"
+              required
+            />
           </div>
         </div>
 
-        {/* Product Model */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Product Model"
-            className="w-full outline-none text-sm"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <input
+              type="text"
+              name="category"
+              value={formData.category}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              placeholder="Category"
+              readOnly
+            />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              placeholder="Brand"
+              readOnly
+            />
+          </div>
         </div>
 
-        {/* Product Color */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Product Color*"
-            className="w-full outline-none text-sm"
-          />
-        </div>
+        <input
+          type="text"
+          name="productModel"
+          value={formData.productModel}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Product Model"
+        />
 
-        {/* Quantity */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
+        <input
+          type="text"
+          name="productColor"
+          value={formData.productColor}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Product Color*"
+          required
+        />
+
+        <input
+          type="number"
+          name="productQuantity"
+          value={formData.productQuantity}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Product Quantity*"
+          required
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="number"
-            placeholder="Product Quantity*"
-            className="w-full outline-none text-sm"
+            name="productPrice"
+            value={formData.productPrice}
+            onChange={handleInputChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            placeholder="Product Price*"
+            required
           />
-        </div>
 
-        {/* Price + Purchase Price */}
-        <div className="flex gap-2">
-          <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2 w-1/2">
-            <FaBox className="text-gray-400 mr-2" />
-            <input
-              type="number"
-              placeholder="Product Price*"
-              className="w-full outline-none text-sm"
-            />
-          </div>
-          <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2 w-1/2">
-            <FaBox className="text-gray-400 mr-2" />
-            <input
-              type="number"
-              placeholder="Purchase Price*"
-              className="w-full outline-none text-sm"
-            />
-          </div>
-        </div>
-
-        {/* Charging Port */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
           <input
-            type="text"
-            placeholder="Charging Port"
-            className="w-full outline-none text-sm"
+            type="number"
+            name="purchasePrice"
+            value={formData.purchasePrice}
+            onChange={handleInputChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            placeholder="Purchase Price*"
+            required
           />
         </div>
 
-        {/* Battery Capacity */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Battery Capacity"
-            className="w-full outline-none text-sm"
-          />
-        </div>
+        <input
+          type="text"
+          name="chargingPort"
+          value={formData.chargingPort}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Charging Port"
+        />
 
-        {/* Description */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Product Description"
-            className="w-full outline-none text-sm"
-          />
-        </div>
+        <input
+          type="text"
+          name="batteryCapacity"
+          value={formData.batteryCapacity}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Battery Capacity"
+        />
 
-        {/* Supplier Dropdown */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2 justify-between">
-          <span className="text-sm text-gray-500">Supplier Name</span>
-          <IoMdArrowDropdown className="text-gray-400" />
-        </div>
+        <textarea
+          name="productDescription"
+          value={formData.productDescription}
+          onChange={handleInputChange}
+          rows="3"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Product Description"
+        />
 
-        {/* Phone Number */}
-        <div className="flex items-center  border border-gray-200 focus:border-orange-300 rounded-md px-3 py-2">
-          <FaBox className="text-gray-400 mr-2" />
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            className="w-full outline-none  text-sm"
-          />
-        </div>
-      </div>
+        <input
+          type="text"
+          name="supplierName"
+          value={formData.supplierName}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Supplier Name"
+        />
 
-      {/* Footer Buttons */}
-      <div className="flex justify-between mt-5 gap-3">
-        <button className="w-full border border-orange-300 text-orange-400 rounded-md py-2 font-semibold">
-          Reset
-        </button>
-        <button className="w-full bg-[#F89320] text-white rounded-md py-2 font-semibold hover:bg-orange-300 transition">
-          Apply
-        </button>
-      </div>
+        <input
+          type="tel"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Phone Number"
+        />
+
+        <div className="flex gap-4 pt-4">
+          <button
+            type="button"
+            onClick={handleResetForm}
+            className="flex-1 py-3 px-6 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Reset
+          </button>
+          <button
+            type="submit"
+            className="flex-1 py-3 px-6 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+          >
+            Apply
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
