@@ -9,7 +9,7 @@ const Navbar = ({
   showBackButton = false,
 }) => {
   return (
-    <div className="bg-white shadow-sm rounded-lg p-4 ">
+    <div className="bg-white shadow-sm px-4 py-2 ">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {showBackButton && (
@@ -20,7 +20,7 @@ const Navbar = ({
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </button>
           )}
-          <h1 className={`text-gray-800 ${className}`}>{header}</h1>
+          <h1 className={`text-gray-800 text-2xl  font-bold  ${className}`}>{header}</h1>
         </div>
 
         {searchVisible && (

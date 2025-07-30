@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+
+ const mynavigate = useNavigate();
+
+ const handleClick = ()=> {
+      mynavigate("/subscription");
+ };
+
   const images = [
     "https://www.indifi.com/blog/wp-content/uploads/2022/05/Inventory.jpeg",
     "https://www.ppms.in/wp-content/uploads/2024/12/unnamed.jpg",
@@ -161,7 +169,7 @@ const SignIn = () => {
               </select>
             </div>
 
-            <button className="w-full py-2 mt-3 bg-[#F89320] hover:bg-orange-300 text-white rounded-full transition cursor-pointer">
+            <button className="w-full py-2 mt-3 bg-[#F89320] hover:bg-orange-300 text-white rounded-full transition cursor-pointer" onClick={handleClick}>
               Sign In
             </button>
             <div className="ml-2 text-sm text-center text-gray-500 mt-2">

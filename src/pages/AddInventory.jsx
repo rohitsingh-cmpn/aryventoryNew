@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import AddInventoryForm from "../components/AddInventoryForm";
 import AddBrandModal from "../components/AddBrandModal";
@@ -59,6 +60,7 @@ const AddInventory = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [isAddBrandModalOpen, setIsAddBrandModalOpen] = useState(false);
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const categories = [
     "Mobile",
@@ -115,7 +117,10 @@ const AddInventory = () => {
       icon: <Monitor className="text-4xl text-gray-400 mb-2" />,
     },
   ]);
-
+  // const handleInventorySelect = (inventory)=> {
+  //   setSelectedCategory(inventory);
+  //   setCurrentStep("category");
+  // };
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setCurrentStep("brand");
@@ -136,8 +141,16 @@ const AddInventory = () => {
     setIsAddCategoryModalOpen(false);
   };
 
+  const onReset = ()=>{
+    setCurrentStep("category");
+  }
+  
   const handleBack = () => {
-    if (currentStep === "brand") {
+    console.log("rohit");
+    if (currentStep === "category") {
+      console.log("rohit");
+      navigate("/inventory");
+    } else if (currentStep === "brand") {
       setCurrentStep("category");
       setSelectedCategory("");
     } else if (currentStep === "form") {
@@ -156,14 +169,14 @@ const AddInventory = () => {
   };
 
   return (
-    <div className="">
+    <div className="flex flex-1/2">
       <div className="min-h-screen bg-gray-100 p-2 lg:p-4">
         <Navbar
           header={getStepTitle()}
           searchVisible={false}
           className="font-bold text-xl lg:text-2xl"
-          onBack={handleBack}
-          showBackButton={currentStep !== "category"}
+          onBack={() => handleBack()}
+          showBackButton={1}
         />
 
         {/* Step Views */}
@@ -244,7 +257,7 @@ const AddInventory = () => {
               selectedCategory={selectedCategory}
               selectedBrand={selectedBrand}
               onBack={handleBack}
-              onReset={handleBack}
+              onReset={onReset}
             />
           </div>
         )}

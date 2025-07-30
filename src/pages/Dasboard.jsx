@@ -41,7 +41,11 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 overflow-y-auto">
-      <Navbar header="NextGen Electronics" searchVisible={true} />
+      <Navbar
+        header="NextGen Electronics"
+        searchVisible={true}
+        className="text-2xl font-bold"
+      />
 
       {/* Sales Activity */}
       <section className="p-4">

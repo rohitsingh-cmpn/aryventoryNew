@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Upload, Package } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+
 
 const AddInventoryForm = ({
   selectedCategory = "",
@@ -23,6 +26,7 @@ const AddInventoryForm = ({
     phoneNumber: "",
   });
 
+  const navigate = useNavigate()
   const [imagePreview, setImagePreview] = useState(null);
 
   const handleInputChange = (e) => {
@@ -47,6 +51,7 @@ const AddInventoryForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    navigate("/inventory");
   };
 
   const handleResetForm = () => {
@@ -125,7 +130,7 @@ const AddInventoryForm = ({
               onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="SKU / Barcode Number*"
-              required
+              
             />
           </div>
 
@@ -137,7 +142,7 @@ const AddInventoryForm = ({
               onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="Barcode Number*"
-              required
+              
             />
           </div>
         </div>
@@ -184,7 +189,7 @@ const AddInventoryForm = ({
           onChange={handleInputChange}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           placeholder="Product Color*"
-          required
+          
         />
 
         <input
@@ -194,7 +199,7 @@ const AddInventoryForm = ({
           onChange={handleInputChange}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           placeholder="Product Quantity*"
-          required
+          
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -205,7 +210,7 @@ const AddInventoryForm = ({
             onChange={handleInputChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             placeholder="Product Price*"
-            required
+            
           />
 
           <input
@@ -215,7 +220,7 @@ const AddInventoryForm = ({
             onChange={handleInputChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             placeholder="Purchase Price*"
-            required
+            
           />
         </div>
 

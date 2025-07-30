@@ -9,6 +9,7 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useState, useMemo } from "react";
+import Navbar from "../components/Navbar";
 
 const Card = ({ children, className = "" }) => (
   <div
@@ -397,7 +398,8 @@ const OrderHistory = () => {
       quantity: 30,
       customer: "Tech Solutions",
       phone: "9876543210",
-      image: "https://www.glueup.com/sites/default/files/image_1355.png",
+      image:
+        "https://images.unsplash.com/photo-1540574163024-5735f30345f5?w=400&q=80",
       address: "Andheri East, Mumbai",
       requestedDate: "20-05-2025",
       dateObj: new Date(2025, 4, 20),
@@ -410,7 +412,7 @@ const OrderHistory = () => {
       customer: "Digital Hub",
       phone: "9123456789",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjZtvrTb9JrYrNjfV8MN9D-cgAoyS-QmD8Sw&s",
+        "https://images.unsplash.com/photo-1598300042247-d088c209a14b?w=400&q=80",
       address: "Bandra West, Mumbai",
       requestedDate: "10-07-2025",
       dateObj: new Date(2025, 6, 10),
@@ -423,7 +425,7 @@ const OrderHistory = () => {
       customer: "Greenwood Furnishings",
       phone: "9820098200",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR55Eb7o7pLzVCXsfLdy8BOV-c563k1dur187rVS58Fk4MRxn5Nlc3H-s8EH-m0ejS1NSQ&usqp=CAU",
+        "https://images.unsplash.com/photo-1567016432779-1fee749b5a45?w=400&q=80",
       address: "Powai, Hiranandani Gardens",
       requestedDate: "25-07-2025",
       dateObj: new Date(2025, 6, 25),
@@ -462,9 +464,10 @@ const OrderHistory = () => {
     setFilters({ date: null, month: null, year: null, status: null });
 
   return (
-    <div className="bg-[#f7f8fa] w-full h-full flex">
-     
+    <div className="bg-[#f7f8fa] w-full h-full ">
+      <Navbar header="Order History" searchVisible={true} className="text-2xl font-bold"/>
       {/* Main Content */}
+      
       <main className="flex-1 p-4 sm:p-6 lg:p-8">
         {/* Main Layout */}
         <div className="flex flex-col lg:flex-row gap-8 h-[calc(100vh-150px)]">

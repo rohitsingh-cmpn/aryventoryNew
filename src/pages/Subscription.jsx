@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 import { CheckCircle, XCircle, Star, Zap, Crown, Gift } from "lucide-react";
 
 const SubscriptionFeature = ({ enabled, children }) => (
@@ -87,8 +88,8 @@ const SubscriptionCard = ({
         )}
       </div>
       
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 mb-6">
-        <ul className="space-y-1 text-gray-700 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      <div className="flex bg-white/70 backdrop-blur-sm rounded-lg p-4 mb-6">
+        <ul className="  space-y-1 text-gray-700 ">
           {features.map(({ label, enabled }, i) => (
             <SubscriptionFeature key={i} enabled={enabled}>
               {label}
@@ -291,30 +292,38 @@ export default function Subscription() {
   ];
 
  return (
-   <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-10">
-     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <div className="text-center mb-12">
-         <h2 className="text-4xl font-extrabold text-gray-800 mb-3">
-           Choose Your Plan
-         </h2>
-         <p className="text-gray-600 text-base">
-           Select the perfect subscription plan for your business needs
-         </p>
-       </div>
+   <>
+     <Navbar
+       header="Subscription Plan"
+       showBackButton={true}
+       className="font-bold  text-2xl "
+     ></Navbar>
 
-       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-         {plans.map((plan, idx) => (
-           <SubscriptionCard key={idx} {...plan} />
-         ))}
-       </div>
+     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-5">
+       <section className="mx-5  px-4 sm:px-6 lg:px-8">
+         <div className="text-center mb-12">
+           <h2 className="text-4xl font-extrabold text-gray-800 mb-3">
+             Choose Your Plan
+           </h2>
+           <p className="text-gray-600 text-base">
+             Select the perfect subscription plan for your business needs
+           </p>
+         </div>
 
-       <div className="mt-12 text-center">
-         <p className="text-sm text-gray-500">
-           All plans include 24/7 customer support and regular updates.
-         </p>
-       </div>
-     </section>
-   </div>
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+           {plans.map((plan, idx) => (
+             <SubscriptionCard key={idx} {...plan} />
+           ))}
+         </div>
+
+         <div className="mt-12 text-center">
+           <p className="text-sm text-gray-500">
+             All plans include 24/7 customer support and regular updates.
+           </p>
+         </div>
+       </section>
+     </div>
+   </>
  );
 
 }

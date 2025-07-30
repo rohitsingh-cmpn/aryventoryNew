@@ -10,7 +10,8 @@ import {
   FaBox,
   FaCreditCard,
   FaTrash,
-  FaCogs
+  FaCogs,
+  FaBars
   
 } from "react-icons/fa";
 
@@ -27,7 +28,7 @@ const sideItem = [
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
 
-  { icon: <FaCartPlus />, label: "Add Inventory", route: "/add-inventory" },
+  { icon: <FaCartPlus />, label: "Add Inventory", route: "/inventory" },
 ];
 
 const Sidebar = () => {
@@ -49,47 +50,58 @@ const Sidebar = () => {
               alt="Profile"
               className="w-10 h-10 rounded-full  border border-white"
             />
-            <div className={`${!isOpened && "hidden"} overflow-hidden h-14`}>
-              <div className="font-bold text-lg ">Aryventory</div>
-              <span className="text-xs text-white/80">Version 1.3.1</span>
+            <div className={` overflow-hidden `}>
+              <div className="font-bold text-lg whitespace-nowrap">
+                JK Paradise
+              </div>
+              <span className="text-s text-white ml-5">Supplier</span>
             </div>
           </div>
 
           {/* Menu header */}
-          <div
-            className="flex items-center gap-2 mb-3 bg-orange-300 px-3 py-2 rounded-lg cursor-pointer"
-            onClick={handleOpen}
+          {/* <div
+            className="flex items-center gap-2 mb-3 bg-orange-300 px-3  py-2 rounded-lg cursor-pointer"
+            
           >
-            <MdMenu />
+            <MdMenu className="ml-"/>
 
-            {isOpened && <span className="overflow-hidden">Menu</span>}
+            {0 && <span className="overflow-hidden">Menu</span>}
+          </div> */}
+          <div onClick={handleOpen}>
+            <SidebarItem icon={<FaBars />} label="Menu" isopen={1} />
           </div>
-          <div className="pb-2">
+
+          <div className="py-2">
             <hr className="border-t border-amber-100" />
           </div>
 
           {/* Sidebar Items */}
           <div className="flex flex-col gap-2 text-lg">
             {sideItem.map((item, i) => (
-              <SidebarItem key={i} {...item} isopen={isOpened} />
+              <SidebarItem key={i} {...item} isopen={1} />
             ))}
           </div>
         </div>
 
         {/* Bottom profile */}
         <div className="mt-4 flex-col flex gap-2">
-          <SidebarItem icon={<FaCogs />} label={"Settings"} route="/settings" />
+          <SidebarItem
+            icon={<FaCogs />}
+            label="Settings"
+            route="/settings"
+            isopen={1}
+          />
 
-          <div className="flex gap-2 items-center">
+          <div className="flex h-14 gap-2 items-center">
             {" "}
             <img
               src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            <div className={`${!isOpened && "hidden"} overflow-hidden h-14`}>
-              <div className="font-bold text-lg ">JK Paradise</div>
-              <span className="text-xs text-white ml-5">Supplier</span>
+            <div className={` overflow-hidden h-14`}>
+              <div className="font-bold text-lg ">Aryventory</div>
+              <span className="text-xs text-white/80">Version 1.3.1</span>
             </div>
           </div>
         </div>
