@@ -1,8 +1,10 @@
 // route.js
-import Dashboard from "../pages/Dasboard";
+import Dashboard from "../pages/Dashboard";
 import Suppliers from "../pages/Suppliers";
 import MyCart from "../pages/MyCart";
+
 import OrderHistory from "../pages/OrderHistory";
+import BuyProducts from "../pages/BuyProducts";
 import DeliveryStatus from "../pages/DeliveryStatus";
 import Subscription from "../pages/Subscription";
 import RecycleBin from "../pages/RecycleBin";
@@ -11,7 +13,8 @@ import ViewDetails from "../pages/ViewDetails";
 import OrderRequest from "../pages/OrderRequest";
 import Inventory from "../pages/InventoryPage";
 import AddInventory from "../pages/AddInventory";
-
+import NotificationPage from "../pages/NotificationPage";
+  
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -26,4 +29,7 @@ export const sidebarRoutes = [
   { path: "/view-details", element: <ViewDetails /> },
   { path: "/addinventory", element: <AddInventory /> },
   { path: "/inventory", element: <Inventory /> },
+  { path: "/notification-page", element: <NotificationPage /> },
+  { path: "/buy-products", element: <BuyProducts /> },
+
 ];

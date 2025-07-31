@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { MdMenu } from "react-icons/md";
+import {
+  MdMenu,
+  MdOutlineInventory,
+  MdOutlineAutoGraph,
+  MdOutlineSettings,
+} from "react-icons/md";
+import { TbReportSearch } from "react-icons/tb";
+
 import {
   FaHome,
   FaTruck,
@@ -28,7 +35,9 @@ const sideItem = [
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
 
-  { icon: <FaCartPlus />, label: "Add Inventory", route: "/inventory" },
+  { icon: <MdOutlineInventory />, label: "Inventory", route: "/inventory" },
+  { icon: <MdOutlineAutoGraph />, label: "Sales", route: "/sales" },
+  { icon: <TbReportSearch />, label: "Reports", route: "/reports" },
 ];
 
 const Sidebar = () => {
@@ -46,7 +55,7 @@ const Sidebar = () => {
           {/* Logo and title */}
           <div className="flex  items-center gap-3 h-14 mb-6">
             <img
-              src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
+              src="https://t4.ftcdn.net/jpg/01/57/11/07/360_F_157110702_EKlFgF7zUdhSCYsOQ3XhtAH3re9lmK7q.jpg"
               alt="Profile"
               className="w-10 h-10 rounded-full  border border-white"
             />
@@ -54,7 +63,9 @@ const Sidebar = () => {
               <div className="font-bold text-lg whitespace-nowrap">
                 JK Paradise
               </div>
-              <span className="text-s text-white ml-5">Supplier</span>
+              <span className="text-s text-white ">
+                <i>ShopKeeper</i>
+              </span>
             </div>
           </div>
 
@@ -84,9 +95,9 @@ const Sidebar = () => {
         </div>
 
         {/* Bottom profile */}
-        <div className="mt-4 flex-col flex gap-2">
+        <div className="mt-4 flex-col text-lg flex gap-2">
           <SidebarItem
-            icon={<FaCogs />}
+            icon={<MdOutlineSettings />}
             label="Settings"
             route="/settings"
             isopen={1}

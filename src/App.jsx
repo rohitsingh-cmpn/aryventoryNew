@@ -16,6 +16,7 @@ import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 
 
+
 // ✅ Layout wrapper
 const LayoutWithSidebar = ({ children }) => (
   <div className="flex h-screen">
@@ -32,6 +33,7 @@ const App = () => {
         {/* 🔐 Auth Routes (no layout) */}
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+       
 
         {/* 🧱 Sidebar Layout Pages */}
         {sidebarRoutes.map(({ path, element }) => (

@@ -1,592 +1,688 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import Navbar from "../components/Navbar"
 import {
+  Home,
   Grid3X3,
-  List,
-  Search,
-  Filter,
-  ChevronDown,
-  ChevronRight,
-  Plus,
-  Eye,
-  Edit,
-  Trash2,
+  Truck,
+  ShoppingBag,
+  ShoppingCart,
+  FileText,
+  RotateCcw,
   Package,
+  Camera,
+  ArrowLeft,
+  ChevronDown,
+  ChevronUp,
+  User,
+  Search,
+  Plus,
 } from "lucide-react";
+import { useMemo } from "react";
 
-const InventoryList = () => {
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
-  const [selectedCategories, setSelectedCategories] = useState(["Mobile"]);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [priceRange, setPriceRange] = useState([0, 50000]);
-  const [selectedColors, setSelectedColors] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showCategoryFilter, setShowCategoryFilter] = useState(true);
-  const [showBrandFilter, setShowBrandFilter] = useState(true);
-  const [showPriceFilter, setShowPriceFilter] = useState(true);
-  const [showColorFilter, setShowColorFilter] = useState(true);
-
-  // Sample inventory data
-  const inventoryItems = [
-    {
-      id: 1,
-      name: "Motorola Edge 50 Pro 5G with 125W Charger",
-      category: "Mobile",
-      brand: "Motorola",
-      price: 31500,
-      stock: 200,
-      color: "Teal",
-      image:
-        "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 2,
-      name: "Motorola Edge 50 Pro 5G with 125W Charger",
-      category: "Mobile",
-      brand: "Motorola",
-      price: 31500,
-      stock: 200,
-      color: "Black",
-      image:
-        "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 3,
-      name: "Samsung Galaxy S24 Ultra",
-      category: "Mobile",
-      brand: "Samsung",
-      price: 45000,
-      stock: 150,
-      color: "Purple",
-      image:
-        "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 4,
-      name: "iPhone 15 Pro Max",
-      category: "Mobile",
-      brand: "Apple",
-      price: 48000,
-      stock: 100,
-      color: "Blue",
-      image:
-        "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 5,
-      name: "Sony WH-1000XM5 Headphones",
-      category: "Headphone",
-      brand: "Sony",
-      price: 25000,
-      stock: 75,
-      color: "Black",
-      image:
-        "https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 6,
-      name: "MacBook Pro 16-inch",
-      category: "Laptop",
-      brand: "Apple",
-      price: 120000,
-      stock: 25,
-      color: "Silver",
-      image:
-        "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300",
-      status: "Low Stock",
-    },
-    {
-      id: 7,
-      name: "Dell XPS 13",
-      category: "Laptop",
-      brand: "Dell",
-      price: 85000,
-      stock: 50,
-      color: "Black",
-      image:
-        "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-    {
-      id: 8,
-      name: "iPad Pro 12.9-inch",
-      category: "Tablet",
-      brand: "Apple",
-      price: 65000,
-      stock: 40,
-      color: "Space Gray",
-      image:
-        "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=300",
-      status: "In Stock",
-    },
-  ];
-
-  const categories = [
-    "Mobile",
-    "Headphone",
-    "Laptop",
-    "Tablet",
-    "Watch",
-    "Speaker",
-    "Charger",
-  ];
-  const brands = [
-    "Motorola",
-    "Samsung",
-    "Apple",
-    "Sony",
-    "Dell",
-    "OnePlus",
-    "Xiaomi",
-  ];
-  const colors = [
-    "Black",
-    "White",
-    "Blue",
-    "Red",
-    "Green",
-    "Purple",
-    "Teal",
-    "Silver",
-    "Space Gray",
-  ];
-
-  // Filter logic
-  const filteredItems = inventoryItems.filter((item) => {
-    const matchesSearch = item.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(item.category);
-    const matchesBrand =
-      selectedBrands.length === 0 || selectedBrands.includes(item.brand);
-    const matchesPrice =
-      item.price >= priceRange[0] && item.price <= priceRange[1];
-    const matchesColor =
-      selectedColors.length === 0 || selectedColors.includes(item.color);
-
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      matchesBrand &&
-      matchesPrice &&
-      matchesColor
-    );
+export default function DeliveryStatus() {
+  const [expandedSections, setExpandedSections] = useState({
+    categories: true,
+    brands: false,
+    priceRange: false,
+    colors: false,
   });
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
+  const [selectedCategory, setSelectedCategory] = useState("Mobile");
+
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [priceRange, setPriceRange] = useState({
+    min: "",
+    max: "",
+    slider: 500,
+  });
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
   };
 
-  const handleBrandChange = (brand) => {
+  const toggleBrand = (brand) => {
     setSelectedBrands((prev) =>
       prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
     );
   };
 
-  const handleColorChange = (color) => {
+  const toggleColor = (color) => {
     setSelectedColors((prev) =>
       prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
     );
   };
 
-  const GridView = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {filteredItems.map((item) => (
-        <div
-          key={item.id}
-          className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-        >
-          <div className="relative">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute top-2 right-2">
-              <span
-                className={`px-2 py-1 text-xs rounded-full ${
-                  item.status === "In Stock"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-orange-100 text-orange-800"
-                }`}
-              >
-                {item.status}
-              </span>
-            </div>
-          </div>
-          <div className="p-4">
-            <h3 className="font-medium text-sm text-gray-800 mb-2 line-clamp-2">
-              {item.name}
-            </h3>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-bold text-gray-900">
-                ₹{item.price.toLocaleString()}
-              </span>
-              <span className="text-sm text-gray-500">Qty: {item.stock}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">
-                {item.brand} • {item.color}
-              </span>
-              <div className="flex gap-1">
-                <button className="p-1 text-gray-400 hover:text-blue-600">
-                  <Eye className="w-4 h-4" />
-                </button>
-                <button className="p-1 text-gray-400 hover:text-green-600">
-                  <Edit className="w-4 h-4" />
-                </button>
-                <button className="p-1 text-gray-400 hover:text-red-600">
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  const resetFilters = () => {
+    setSelectedCategory("Mobile");
+    setSelectedBrands([]);
+    setSelectedColors([]);
+    setPriceRange({ min: "", max: "", slider: 500 });
+    setSearchTerm("");
+  };
 
-  const ListView = () => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Product
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Brand
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredItems.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <img
-                      className="h-10 w-10 rounded-lg object-cover"
-                      src={item.image}
-                      alt={item.name}
-                    />
-                    <div className="ml-3">
-                      <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
-                        {item.name}
-                      </div>
-                      <div className="text-sm text-gray-500">{item.color}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.category}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.brand}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  ₹{item.price.toLocaleString()}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.stock}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      item.status === "In Stock"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-orange-100 text-orange-800"
-                    }`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex gap-2">
-                    <button className="text-blue-600 hover:text-blue-900">
-                      <Eye className="w-4 h-4" />
-                    </button>
-                    <button className="text-green-600 hover:text-green-900">
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button className="text-red-600 hover:text-red-900">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  const applyFilters = () => {
+    console.log("Applied filters:", {
+      category: selectedCategory,
+      brands: selectedBrands,
+      colors: selectedColors,
+      priceRange: priceRange,
+      searchTerm: searchTerm,
+    });
+    // Here you would filter the products based on the selected filters
+  };
+
+  const categories = [
+    "Mobile",
+    "Headset",
+    "Charger",
+    "Power Bank",
+    "Mobile Cover",
+  ];
+  const brands = ["Apple", "Samsung", "Sony", "JBL", "Anker", "OnePlus"];
+  const colors = ["Black", "White", "Blue", "Red", "Silver", "Gold"];
+
+  // Sample product data
+  const products = [
+    {
+      id: 1,
+      name: "Motorola Edge 50 Pro 5G with 125W Charger",
+      price: "₹150",
+      originalPrice: "₹200",
+      quantity: 200,
+      image: "/api/placeholder/120/150",
+      category: "Mobile",
+      brand: "Motorola",
+      color: "Black",
+    },
+    {
+      id: 2,
+      name: "Apple iPhone 14 Pro Max",
+      price: "₹1200",
+      originalPrice: "₹1400",
+      quantity: 100,
+      image: "/api/placeholder/120/150",
+      category: "Mobile",
+      brand: "Apple",
+      color: "White",
+    },
+    {
+      id: 3,
+      name: "OnePlus Nord CE 3",
+      price: "₹300",
+      originalPrice: "₹400",
+      quantity: 180,
+      image: "/api/placeholder/120/150",
+      category: "Mobile",
+      brand: "OnePlus",
+      color: "Blue",
+    },
+    {
+      id: 4,
+      name: "Samsung Galaxy M14",
+      price: "₹280",
+      originalPrice: "₹350",
+      quantity: 210,
+      image: "/api/placeholder/120/150",
+      category: "Mobile",
+      brand: "Samsung",
+      color: "Black",
+    },
+    {
+      id: 5,
+      name: "Sony WH-1000XM4 Headphones",
+      price: "₹800",
+      originalPrice: "₹1000",
+      quantity: 70,
+      image: "/api/placeholder/120/150",
+      category: "Headset",
+      brand: "Sony",
+      color: "Silver",
+    },
+    {
+      id: 6,
+      name: "JBL TUNE 510BT Wireless Headset",
+      price: "₹350",
+      originalPrice: "₹500",
+      quantity: 130,
+      image: "/api/placeholder/120/150",
+      category: "Headset",
+      brand: "JBL",
+      color: "Red",
+    },
+    {
+      id: 7,
+      name: "Samsung Fast Charger 25W",
+      price: "₹180",
+      originalPrice: "₹250",
+      quantity: 300,
+      image: "/api/placeholder/120/150",
+      category: "Charger",
+      brand: "Samsung",
+      color: "White",
+    },
+    {
+      id: 8,
+      name: "Apple MagSafe Wireless Charger",
+      price: "₹1200",
+      originalPrice: "₹1500",
+      quantity: 90,
+      image: "/api/placeholder/120/150",
+      category: "Charger",
+      brand: "Apple",
+      color: "White",
+    },
+    {
+      id: 9,
+      name: "Anker Nano II 45W USB-C Charger",
+      price: "₹950",
+      originalPrice: "₹1100",
+      quantity: 80,
+      image: "/api/placeholder/120/150",
+      category: "Charger",
+      brand: "Anker",
+      color: "Black",
+    },
+    {
+      id: 10,
+      name: "Realme 10000mAh Power Bank",
+      price: "₹600",
+      originalPrice: "₹750",
+      quantity: 150,
+      image: "/api/placeholder/120/150",
+      category: "Power Bank",
+      brand: "Realme",
+      color: "Blue",
+    },
+    {
+      id: 11,
+      name: "Mi 20000mAh Power Bank",
+      price: "₹900",
+      originalPrice: "₹1100",
+      quantity: 110,
+      image: "/api/placeholder/120/150",
+      category: "Power Bank",
+      brand: "Mi",
+      color: "Black",
+    },
+    {
+      id: 12,
+      name: "OnePlus Power Bank 10000mAh",
+      price: "₹700",
+      originalPrice: "₹850",
+      quantity: 140,
+      image: "/api/placeholder/120/150",
+      category: "Power Bank",
+      brand: "OnePlus",
+      color: "Red",
+    },
+    {
+      id: 13,
+      name: "Spigen Rugged Armor Mobile Cover",
+      price: "₹400",
+      originalPrice: "₹500",
+      quantity: 250,
+      image: "/api/placeholder/120/150",
+      category: "Mobile Cover",
+      brand: "Spigen",
+      color: "Black",
+    },
+    {
+      id: 14,
+      name: "Apple Silicone Case iPhone 14",
+      price: "₹600",
+      originalPrice: "₹700",
+      quantity: 120,
+      image: "/api/placeholder/120/150",
+      category: "Mobile Cover",
+      brand: "Apple",
+      color: "Blue",
+    },
+    {
+      id: 15,
+      name: "OnePlus Sandstone Case",
+      price: "₹300",
+      originalPrice: "₹400",
+      quantity: 160,
+      image: "/api/placeholder/120/150",
+      category: "Mobile Cover",
+      brand: "OnePlus",
+      color: "Red",
+    },
+    {
+      id: 16,
+      name: "Samsung Clear View Cover",
+      price: "₹500",
+      originalPrice: "₹650",
+      quantity: 110,
+      image: "/api/placeholder/120/150",
+      category: "Mobile Cover",
+      brand: "Samsung",
+      color: "Silver",
+    },
+    {
+      id: 17,
+      name: "JBL GO 3 Portable Speaker",
+      price: "₹750",
+      originalPrice: "₹900",
+      quantity: 90,
+      image: "/api/placeholder/120/150",
+      category: "Headset",
+      brand: "JBL",
+      color: "Blue",
+    },
+    {
+      id: 18,
+      name: "Anker PowerCore Slim 10000",
+      price: "₹850",
+      originalPrice: "₹1000",
+      quantity: 100,
+      image: "/api/placeholder/120/150",
+      category: "Power Bank",
+      brand: "Anker",
+      color: "White",
+    },
+    {
+      id: 19,
+      name: "Sony Wireless Charging Pad",
+      price: "₹950",
+      originalPrice: "₹1100",
+      quantity: 75,
+      image: "/api/placeholder/120/150",
+      category: "Charger",
+      brand: "Sony",
+      color: "Gold",
+    },
+    {
+      id: 20,
+      name: "Mi Transparent Mobile Cover",
+      price: "₹200",
+      originalPrice: "₹300",
+      quantity: 180,
+      image: "/api/placeholder/120/150",
+      category: "Mobile Cover",
+      brand: "Mi",
+      color: "Clear",
+    },
+  ];
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesCategory = selectedCategory
+        ? product.category === selectedCategory
+        : true;
+      const matchesBrand =
+        selectedBrands.length > 0
+          ? selectedBrands.includes(product.brand)
+          : true;
+      const matchesColor =
+        selectedColors.length > 0
+          ? selectedColors.includes(product.color)
+          : true;
+
+      const price = parseFloat(product.price.replace(/[^\d]/g, ""));
+      const min = parseFloat(priceRange.min) || 0;
+      const max = parseFloat(priceRange.max) || Infinity;
+      const matchesPrice = price >= min && price <= max;
+
+      const matchesSearch = searchTerm
+        ? product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        : true;
+
+      return (
+        matchesCategory &&
+        matchesBrand &&
+        matchesColor &&
+        matchesPrice &&
+        matchesSearch
+      );
+    });
+  }, [
+    products,
+    selectedCategory,
+    selectedBrands,
+    selectedColors,
+    priceRange,
+    searchTerm,
+  ]);
+ const navigate = useNavigate();
+
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="flex gap-6">
-        {/* Sidebar Filters */}
-        <div className="w-64 flex-shrink-0">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="flex items-center gap-2 mb-4">
-              <Filter className="w-5 h-5 text-gray-600" />
-              <h2 className="font-semibold text-gray-800">Filter</h2>
-            </div>
+    <div className="bg-gray-100  max-h-screen">
+      {" "}
+      <Navbar header="NextGen Electronics" className="py-2">
+        {" "}
+        {/* Search Bar */}
+        <div className="relative">
+                <Search
+                  size={20}
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F89320] focus:border-[#F89320]"
+                />
+              </div>
+      </Navbar>
+      <div className="flex gap-2  bg-gray-100">
+        {/* <div className=" flex flex-col bg-white pr-8 py-3 border-b border-gray-200  items-center justify-between">
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate("/inventory")}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <h1 className="text-2xl font-semibold text-gray-900">Notification</h1>
+        </div>
 
-            {/* Categories Filter */}
-            <div className="mb-6">
-              <button
-                onClick={() => setShowCategoryFilter(!showCategoryFilter)}
-                className="flex items-center justify-between w-full text-left font-medium text-gray-700 mb-3"
-              >
-                Categories
-                {showCategoryFilter ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
+      </div> */}
+        {/* Left Icon Sidebar */}
+
+        {/* Filter Sidebar */}
+        <div className="m-5 h-[calc(100vh-2.5rem)]">
+          {" "}
+          {/* 2.5rem for margin top/bottom */}
+          <div className="h-full w-80 rounded-xl bg-white border border-gray-200 flex flex-col overflow-hidden">
+            {/* Scrollable Filter Content */}
+            <div className="flex-1 overflow-y-auto p-6">
+              <h2 className="text-2xl font-medium text-gray-800">Filters</h2>
+              <div className="p-1 border-b border-gray-200 mb-3"></div>
+
+              {/* Categories Section */}
+              <div className="mb-8">
+                <button
+                  onClick={() => toggleSection("categories")}
+                  className="flex items-center justify-between w-full mb-4"
+                >
+                  <h3 className="text-base font-medium text-gray-900">
+                    Categories
+                  </h3>
+                  {expandedSections.categories ? (
+                    <ChevronUp size={16} className="text-gray-400" />
+                  ) : (
+                    <ChevronDown size={16} className="text-gray-400" />
+                  )}
+                </button>
+
+                {expandedSections.categories && (
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      {categories.map((category) => (
+                        <button
+                          key={category}
+                          onClick={() => setSelectedCategory(category)}
+                          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            selectedCategory === category
+                              ? "bg-[#F89320] text-white"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                    <button className="text-sm text-gray-600 hover:text-gray-800 font-medium">
+                      View More
+                    </button>
+                  </div>
                 )}
-              </button>
-              {showCategoryFilter && (
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <label key={category} className="flex items-center">
+              </div>
+
+              {/* Brands Section */}
+              <div className="mb-8">
+                <button
+                  onClick={() => toggleSection("brands")}
+                  className="flex items-center justify-between w-full mb-4"
+                >
+                  <h3 className="text-base font-medium text-gray-900">
+                    Brands
+                  </h3>
+                  {expandedSections.brands ? (
+                    <ChevronUp size={16} className="text-gray-400" />
+                  ) : (
+                    <ChevronDown size={16} className="text-gray-400" />
+                  )}
+                </button>
+
+                {expandedSections.brands && (
+                  <div className="space-y-2">
+                    {brands.map((brand) => (
+                      <label
+                        key={brand}
+                        className="flex items-center space-x-3"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedBrands.includes(brand)}
+                          onChange={() => toggleBrand(brand)}
+                          className="w-4 h-4 text-[#F89320] border-gray-300 rounded focus:ring-orange-300"
+                        />
+                        <span className="text-sm text-gray-700">{brand}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Price Range Section */}
+              <div className="mb-8">
+                <button
+                  onClick={() => toggleSection("priceRange")}
+                  className="flex items-center justify-between w-full mb-4"
+                >
+                  <h3 className="text-base font-medium text-gray-900">
+                    Price Range
+                  </h3>
+                  {expandedSections.priceRange ? (
+                    <ChevronUp size={16} className="text-gray-400" />
+                  ) : (
+                    <ChevronDown size={16} className="text-gray-400" />
+                  )}
+                </button>
+
+                {expandedSections.priceRange && (
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-4">
                       <input
-                        type="checkbox"
-                        checked={selectedCategories.includes(category)}
-                        onChange={() => handleCategoryChange(category)}
-                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        type="number"
+                        placeholder="Min"
+                        value={priceRange.min}
+                        onChange={(e) =>
+                          setPriceRange((prev) => ({
+                            ...prev,
+                            min: e.target.value,
+                          }))
+                        }
+                        className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
                       />
-                      <span className="ml-2 text-sm text-gray-600">
-                        {category}
-                      </span>
-                    </label>
-                  ))}
-                  <button className="text-sm text-orange-600 hover:text-orange-700">
-                    View More
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Brands Filter */}
-            <div className="mb-6">
-              <button
-                onClick={() => setShowBrandFilter(!showBrandFilter)}
-                className="flex items-center justify-between w-full text-left font-medium text-gray-700 mb-3"
-              >
-                Brands
-                {showBrandFilter ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-              </button>
-              {showBrandFilter && (
-                <div className="space-y-2">
-                  {brands.map((brand) => (
-                    <label key={brand} className="flex items-center">
+                      <span className="text-gray-400">-</span>
                       <input
-                        type="checkbox"
-                        checked={selectedBrands.includes(brand)}
-                        onChange={() => handleBrandChange(brand)}
-                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        type="number"
+                        placeholder="Max"
+                        value={priceRange.max}
+                        onChange={(e) =>
+                          setPriceRange((prev) => ({
+                            ...prev,
+                            max: e.target.value,
+                          }))
+                        }
+                        className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
                       />
-                      <span className="ml-2 text-sm text-gray-600">
-                        {brand}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Price Range Filter */}
-            <div className="mb-6">
-              <button
-                onClick={() => setShowPriceFilter(!showPriceFilter)}
-                className="flex items-center justify-between w-full text-left font-medium text-gray-700 mb-3"
-              >
-                Price Range
-                {showPriceFilter ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-              </button>
-              {showPriceFilter && (
-                <div className="space-y-3">
-                  <div className="flex gap-2">
+                    </div>
                     <input
-                      type="number"
-                      placeholder="Min"
-                      value={priceRange[0]}
+                      type="range"
+                      min="0"
+                      max="1000"
+                      value={priceRange.slider}
                       onChange={(e) =>
-                        setPriceRange([
-                          parseInt(e.target.value) || 0,
-                          priceRange[1],
-                        ])
+                        setPriceRange((prev) => ({
+                          ...prev,
+                          slider: e.target.value,
+                        }))
                       }
-                      className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-orange-500 focus:border-orange-500"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={priceRange[1]}
-                      onChange={(e) =>
-                        setPriceRange([
-                          priceRange[0],
-                          parseInt(e.target.value) || 50000,
-                        ])
-                      }
-                      className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-orange-500 focus:border-orange-500"
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                     />
                   </div>
-                  <button className="w-full bg-orange-600 text-white py-2 px-4 rounded text-sm hover:bg-orange-700">
-                    Apply
-                  </button>
-                </div>
-              )}
+                )}
+              </div>
+
+              {/* Colors Section */}
+              <div className="mb-8">
+                <button
+                  onClick={() => toggleSection("colors")}
+                  className="flex items-center justify-between w-full mb-4"
+                >
+                  <h3 className="text-base font-medium text-gray-900">
+                    Colors
+                  </h3>
+                  {expandedSections.colors ? (
+                    <ChevronUp size={16} className="text-gray-400" />
+                  ) : (
+                    <ChevronDown size={16} className="text-gray-400" />
+                  )}
+                </button>
+
+                {expandedSections.colors && (
+                  <div className="flex flex-wrap gap-3">
+                    {colors.map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => toggleColor(color)}
+                        className={`w-8 h-8 rounded-full border-2 transition-all ${
+                          selectedColors.includes(color)
+                            ? "border-[#F89320] ring-2 ring-orange-200"
+                            : "border-gray-300 hover:border-gray-400"
+                        } ${
+                          color === "Black"
+                            ? "bg-black"
+                            : color === "White"
+                            ? "bg-white"
+                            : color === "Blue"
+                            ? "bg-blue-500"
+                            : color === "Red"
+                            ? "bg-red-500"
+                            : color === "Silver"
+                            ? "bg-gray-400"
+                            : "bg-yellow-400"
+                        }`}
+                        title={color}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Colors Filter */}
-            <div className="mb-6">
-              <button
-                onClick={() => setShowColorFilter(!showColorFilter)}
-                className="flex items-center justify-between w-full text-left font-medium text-gray-700 mb-3"
-              >
-                Colors
-                {showColorFilter ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-              </button>
-              {showColorFilter && (
-                <div className="space-y-2">
-                  {colors.map((color) => (
-                    <label key={color} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedColors.includes(color)}
-                        onChange={() => handleColorChange(color)}
-                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
-                      />
-                      <span className="ml-2 text-sm text-gray-600">
-                        {color}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              )}
+            {/* Sticky Bottom Buttons */}
+            <div className="p-6 border-t border-gray-200 sticky bottom-0 bg-white">
+              <div className="flex space-x-3">
+                <button
+                  onClick={resetFilters}
+                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                >
+                  Reset
+                </button>
+                <button
+                  onClick={applyFilters}
+                  className="flex-1 px-4 py-3 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 font-medium transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1">
-          {/* Header */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+        {/* Main Content Area */}
+        <div className="flex-1 m-2 flex flex-col">
+          {/* Top Header */}
+          <div className="bg-white border-b border-gray-200 p-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Package className="w-6 h-6 text-gray-600" />
-                <h1 className="text-xl font-bold text-gray-800">Inventory</h1>
-              </div>
-              <button className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center gap-2">
-                <Plus className="w-4 h-4" />
-                Add Inventory
-              </button>
-            </div>
-          </div>
-
-          {/* Search and View Toggle */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="relative flex-1 max-w-md">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search inventory..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300"
-                />
-              </div>
-              <div className="flex items-center gap-2 ml-4">
+              <h1 className="text-2xl font-semibold text-gray-900">
+                Inventory
+              </h1>
+              <div className="flex items-center space-x-4">
+                {/* Add Inventory Button */}
                 <button
-                  onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded-lg ${
-                    viewMode === "grid"
-                      ? "bg-orange-100 text-orange-600"
-                      : "text-gray-400 hover:text-gray-600"
-                  }`}
+                  className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors"
+                  onClick={() => {
+                    navigate("/addinventory");
+                  }}
                 >
-                  <Grid3X3 className="w-5 h-5" />
+                  <Plus size={20} />
+                  <span>Add Inventory</span>
                 </button>
-                <button
-                  onClick={() => setViewMode("list")}
-                  className={`p-2 rounded-lg ${
-                    viewMode === "list"
-                      ? "bg-orange-100 text-orange-600"
-                      : "text-gray-400 hover:text-gray-600"
-                  }`}
+                {/* Profile Icon */}
+                <div
+                  className="w-10 h-10 bg-[#F89320] rounded-full flex items-center text-white text-2xl justify-center"
+                  onClick={() => navigate("/notification-page")}
                 >
-                  <List className="w-5 h-5" />
-                </button>
+                  <IoIosNotificationsOutline />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Results Count */}
-          <div className="mb-4">
-            <p className="text-sm text-gray-600">
-              Showing {filteredItems.length} of {inventoryItems.length} items
-            </p>
-          </div>
+          {/* Products Grid */}
+          <div className="flex-1 p-6 overflow-y-auto">
+            <div className="grid grid-cols-4 gap-6">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+                >
+                  {/* Product Image */}
+                  <div className="relative mb-4">
+                    <div className="w-full h-40 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
+                      <div className="w-20 h-28 bg-white rounded-lg shadow-lg flex items-center justify-center">
+                        <div className="w-16 h-24 bg-gradient-to-b from-orange-400 to-orange-300 rounded"></div>
+                      </div>
+                    </div>
+                    {/* Arrow button */}
+                    <button className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm">
+                      <ChevronDown size={14} className="text-gray-600" />
+                    </button>
+                  </div>
 
-          {/* Content */}
-          {viewMode === "grid" ? <GridView /> : <ListView />}
+                  {/* Product Info */}
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                      {product.name}
+                    </h3>
 
-          {/* Empty State */}
-          {filteredItems.length === 0 && (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-              <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                No items found
-              </h3>
-              <p className="text-gray-500">
-                Try adjusting your filters or search terms
-              </p>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-green-600 font-semibold">
+                        {product.price}
+                      </span>
+                      <span className="text-gray-400 line-through text-sm">
+                        {product.originalPrice}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">Quantity</span>
+                      <span className="text-sm font-medium text-gray-900">
+                        {product.quantity}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default InventoryList;
+}

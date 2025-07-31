@@ -92,7 +92,7 @@ const AddInventoryForm = ({
               <button
                 type="button"
                 onClick={() => setImagePreview(null)}
-                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
+                className="absolute top-0 right-0 bg-red-400 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
               >
                 ×
               </button>
@@ -100,7 +100,7 @@ const AddInventoryForm = ({
           ) : (
             <div>
               <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-500 text-sm mb-2">
+              <p className="text-gray-400 text-sm mb-2">
                 Click here to upload image
               </p>
               <input
@@ -112,7 +112,7 @@ const AddInventoryForm = ({
               />
               <label
                 htmlFor="imageUpload"
-                className="cursor-pointer text-orange-500 hover:text-orange-600"
+                className="cursor-pointer text-orange-400 hover:text-orange-300"
               >
                 Choose file
               </label>
@@ -128,7 +128,7 @@ const AddInventoryForm = ({
               name="sku"
               value={formData.sku}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="SKU / Barcode Number*"
               
             />
@@ -140,7 +140,7 @@ const AddInventoryForm = ({
               name="barcode"
               value={formData.barcode}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Barcode Number*"
               
             />
@@ -154,7 +154,7 @@ const AddInventoryForm = ({
               name="category"
               value={formData.category}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Category"
               readOnly
             />
@@ -166,7 +166,7 @@ const AddInventoryForm = ({
               name="brand"
               value={formData.brand}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Brand"
               readOnly
             />
@@ -178,7 +178,7 @@ const AddInventoryForm = ({
           name="productModel"
           value={formData.productModel}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Product Model"
         />
 
@@ -187,7 +187,7 @@ const AddInventoryForm = ({
           name="productColor"
           value={formData.productColor}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Product Color*"
           
         />
@@ -197,7 +197,7 @@ const AddInventoryForm = ({
           name="productQuantity"
           value={formData.productQuantity}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Product Quantity*"
           
         />
@@ -208,7 +208,7 @@ const AddInventoryForm = ({
             name="productPrice"
             value={formData.productPrice}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Product Price*"
             
           />
@@ -218,7 +218,7 @@ const AddInventoryForm = ({
             name="purchasePrice"
             value={formData.purchasePrice}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Purchase Price*"
             
           />
@@ -229,7 +229,7 @@ const AddInventoryForm = ({
           name="chargingPort"
           value={formData.chargingPort}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Charging Port"
         />
 
@@ -238,7 +238,7 @@ const AddInventoryForm = ({
           name="batteryCapacity"
           value={formData.batteryCapacity}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Battery Capacity"
         />
 
@@ -247,7 +247,7 @@ const AddInventoryForm = ({
           value={formData.productDescription}
           onChange={handleInputChange}
           rows="3"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Product Description"
         />
 
@@ -256,7 +256,7 @@ const AddInventoryForm = ({
           name="supplierName"
           value={formData.supplierName}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Supplier Name"
         />
 
@@ -265,7 +265,7 @@ const AddInventoryForm = ({
           name="phoneNumber"
           value={formData.phoneNumber}
           onChange={handleInputChange}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="Phone Number"
         />
 
@@ -279,7 +279,7 @@ const AddInventoryForm = ({
           </button>
           <button
             type="submit"
-            className="flex-1 py-3 px-6 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+            className="flex-1 py-3 px-6 bg-orange-400 text-white rounded-lg hover:bg-orange-300 transition-colors"
           >
             Apply
           </button>

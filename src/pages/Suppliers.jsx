@@ -1,31 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import Navbar from "../components/Navbar";
 import {
   FaGift,
   FaShoppingBag,
   FaMoneyBillWave,
   FaTimes,
-  FaRegClock,
+  FaHandRock,
+  FaBox,
 } from "react-icons/fa";
-import GraphWithSelect from "../components/GraphWithSelect"; // Assuming this is a separate component for the graph
-import SalesGraph from "../components/SalesGraph";
-import Navbar from "../components/Navbar";
 
-
-
+// Reusable StatCard component
 const StatCard = ({
-  icon, 
+  icon,
   label,
   value,
   bg = "bg-white",
   textColor = "text-black",
 }) => (
   <div
-    className={`flex flex-col ${bg} p-5 2xl:p-10 rounded-2xl w-full shadow-sm lg:h-[200px] justify-between `}
+    className={`flex flex-col ${bg} p-4 rounded-2xl w-full shadow-sm justify-between xl:p-8`}
   >
     <div className="flex justify-end text-xl mb-2">{icon}</div>
     <div>
-      <span className="text-sm text-gray-600 ">{label}</span>
-      <span className={`text-2xl font-semibold block text-gray-700 ${textColor}`}>
+      <span className="text-sm text-gray-600 whitespace-nowrap truncate">
+        {label}
+      </span>
+      <span className={`text-2xl font-semibold block ${textColor}`}>
         {value}
       </span>
     </div>
@@ -33,130 +33,124 @@ const StatCard = ({
 );
 
 const Suppliers = () => {
-  const [range, setRange] = useState("daily");
-  const employees = [
-    {
-      name: "JK Paradise",
-      role: "Manager",
-      image:
-        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      name: "Abbas",
-      role: "Sales",
-      image:
-        "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg",
-    },
-    {
-      name: "Ayub",
-      role: "Support",
-      image:
-        "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
-    },
-    // etc...
-  ];
+  const inventory = Array(8).fill({
+    name: "Samsung Motorola Edge 50 Pro 5G",
+    price: "₹75k",
+    quantity: 10,
+    image:
+      "https://m.media-amazon.com/images/I/51Ibtg1KESL._UF894,1000_QL80_.jpg",
+  });
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-gray-100 overflow-y-auto">
       <Navbar
         header="NextGen Electronics"
-        
-        className="font-bold py-1 text-2xl "
-      ></Navbar>
-      <div className="min-h-screen bg-gray-100 p-4 flex flex-col gap-4">
-        {/* Top Stats - grid 4 columns on lg+ */}
-        <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 text-orange-500">
-          <StatCard icon={<FaGift />} label="Total Orders Today" value="₹150" />
-          <StatCard
-            icon={<FaShoppingBag />}
-            label="Out of Stock"
-            value="₹60"
-            bg="bg-violet-200"
-          />
-          <StatCard
-            icon={<FaMoneyBillWave />}
-            label="Low Quantity Products"
-            value="₹80"
-            bg="bg-green-200"
-          />
-          <StatCard
-            icon={<FaTimes />}
-            label="Total Orders in Current Month"
-            value="₹60"
-            bg="bg-red-200"
-            textColor="text-red-600"
-          />
-        </div>
+        searchVisible={true}
+        className="text-2xl font-bold"
+      />
 
-        {/* Chart + Right Cards */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:grid lg:grid-cols-4">
-          {/* Chart Container */}
-          <SalesGraph />
+      {/* Sales Activity */}
+      <section className="p-4">
+        <h2 className="text-xl font-semibold mb-4">Sales Activity</h2>
 
-          {/* Right Side Cards - stacked vertically */}
-          <div className="grid grid-cols-2  gap-4 w-full text-orange-400  lg:grid-cols-1 ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          {/* Delivery & Request Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 text-orange-500 font-semibold">
+            <StatCard icon={<FaBox />} label="Pending Delivery" value="80" />
             <StatCard
-              icon={<FaMoneyBillWave />}
-              label="Top Selling Product"
-              value="₹80"
-              bg="bg-green-200"
-            />
-            <StatCard
-              icon={<FaTimes />}
-              label="Current month's Best Performers"
-              value="₹60"
-              bg="bg-red-200"
-              textColor="text-red-600"
+              icon={<FaHandRock />}
+              label="Pending Request"
+              value="60"
             />
           </div>
-        </div>
 
-        {/* Bottom Section - Recent Activity */}
-
-        <div className="flex flex-col lg:flex-row  rounded-xl   lg:grid lg:grid-cols-20  ">
-          <div className=" grid grid-cols-2  lg:col-span-5 gap-4 lg:grid-cols-1">
-            <StatCard
-              icon={<FaRegClock />}
-              label="In hand"
-              value="₹60"
-              bg="bg-violet-200"
-            />
-            <StatCard
-              icon={<FaRegClock />}
-              label="To be received"
-              value="₹80"
-              bg="bg-green-200"
-            />
-          </div>
-          <div className="col-span-1  justify-between   lg:col-span-15 grid grid-cols-1  lg:grid-cols-15   ">
-            <div className="  lg:col-span-10 ">
-              <GraphWithSelect />
+          {/* Reward Summary */}
+          <div className="lg:col-span-3 bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-6">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold">Reward Summary</h3>
+              <button className="bg-[#F89320] text-white px-4 py-2 rounded-lg hover:bg-orange-300 transition">
+                View
+              </button>
             </div>
-            <div className=" w-full p-5 h-full lg:col-span-5 ">
-              <h1 className="font-semibold 2xl:text-xl">Legends</h1>
-              <div className="  flex flex-row lg:flex-col lg:flex-row bg-white rounded-xl ">
-                {employees.map((emp, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex flex-col items-center  p-2 bg-white rounded-lg "
-                  >
-                    <img
-                      src={emp.image}
-                      alt={emp.name}
-                      className="w-16 h-16 rounded-full object-cover border border-orange-300"
-                    />
-                    <div className="mt-2 text-sm font-medium text-gray-800">
-                      {emp.name}
-                    </div>
-                    <div className="text-xs text-gray-500">{emp.role}</div>
-                  </div>
-                ))}
+
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Reward Cards */}
+              <div className="grid grid-cols-2 gap-4 flex-1 bg-white text-orange-500 font-semibold">
+                <StatCard icon={<FaGift />} label="Total Reward" value="₹150" />
+                <StatCard
+                  icon={<FaShoppingBag />}
+                  label="Total Shopkeeper"
+                  value="₹60"
+                  bg="bg-violet-200"
+                />
+                <StatCard
+                  icon={<FaMoneyBillWave />}
+                  label="Paid"
+                  value="₹80"
+                  bg="bg-green-200"
+                />
+                <StatCard
+                  icon={<FaTimes />}
+                  label="Unpaid"
+                  value="₹60"
+                  bg="bg-red-200"
+                  textColor="text-red-600"
+                />
+              </div>
+
+              {/* Reward Image */}
+              <div className="w-full  lg:w-[250px] xl:w-[350px] 2xl:w-[500px]">
+                <img
+                  src="https://miro.medium.com/v2/resize:fit:1252/0*x97kZzRE731bh44K.jpg"
+                  alt="reward"
+                  className="rounded-xl w-full h-full object-contain"
+                />
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Inventory Section */}
+      <div className="flex flex-col">
+        <h2 className="text-xl ml-6 whitespace-nowrap font-semibold ">
+          Inventory Summary in Quantity
+        </h2>
+
+        <section className="p-4">
+          <div className="bg-white p-6 rounded-2xl shadow">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">
+                Total Product in Inventory
+              </h2>
+              <span className="font-bold text-xl">{inventory.length}</span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 3xl: gap-4">
+              {inventory.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white border border-gray-200 rounded-lg shadow p-4 flex flex-col"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-fit h-fit object-cover rounded"
+                  />
+                  <h3 className="text-sm font-semibold mt-2 truncate">
+                    {item.name}
+                  </h3>
+                  <p className="text-gray-500 text-sm">
+                    Quantity: {item.quantity}
+                  </p>
+                  <p className="font-bold text-black mt-1">{item.price}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
-    </>
+    </div>
   );
 };
 

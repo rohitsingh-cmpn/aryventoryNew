@@ -62,7 +62,7 @@ const AddInventory = () => {
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const categories = [
+  const categories = [         
     "Mobile",
     "Watch",
     "Tablet",
@@ -232,7 +232,7 @@ const AddInventory = () => {
                 + Add Brand
               </button>
             </div>
-            <div className="bg-white p-3 rounded-xl shadow space-y-2 max-h-[300px] overflow-y-auto">
+            <div className="bg-white p-3 rounded-xl shadow space-y-2 ">
               {brands.map((brand) => (
                 <div
                   key={brand}

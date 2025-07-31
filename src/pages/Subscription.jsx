@@ -61,7 +61,7 @@ const SubscriptionCard = ({
   >
     {active && (
       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-        <span className="bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs px-4 py-1 rounded-full font-semibold shadow-lg">
+        <span className="bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs px-4 py-1 rounded-full font-semibold shadow-lg whitespace-nowrap">
           ✨ Active Plan
         </span>
       </div>
@@ -295,14 +295,14 @@ export default function Subscription() {
    <>
      <Navbar
        header="Subscription Plan"
-       showBackButton={true}
-       className="font-bold  text-2xl "
+       
+       className="font-bold py-2 text-2xl "
      ></Navbar>
 
-     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-5">
+     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-2">
        <section className="mx-5  px-4 sm:px-6 lg:px-8">
-         <div className="text-center mb-12">
-           <h2 className="text-4xl font-extrabold text-gray-800 mb-3">
+         <div className="text-center mb-5">
+           <h2 className="text-4xl font-extrabold text-gray-800 mb-2">
              Choose Your Plan
            </h2>
            <p className="text-gray-600 text-base">
