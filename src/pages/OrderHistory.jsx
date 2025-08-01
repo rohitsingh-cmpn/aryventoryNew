@@ -465,9 +465,13 @@ const OrderHistory = () => {
 
   return (
     <div className="bg-[#f7f8fa] w-full h-full ">
-      <Navbar header="Order History" searchVisible={true} className="text-2xl font-bold"/>
+      <Navbar
+        header="Order History"
+        searchVisible={true}
+        className="text-2xl font-bold"
+      />
       {/* Main Content */}
-      
+
       <main className="flex-1 p-4 sm:p-6 lg:p-8">
         {/* Main Layout */}
         <div className="flex flex-col lg:flex-row gap-8 h-[calc(100vh-150px)]">

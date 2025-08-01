@@ -8,7 +8,7 @@ const categories = [
   "Mobile Cover",
 ];
 
-const FilterSidebar = ({ selectedCategory, onCategoryChange }) => {
+const FilterSection = ({ selectedCategory, onCategoryChange }) => {
   return (
     <div className="w-full md:w-64 bg-white p-4 rounded-xl shadow-md">
       <h2 className="text-lg font-semibold mb-4">Filter</h2>
@@ -42,4 +42,4 @@ const FilterSidebar = ({ selectedCategory, onCategoryChange }) => {
   );
 };
 
-export default FilterSidebar;
+export default FilterSection;

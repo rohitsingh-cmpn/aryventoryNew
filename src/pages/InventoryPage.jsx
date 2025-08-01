@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
 import {
   Home,
   Grid3X3,
@@ -20,6 +20,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useMemo } from "react";
+import FilterSection from "../components/FilterSidebar";
 
 export default function DeliveryStatus() {
   const [expandedSections, setExpandedSections] = useState({
@@ -351,338 +352,303 @@ export default function DeliveryStatus() {
     priceRange,
     searchTerm,
   ]);
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
+ return (
+   <div className="h-screen overflow-hidden flex flex-col bg-gray-50">
+     {/* Fixed Navbar */}
+     <div className="w-full shadow h-16 flex items-center px-6 bg-white z-10">
+       <Navbar header="NextGen Electronics" className="py-2 w-full">
+         <div className="relative">
+           <Search
+             size={20}
+             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+           />
+           <input
+             type="text"
+             placeholder="Search"
+             value={searchTerm}
+             onChange={(e) => setSearchTerm(e.target.value)}
+             className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F89320] focus:border-[#F89320]"
+           />
+         </div>
+       </Navbar>
+     </div>
 
-  return (
-    <div className="bg-gray-100  max-h-screen">
-      {" "}
-      <Navbar header="NextGen Electronics" className="py-2">
-        {" "}
-        {/* Search Bar */}
-        <div className="relative">
-                <Search
-                  size={20}
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F89320] focus:border-[#F89320]"
-                />
-              </div>
-      </Navbar>
-      <div className="flex gap-2  bg-gray-100">
-        {/* <div className=" flex flex-col bg-white pr-8 py-3 border-b border-gray-200  items-center justify-between">
-        <div className="flex gap-3">
-          <button
-            onClick={() => navigate("/inventory")}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <h1 className="text-2xl font-semibold text-gray-900">Notification</h1>
-        </div>
+     {/* Body Layout */}
+     <div className="flex flex-1 p-4 overflow-hidden">
+       {/* Sidebar Filter Section (not fixed) */}
+       <div>
+        <FilterSection></FilterSection>
+       </div>
+       <div className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
+         {/* Filters Header */}
+         <div className="p-2">
+           <h2 className="text-2xl font-medium text-gray-800">Filters</h2>
+           <div className="border-b border-gray-200 mb-3" />
 
-      </div> */}
-        {/* Left Icon Sidebar */}
+           {/* Categories Section */}
+           <div className="mb-8">
+             <button
+               onClick={() => toggleSection("categories")}
+               className="flex items-center justify-between w-full mb-4"
+             >
+               <h3 className="text-base font-medium text-gray-900">
+                 Categories
+               </h3>
+               {expandedSections.categories ? (
+                 <ChevronUp size={16} className="text-gray-400" />
+               ) : (
+                 <ChevronDown size={16} className="text-gray-400" />
+               )}
+             </button>
+             {expandedSections.categories && (
+               <div className="space-y-3">
+                 <div className="flex flex-wrap gap-2">
+                   {categories.map((category) => (
+                     <button
+                       key={category}
+                       onClick={() => setSelectedCategory(category)}
+                       className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                         selectedCategory === category
+                           ? "bg-[#F89320] text-white"
+                           : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                       }`}
+                     >
+                       {category}
+                     </button>
+                   ))}
+                 </div>
+                 <button className="text-sm text-gray-600 hover:text-gray-800 font-medium">
+                   View More
+                 </button>
+               </div>
+             )}
+           </div>
 
-        {/* Filter Sidebar */}
-        <div className="m-5 h-[calc(100vh-2.5rem)]">
-          {" "}
-          {/* 2.5rem for margin top/bottom */}
-          <div className="h-full w-80 rounded-xl bg-white border border-gray-200 flex flex-col overflow-hidden">
-            {/* Scrollable Filter Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <h2 className="text-2xl font-medium text-gray-800">Filters</h2>
-              <div className="p-1 border-b border-gray-200 mb-3"></div>
+           {/* Brands Section */}
+           <div className="mb-8">
+             <button
+               onClick={() => toggleSection("brands")}
+               className="flex items-center justify-between w-full mb-4"
+             >
+               <h3 className="text-base font-medium text-gray-900">Brands</h3>
+               {expandedSections.brands ? (
+                 <ChevronUp size={16} className="text-gray-400" />
+               ) : (
+                 <ChevronDown size={16} className="text-gray-400" />
+               )}
+             </button>
+             {expandedSections.brands && (
+               <div className="space-y-2">
+                 {brands.map((brand) => (
+                   <label key={brand} className="flex items-center space-x-3">
+                     <input
+                       type="checkbox"
+                       checked={selectedBrands.includes(brand)}
+                       onChange={() => toggleBrand(brand)}
+                       className="w-4 h-4 text-[#F89320] border-gray-300 rounded focus:ring-orange-300"
+                     />
+                     <span className="text-sm text-gray-700">{brand}</span>
+                   </label>
+                 ))}
+               </div>
+             )}
+           </div>
 
-              {/* Categories Section */}
-              <div className="mb-8">
-                <button
-                  onClick={() => toggleSection("categories")}
-                  className="flex items-center justify-between w-full mb-4"
-                >
-                  <h3 className="text-base font-medium text-gray-900">
-                    Categories
-                  </h3>
-                  {expandedSections.categories ? (
-                    <ChevronUp size={16} className="text-gray-400" />
-                  ) : (
-                    <ChevronDown size={16} className="text-gray-400" />
-                  )}
-                </button>
+           {/* Price Range Section */}
+           <div className="mb-8">
+             <button
+               onClick={() => toggleSection("priceRange")}
+               className="flex items-center justify-between w-full mb-4"
+             >
+               <h3 className="text-base font-medium text-gray-900">
+                 Price Range
+               </h3>
+               {expandedSections.priceRange ? (
+                 <ChevronUp size={16} className="text-gray-400" />
+               ) : (
+                 <ChevronDown size={16} className="text-gray-400" />
+               )}
+             </button>
+             {expandedSections.priceRange && (
+               <div className="space-y-4">
+                 <div className="flex items-center space-x-4">
+                   <input
+                     type="number"
+                     placeholder="Min"
+                     value={priceRange.min}
+                     onChange={(e) =>
+                       setPriceRange((prev) => ({
+                         ...prev,
+                         min: e.target.value,
+                       }))
+                     }
+                     className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                   />
+                   <span className="text-gray-400">-</span>
+                   <input
+                     type="number"
+                     placeholder="Max"
+                     value={priceRange.max}
+                     onChange={(e) =>
+                       setPriceRange((prev) => ({
+                         ...prev,
+                         max: e.target.value,
+                       }))
+                     }
+                     className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                   />
+                 </div>
+                 <input
+                   type="range"
+                   min="0"
+                   max="1000"
+                   value={priceRange.slider}
+                   onChange={(e) =>
+                     setPriceRange((prev) => ({
+                       ...prev,
+                       slider: e.target.value,
+                     }))
+                   }
+                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                 />
+               </div>
+             )}
+           </div>
 
-                {expandedSections.categories && (
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap gap-2">
-                      {categories.map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => setSelectedCategory(category)}
-                          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                            selectedCategory === category
-                              ? "bg-[#F89320] text-white"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                    <button className="text-sm text-gray-600 hover:text-gray-800 font-medium">
-                      View More
-                    </button>
-                  </div>
-                )}
-              </div>
+           {/* Colors Section */}
+           <div className="mb-8">
+             <button
+               onClick={() => toggleSection("colors")}
+               className="flex items-center justify-between w-full mb-4"
+             >
+               <h3 className="text-base font-medium text-gray-900">Colors</h3>
+               {expandedSections.colors ? (
+                 <ChevronUp size={16} className="text-gray-400" />
+               ) : (
+                 <ChevronDown size={16} className="text-gray-400" />
+               )}
+             </button>
+             {expandedSections.colors && (
+               <div className="flex flex-wrap gap-3">
+                 {colors.map((color) => (
+                   <button
+                     key={color}
+                     onClick={() => toggleColor(color)}
+                     className={`w-8 h-8 rounded-full border-2 transition-all ${
+                       selectedColors.includes(color)
+                         ? "border-[#F89320] ring-2 ring-orange-200"
+                         : "border-gray-300 hover:border-gray-400"
+                     } ${
+                       color === "Black"
+                         ? "bg-black"
+                         : color === "White"
+                         ? "bg-white"
+                         : color === "Blue"
+                         ? "bg-blue-500"
+                         : color === "Red"
+                         ? "bg-red-500"
+                         : color === "Silver"
+                         ? "bg-gray-400"
+                         : "bg-yellow-400"
+                     }`}
+                     title={color}
+                   />
+                 ))}
+               </div>
+             )}
+           </div>
 
-              {/* Brands Section */}
-              <div className="mb-8">
-                <button
-                  onClick={() => toggleSection("brands")}
-                  className="flex items-center justify-between w-full mb-4"
-                >
-                  <h3 className="text-base font-medium text-gray-900">
-                    Brands
-                  </h3>
-                  {expandedSections.brands ? (
-                    <ChevronUp size={16} className="text-gray-400" />
-                  ) : (
-                    <ChevronDown size={16} className="text-gray-400" />
-                  )}
-                </button>
+           {/* Bottom Buttons */}
+           <div className="mt-8">
+             <div className="flex space-x-3">
+               <button
+                 onClick={resetFilters}
+                 className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+               >
+                 Reset
+               </button>
+               <button
+                 onClick={applyFilters}
+                 className="flex-1 px-4 py-3 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 font-medium transition-colors"
+               >
+                 Apply
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
 
-                {expandedSections.brands && (
-                  <div className="space-y-2">
-                    {brands.map((brand) => (
-                      <label
-                        key={brand}
-                        className="flex items-center space-x-3"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedBrands.includes(brand)}
-                          onChange={() => toggleBrand(brand)}
-                          className="w-4 h-4 text-[#F89320] border-gray-300 rounded focus:ring-orange-300"
-                        />
-                        <span className="text-sm text-gray-700">{brand}</span>
-                      </label>
-                    ))}
-                  </div>
-                )}
-              </div>
+       {/* Scrollable Main Content */}
+       <div className="flex-1 overflow-y-auto bg-gray-50">
+         {/* Sticky Header */}
+         <div className="bg-white border-b border-gray-200 p-6 sticky top-0 z-10">
+           <div className="flex items-center justify-between">
+             <h1 className="text-2xl font-semibold text-gray-900">Inventory</h1>
+             <div className="flex items-center space-x-4">
+               <button
+                 className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors"
+                 onClick={() => navigate("/addinventory")}
+               >
+                 <Plus size={20} />
+                 <span>Add Inventory</span>
+               </button>
+               <div
+                 className="w-10 h-10 bg-[#F89320] rounded-full flex items-center text-white text-2xl justify-center"
+                 onClick={() => navigate("/notification-page")}
+               >
+                 <IoIosNotificationsOutline />
+               </div>
+             </div>
+           </div>
+         </div>
 
-              {/* Price Range Section */}
-              <div className="mb-8">
-                <button
-                  onClick={() => toggleSection("priceRange")}
-                  className="flex items-center justify-between w-full mb-4"
-                >
-                  <h3 className="text-base font-medium text-gray-900">
-                    Price Range
-                  </h3>
-                  {expandedSections.priceRange ? (
-                    <ChevronUp size={16} className="text-gray-400" />
-                  ) : (
-                    <ChevronDown size={16} className="text-gray-400" />
-                  )}
-                </button>
+         {/* Products Grid */}
+         <div className="p-6">
+           <div className="grid grid-cols-4 gap-6">
+             {filteredProducts.map((product) => (
+               <div
+                 key={product.id}
+                 className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+               >
+                 <div className="relative mb-4">
+                   <div className="w-full h-40 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
+                     <div className="w-20 h-28 bg-white rounded-lg shadow-lg flex items-center justify-center">
+                       <div className="w-16 h-24 bg-gradient-to-b from-orange-400 to-orange-300 rounded" />
+                     </div>
+                   </div>
+                   <button className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm">
+                     <ChevronDown size={14} className="text-gray-600" />
+                   </button>
+                 </div>
 
-                {expandedSections.priceRange && (
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-4">
-                      <input
-                        type="number"
-                        placeholder="Min"
-                        value={priceRange.min}
-                        onChange={(e) =>
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            min: e.target.value,
-                          }))
-                        }
-                        className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
-                      />
-                      <span className="text-gray-400">-</span>
-                      <input
-                        type="number"
-                        placeholder="Max"
-                        value={priceRange.max}
-                        onChange={(e) =>
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            max: e.target.value,
-                          }))
-                        }
-                        className="w-20 px-3 py-2 border border-gray-300 rounded-md text-sm"
-                      />
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1000"
-                      value={priceRange.slider}
-                      onChange={(e) =>
-                        setPriceRange((prev) => ({
-                          ...prev,
-                          slider: e.target.value,
-                        }))
-                      }
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    />
-                  </div>
-                )}
-              </div>
+                 <div className="space-y-2">
+                   <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                     {product.name}
+                   </h3>
+                   <div className="flex items-center space-x-2">
+                     <span className="text-green-600 font-semibold">
+                       {product.price}
+                     </span>
+                     <span className="text-gray-400 line-through text-sm">
+                       {product.originalPrice}
+                     </span>
+                   </div>
+                   <div className="flex items-center justify-between">
+                     <span className="text-xs text-gray-500">Quantity</span>
+                     <span className="text-sm font-medium text-gray-900">
+                       {product.quantity}
+                     </span>
+                   </div>
+                 </div>
+               </div>
+             ))}
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ );
 
-              {/* Colors Section */}
-              <div className="mb-8">
-                <button
-                  onClick={() => toggleSection("colors")}
-                  className="flex items-center justify-between w-full mb-4"
-                >
-                  <h3 className="text-base font-medium text-gray-900">
-                    Colors
-                  </h3>
-                  {expandedSections.colors ? (
-                    <ChevronUp size={16} className="text-gray-400" />
-                  ) : (
-                    <ChevronDown size={16} className="text-gray-400" />
-                  )}
-                </button>
-
-                {expandedSections.colors && (
-                  <div className="flex flex-wrap gap-3">
-                    {colors.map((color) => (
-                      <button
-                        key={color}
-                        onClick={() => toggleColor(color)}
-                        className={`w-8 h-8 rounded-full border-2 transition-all ${
-                          selectedColors.includes(color)
-                            ? "border-[#F89320] ring-2 ring-orange-200"
-                            : "border-gray-300 hover:border-gray-400"
-                        } ${
-                          color === "Black"
-                            ? "bg-black"
-                            : color === "White"
-                            ? "bg-white"
-                            : color === "Blue"
-                            ? "bg-blue-500"
-                            : color === "Red"
-                            ? "bg-red-500"
-                            : color === "Silver"
-                            ? "bg-gray-400"
-                            : "bg-yellow-400"
-                        }`}
-                        title={color}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Sticky Bottom Buttons */}
-            <div className="p-6 border-t border-gray-200 sticky bottom-0 bg-white">
-              <div className="flex space-x-3">
-                <button
-                  onClick={resetFilters}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
-                >
-                  Reset
-                </button>
-                <button
-                  onClick={applyFilters}
-                  className="flex-1 px-4 py-3 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 font-medium transition-colors"
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="flex-1 m-2 flex flex-col">
-          {/* Top Header */}
-          <div className="bg-white border-b border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                Inventory
-              </h1>
-              <div className="flex items-center space-x-4">
-                {/* Add Inventory Button */}
-                <button
-                  className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors"
-                  onClick={() => {
-                    navigate("/addinventory");
-                  }}
-                >
-                  <Plus size={20} />
-                  <span>Add Inventory</span>
-                </button>
-                {/* Profile Icon */}
-                <div
-                  className="w-10 h-10 bg-[#F89320] rounded-full flex items-center text-white text-2xl justify-center"
-                  onClick={() => navigate("/notification-page")}
-                >
-                  <IoIosNotificationsOutline />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Products Grid */}
-          <div className="flex-1 p-6 overflow-y-auto">
-            <div className="grid grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
-                >
-                  {/* Product Image */}
-                  <div className="relative mb-4">
-                    <div className="w-full h-40 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center">
-                      <div className="w-20 h-28 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                        <div className="w-16 h-24 bg-gradient-to-b from-orange-400 to-orange-300 rounded"></div>
-                      </div>
-                    </div>
-                    {/* Arrow button */}
-                    <button className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm">
-                      <ChevronDown size={14} className="text-gray-600" />
-                    </button>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
-                      {product.name}
-                    </h3>
-
-                    <div className="flex items-center space-x-2">
-                      <span className="text-green-600 font-semibold">
-                        {product.price}
-                      </span>
-                      <span className="text-gray-400 line-through text-sm">
-                        {product.originalPrice}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">Quantity</span>
-                      <span className="text-sm font-medium text-gray-900">
-                        {product.quantity}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+};

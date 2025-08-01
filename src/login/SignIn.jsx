@@ -161,8 +161,8 @@ const SignIn = () => {
               <label className="block text-sm text-gray-600 mb-1">
                 Select Role
               </label>
-              <select className="w-full px-4 mr-4 py-2 border border-gray-300 rounded-full bg-white text-gray-700 hover:border-orange-300 focus:border-orange-500 focus:outline-none transition">
-                <option>Select role</option>
+              <select className="w-full px-4 mr-4 py-2 border border-gray-300 rounded-full bg-white text-gray-700 hover:border-orange-300 focus:border-orange-500 focus:outline-none transition appearance-none">
+                <option >Select role</option>
                 <option>Shopkeeper</option>
                 <option>Staff</option>
                 <option>Supplier</option>
