@@ -1,13 +1,14 @@
 import React from "react";
-import { Search, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Search, ArrowLeft, Import } from "lucide-react";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import NotificationPage from "../pages/NotificationPage";
 
-const Navbar = ({
-  header,
-  searchVisible = false,
-  className = "",
-  onBack,
-  showBackButton = false,
-}) => {
+const Navbar = ({ header, className = "", onBack, showBackButton = false }) => {
+  const [Noti, setNoti] = useState(true);
+  const [Nav, setNav] = useState(true);
+  const navigate = useNavigate();
   return (
     <div className="bg-white shadow-sm px-4 py-2 ">
       <div className="flex items-center justify-between">
@@ -20,19 +21,26 @@ const Navbar = ({
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </button>
           )}
-          <h1 className={`text-gray-800 text-2xl  font-bold  ${className}`}>{header}</h1>
+          <h1 className={`text-gray-800 text-2xl  font-bold  ${className}`}>
+            NextGen Electronics
+          </h1>
         </div>
 
-        {searchVisible && (
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-            />
-          </div>
-        )}
+        <div
+          className="relative w-10 h-10 bg-[#F89320] rounded-full flex items-center text-white text-2xl justify-center "
+          onClick={() => {
+            setNoti(!Noti);
+            
+          }}
+        >
+          {" "}
+          <IoIosNotificationsOutline />
+          {!Noti && (
+            <div onClick={()=> navigate("/notification-page")} className="top-14 right-6 z-99999 w-[400px] absolute">
+              <NotificationPage Nav = {Nav}/>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

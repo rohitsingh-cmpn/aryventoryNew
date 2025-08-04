@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Calendar, Package, AlertCircle, Users,ArrowLeft } from "lucide-react";
+import { Calendar, Package, AlertCircle, Users, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const NotificationPage = () => {
+const NotificationPage = ({ Nav }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -96,53 +96,80 @@ const NotificationPage = () => {
     }
   };
   const navigate = useNavigate();
+  const navDimension = {
+    padding: 3,
+    space: 3,
+    gap: 2,
+    margin: 1,
+    text: 'sm',
+  };
 
   return (
-    <div className="flex-1 bg-gray-50 min-h-screen">
+    <div
+      className={`flex-1 ${!Nav && "h-full"} bg-white ${
+        Nav && "border-2 flex flex-col shadow-2xl rounded-2xl p-2"
+      }`}
+    >
       {/* Header */}
-      <div className="bg-white pr-8 py-3 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex gap-3">
-          <button
-            onClick={() => navigate("/inventory")}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <h1 className="text-2xl font-semibold text-gray-900">Notification</h1>
-        </div>
+      {!Nav && (
+        <div
+          className={`bg-white pr-8 py-3 border-b border-gray-200 flex items-center justify-between`}
+        >
+          <div className="flex gap-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </button>
+            <h1 className="text-2xl font-semibold text-gray-900">
+              Notification
+            </h1>
+          </div>
 
-        <div className="relative">
-          <button
-            onClick={() => setShowDatePicker(!showDatePicker)}
-            className="bg-orange-400 hover:bg-orange-300 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200"
-          >
-            <Calendar className="w-4 h-4" />
-            {formatDate(selectedDate)}
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              className="bg-orange-400 hover:bg-orange-300 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200"
+            >
+              <Calendar className="w-4 h-4" />
+              {formatDate(selectedDate)}
+            </button>
 
-          {showDatePicker && (
-            <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={handleDateChange}
-                className="w-48 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent"
-              />
-            </div>
-          )}
+            {showDatePicker && (
+              <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  className="w-48 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Notifications List */}
-      <div className="p-8 space-y-6">
-        {notifications.map((notification) => (
+      <div
+        className={`p-${!Nav ? 8 : navDimension.padding} space-y-${
+          !Nav ? 4 : navDimension.space
+        }`}
+      >
+        {notifications.slice(0, Nav ? 3 : Infinity).map((notification) => (
           <div
             key={notification.id}
-            className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200"
+            className={`bg-gray-50 rounded-2xl  shadow-sm  p-${
+              !Nav ? 6 : navDimension.padding
+            } hover:shadow-md transition-shadow duration-200`}
           >
             {/* Subtitle */}
             {notification.subtitle && (
-              <div className="flex items-center justify-between mb-3">
+              <div
+                className={`flex items-center justify-between mb-${
+                  !Nav ? 3 : navDimension.margin
+                }`}
+              >
                 <p className="text-sm text-gray-500">{notification.subtitle}</p>
                 <span className="text-sm text-gray-400">
                   {notification.timestamp}
@@ -151,14 +178,16 @@ const NotificationPage = () => {
             )}
 
             {/* Notification Content */}
-            <div className="flex items-start gap-4">
+            <div
+              className={`flex items-start gap-${!Nav ? 4 : navDimension.gap}`}
+            >
               {getNotificationIcon(notification)}
 
               <div className="flex-1">
                 <h3
-                  className={`text-lg font-medium mb-1 ${getTitleColor(
-                    notification.type
-                  )}`}
+                  className={`text-${
+                    !Nav ? "lg" : navDimension.text
+                  } font-medium mb-1 ${getTitleColor(notification.type)}`}
                 >
                   {notification.title}
                 </h3>
@@ -169,7 +198,13 @@ const NotificationPage = () => {
                   </p>
                 )}
 
-                <p className="text-gray-700 leading-relaxed">
+                <p
+                  className={`text-gray-700 ${
+                    !Nav ? "leading-relaxed" : ""
+                  } text-${Nav ? "sm" : "lg"} line-clamp-${
+                    Nav ? 2 : Infinity
+                  } `}
+                >
                   {notification.description}
                 </p>
               </div>
@@ -183,6 +218,15 @@ const NotificationPage = () => {
           </div>
         ))}
       </div>
+
+      {Nav && (
+        <button
+          onClick={() => navigate("/notification-page")}
+          className="text-sm italic ml-auto mr-4 text-[#F89320]  hover:underline"
+        >
+          see detail...
+        </button>
+      )}
     </div>
   );
 };

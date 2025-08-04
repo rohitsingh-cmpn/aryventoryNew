@@ -9,7 +9,6 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useState, useMemo } from "react";
-import Navbar from "../components/Navbar";
 
 const Card = ({ children, className = "" }) => (
   <div
@@ -465,13 +464,7 @@ const OrderHistory = () => {
 
   return (
     <div className="bg-[#f7f8fa] w-full h-full ">
-      <Navbar
-        header="Order History"
-        searchVisible={true}
-        className="text-2xl font-bold"
-      />
       {/* Main Content */}
-
       <main className="flex-1 p-4 sm:p-6 lg:p-8">
         {/* Main Layout */}
         <div className="flex flex-col lg:flex-row gap-8 h-[calc(100vh-150px)]">
@@ -566,7 +559,6 @@ const OrderHistory = () => {
           </div>
         </div>
       </main>
-
       {/* Mobile Filter Modal */}
       {showMobileFilter && (
         <div className="lg:hidden fixed inset-0  backdrop-blur-sm bg-white/30 bg-opacity-60 z-500 flex items-end">
@@ -594,7 +586,6 @@ const OrderHistory = () => {
           </div>
         </div>
       )}
-
       {/* Inline Styles for Animations */}
       <style jsx global>{`
         @keyframes fadeInUp {

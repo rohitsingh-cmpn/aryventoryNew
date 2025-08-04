@@ -35,7 +35,7 @@ const RecyclePage = () => {
       deletedDate: "7/4/2025",
     },
     {
-      id: "3",
+      id: "4",
       name: "Motorola Edge 50 Pro 5G with 125W Charger...",
       image:
         "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
@@ -117,23 +117,7 @@ const RecyclePage = () => {
   return (
     <div className="flex-1 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="flex border-b p-2 items-center justify-between bg-white border-gray-200 ">
-        <h1 className="text-2xl font-semibold text-gray-900">
-          NextGen Electronics
-        </h1>
-        {/* searchbar */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 outline-none py-2  border border-gray-300 rounded-full focus:ring-2 focus:ring-orange-300 focus:border-transparent"
-          />
-        </div>
-      </div>
-
+      
       {/* Content */}
       <div>
         {/* header-2 */}

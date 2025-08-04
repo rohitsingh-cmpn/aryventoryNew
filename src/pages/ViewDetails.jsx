@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+
 import { useNavigate } from "react-router-dom";
 // import MyCart from "./MyCart"
 
@@ -23,20 +23,11 @@ const sideItem = [
   // { key: "Launch Date", value: "September 2025" },
 ];
 
-
 const ViewDetails = () => {
-
   const navigate = useNavigate();
-  
 
   return (
     <>
-      <Navbar
-        header="Product Details"
-        showBackButton
-        className="p-1"
-        onBack={()=> navigate("/my-cart")}
-      ></Navbar>
 
       <div className=" bg-gray-100 p-5 h-screen ">
         {/* Content container */}

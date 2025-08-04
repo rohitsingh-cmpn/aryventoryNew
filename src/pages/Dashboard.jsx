@@ -8,12 +8,9 @@ import {
 } from "react-icons/fa";
 import GraphWithSelect from "../components/GraphWithSelect"; // Assuming this is a separate component for the graph
 import SalesGraph from "../components/SalesGraph";
-import Navbar from "../components/Navbar";
-
-
 
 const StatCard = ({
-  icon, 
+  icon,
   label,
   value,
   bg = "bg-white",
@@ -25,7 +22,9 @@ const StatCard = ({
     <div className="flex justify-end text-xl mb-2">{icon}</div>
     <div>
       <span className="text-sm text-gray-600 ">{label}</span>
-      <span className={`text-2xl font-semibold block text-gray-700 ${textColor}`}>
+      <span
+        className={`text-2xl font-semibold block text-gray-700 ${textColor}`}
+      >
         {value}
       </span>
     </div>
@@ -58,11 +57,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar
-        header="NextGen Electronics"
-        
-        className="font-bold py-1 text-2xl "
-      ></Navbar>
       <div className="min-h-screen bg-gray-100 p-4 flex flex-col gap-4">
         {/* Top Stats - grid 4 columns on lg+ */}
         <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 text-orange-500">

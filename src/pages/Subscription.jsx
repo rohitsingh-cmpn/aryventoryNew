@@ -293,11 +293,6 @@ export default function Subscription() {
 
  return (
    <>
-     <Navbar
-       header="Subscription Plan"
-       
-       className="font-bold py-2 text-2xl "
-     ></Navbar>
 
      <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-2">
        <section className="mx-5  px-4 sm:px-6 lg:px-8">

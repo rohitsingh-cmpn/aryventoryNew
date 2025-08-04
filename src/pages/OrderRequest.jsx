@@ -559,9 +559,9 @@ const OrderRequest = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh-65px)] overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
-        <main className=" p-4 flex flex-col flex-1 ">
+        <main className=" p-4  flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
             <div className="hidden lg:block w-1/5 h-full">
@@ -694,7 +694,7 @@ const OrderRequest = () => {
             </div>
 
             {/* Products Container */}
-            <div className="flex-1">
+            <div className="flex-1 h-full">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex flex-row justify-between items-center sm:items-center">
                   <h1 className="mr-5 font-['Montserrat',Helvetica] text-2xl text-black ">
@@ -804,7 +804,6 @@ const OrderRequest = () => {
             </div>
           </div>
         </main>
-
         {/* Mobile Filter Modal */}
         {showMobileFilter && (
           <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">

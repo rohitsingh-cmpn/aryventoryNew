@@ -14,6 +14,7 @@ import { sidebarRoutes } from "./routes/route";
 // Auth Pages
 import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
+import Navbar from "./components/Navbar";
 
 
 
@@ -21,7 +22,11 @@ import SignUp from "./login/SignUp";
 const LayoutWithSidebar = ({ children }) => (
   <div className="flex h-screen">
     <Sidebar />
-    <div className="flex-1 overflow-y-auto">{children}</div>
+    <div className="flex flex-col w-full">
+      <Navbar />
+      <div className="flex-1 overflow-y-auto">{children}</div>
+    </div>
+    
   </div>
 );
 

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 const sideItem = [
   {
@@ -30,7 +31,7 @@ const sideItem = [
 const MyCart = () => {
   return (
     <>
-      <div className="  p-6 bg-gray-100 min-h-screen ">
+      <div className="  p-6 bg-gray-100 h-screen ">
         <h1 className="text-2xl font-semibold mb-4">My Cart</h1>
         {/* table header */}
         <div className="bg-white rounded-2xl shadow p-4">

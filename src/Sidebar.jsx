@@ -47,7 +47,7 @@ const Sidebar = () => {
   }
   return (
     <div
-      className={`  p-2  min-h-screen  transition-all duration-300 ease-in-out 
+      className={` z-50 p-2  min-h-screen  transition-all duration-300 ease-in-out 
           ${isOpened ? " w-68 " : " w-22 translate-x-0"}`}
     >
       <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 shadow-lg flex flex-col justify-between">

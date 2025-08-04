@@ -8,7 +8,7 @@ const SidebarItem = ({ icon, label, route, isopen }) => {
   return (
     <Link
       to={route}
-      className={`flex items-center gap-3 px-3 py-2 rounded-lg 
+      className={`flex relative items-center gap-3 px-3 py-2 rounded-lg group
         ${
           isActive
             ? "bg-white text-orange-500 font-semibold"
@@ -16,8 +16,17 @@ const SidebarItem = ({ icon, label, route, isopen }) => {
         }
       `}
     >
-      <span className="text-lg  ">{icon}</span>
-      {isopen && <span className="text-nowrap overflow-hidden ">{label}</span>}
+      <span>{icon}</span>
+
+      {/* Floating label on hover */}
+      {isopen && <div className={`absolute left-16 z-50 px-4 py-1 rounded-2xl bg-[#F89320] text-white text-lg whitespace-nowrap transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100  `}>
+        {label}
+      </div>}
+
+      {/* Always shown if sidebar is open */}
+      { (
+        <span className="whitespace-nowrap overflow-hidden">{label}</span>
+      )}
     </Link>
   );
 };

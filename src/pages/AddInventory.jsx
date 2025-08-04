@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+
 import AddInventoryForm from "../components/AddInventoryForm";
 import AddBrandModal from "../components/AddBrandModal";
 import AddCategoryModal from "../components/AddCategoryModal";
@@ -62,7 +62,7 @@ const AddInventory = () => {
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const categories = [         
+  const categories = [
     "Mobile",
     "Watch",
     "Tablet",
@@ -141,10 +141,10 @@ const AddInventory = () => {
     setIsAddCategoryModalOpen(false);
   };
 
-  const onReset = ()=>{
+  const onReset = () => {
     setCurrentStep("category");
-  }
-  
+  };
+
   const handleBack = () => {
     console.log("rohit");
     if (currentStep === "category") {
@@ -171,13 +171,7 @@ const AddInventory = () => {
   return (
     <div className="flex flex-1/2">
       <div className="min-h-screen bg-gray-100 p-2 lg:p-4">
-        <Navbar
-          header={getStepTitle()}
-          searchVisible={false}
-          className="font-bold text-xl lg:text-2xl"
-          onBack={() => handleBack()}
-          showBackButton={1}
-        />
+        
 
         {/* Step Views */}
         {currentStep === "category" && (
