@@ -27,23 +27,30 @@ function App() {
     },
     {
       id: 2,
-      name: "John Doe",
+      name: "Albert Einstein",
       contact: "8546735498",
       avatar: "J",
       color: "bg-yellow-500",
     },
     {
       id: 3,
-      name: "John Doe",
+      name: "Abdur Rashid",
       contact: "8546735498",
       avatar: "J",
       color: "bg-blue-500",
     },
     {
       id: 4,
-      name: "John Doe",
+      name: "Rohit Singh",
       contact: "8546735498",
       avatar: "J",
+      color: "bg-indigo-500",
+    },
+    {
+      id: 5,
+      name: "Rashid Shaikh",
+      contact: "8546735498",
+      avatar: "R",
       color: "bg-indigo-500",
     },
   ]);

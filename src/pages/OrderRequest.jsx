@@ -702,7 +702,7 @@ const OrderRequest = () => {
                   </h1>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-2">
+                <div className="hidden sm:flex items-center gap-2">  
                   <div className="relative">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
@@ -806,7 +806,7 @@ const OrderRequest = () => {
         </main>
         {/* Mobile Filter Modal */}
         {showMobileFilter && (
-          <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+          <div className="lg:hidden fixed inset-0  backdrop-blur-sm  bg-opacity-50 z-50 flex items-end">
             <div className="bg-white w-full max-h-[85vh] rounded-t-xl transform transition-transform duration-300 ease-out animate-slide-up">
               <div className="p-4 border-b">
                 <div className="flex justify-between items-center">

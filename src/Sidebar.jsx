@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import {
-  MdMenu,
   MdOutlineInventory,
   MdOutlineAutoGraph,
   MdOutlineSettings,
 } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
-
 import {
   FaHome,
   FaTruck,
@@ -17,9 +15,7 @@ import {
   FaBox,
   FaCreditCard,
   FaTrash,
-  FaCogs,
-  FaBars
-  
+  FaBars,
 } from "react-icons/fa";
 
 import SidebarItem from "./SidebarItem";
@@ -34,52 +30,48 @@ const sideItem = [
   { icon: <FaBox />, label: "Delivery Status", route: "/delivery-status" },
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
-
   { icon: <MdOutlineInventory />, label: "Inventory", route: "/inventory" },
   { icon: <MdOutlineAutoGraph />, label: "Sales", route: "/sales" },
   { icon: <TbReportSearch />, label: "Reports", route: "/reports" },
 ];
 
-const Sidebar = () => {
-  const [isOpened, setOpened] = useState(false);
-  function handleOpen() {
-    setOpened(!isOpened);
-  }
+const Sidebar = ({ isSidebarOpen }) => {
+  const [isShrinked, setShrinked] = useState(false);
+
+  const shrinkWidth = isShrinked ? "w-22" : "w-68";
+
+
   return (
     <div
-      className={` z-50 p-2  min-h-screen  transition-all duration-300 ease-in-out 
-          ${isOpened ? " w-68 " : " w-22 translate-x-0"}`}
+      className={`
+    fixed md:static z-9 inset-y-0 left-0 bg-white transform transition-transform duration-300 ease-in-out
+    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+    ${isShrinked ? "w-22" : "w-68"}
+    p-2 h-screen
+  `}
     >
       <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 shadow-lg flex flex-col justify-between">
         <div>
-          {/* Logo and title */}
-          <div className="flex  items-center gap-3 h-14 mb-6">
+          {/* Top Logo */}
+          <div className="flex items-center gap-3 h-14 mb-6">
             <img
               src="https://t4.ftcdn.net/jpg/01/57/11/07/360_F_157110702_EKlFgF7zUdhSCYsOQ3XhtAH3re9lmK7q.jpg"
               alt="Profile"
-              className="w-10 h-10 rounded-full  border border-white"
+              className="w-10 h-10 rounded-full border border-white"
             />
-            <div className={` overflow-hidden `}>
-              <div className="font-bold text-lg whitespace-nowrap">
-                JK Paradise
+            {!isShrinked && (
+              <div>
+                <div className="font-bold text-lg whitespace-nowrap">
+                  JK Paradise
+                </div>
+                <span className="text-sm text-white/80">ShopKeeper</span>
               </div>
-              <span className="text-s text-white ">
-                <i>ShopKeeper</i>
-              </span>
-            </div>
+            )}
           </div>
 
-          {/* Menu header */}
-          {/* <div
-            className="flex items-center gap-2 mb-3 bg-orange-300 px-3  py-2 rounded-lg cursor-pointer"
-            
-          >
-            <MdMenu className="ml-"/>
-
-            {0 && <span className="overflow-hidden">Menu</span>}
-          </div> */}
-          <div onClick={handleOpen}>
-            <SidebarItem icon={<FaBars />} label="Menu" isopen={1} />
+          {/* Shrink Toggle */}
+          <div onClick={() => setShrinked(!isShrinked)}>
+            <SidebarItem icon={<FaBars />} label="Menu" isopen={!isShrinked} />
           </div>
 
           <div className="py-2">
@@ -89,31 +81,32 @@ const Sidebar = () => {
           {/* Sidebar Items */}
           <div className="flex flex-col gap-2 text-lg">
             {sideItem.map((item, i) => (
-              <SidebarItem key={i} {...item} isopen={1} />
+              <SidebarItem key={i} {...item} isopen={!isShrinked} />
             ))}
           </div>
         </div>
 
-        {/* Bottom profile */}
+        {/* Bottom Settings/Profile */}
         <div className="mt-4 flex-col text-lg flex gap-2">
           <SidebarItem
             icon={<MdOutlineSettings />}
             label="Settings"
             route="/settings"
-            isopen={1}
+            isopen={!isShrinked}
           />
 
           <div className="flex h-14 gap-2 items-center">
-            {" "}
             <img
               src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            <div className={` overflow-hidden h-14`}>
-              <div className="font-bold text-lg ">Aryventory</div>
-              <span className="text-xs text-white/80">Version 1.3.1</span>
-            </div>
+            {!isShrinked && (
+              <div>
+                <div className="font-bold text-lg">Aryventory</div>
+                <span className="text-xs text-white/80">Version 1.3.1</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

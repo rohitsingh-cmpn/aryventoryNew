@@ -1,5 +1,6 @@
 // route.js
 import Dashboard from "../pages/Dashboard";
+import Component from "../pages/Dashboardcopy";
 import Suppliers from "../pages/Suppliers";
 import MyCart from "../pages/MyCart";
 
@@ -18,6 +19,7 @@ import NotificationPage from "../pages/NotificationPage";
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
+  { path: "/dashboardc", element: <Component /> },
   { path: "/suppliers", element: <Suppliers /> },
   { path: "/my-cart", element: <MyCart /> },
   { path: "/order-history", element: <OrderHistory /> },
