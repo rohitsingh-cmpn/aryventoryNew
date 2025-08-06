@@ -15,7 +15,9 @@ import OrderRequest from "../pages/OrderRequest";
 import Inventory from "../pages/InventoryPage";
 import AddInventory from "../pages/AddInventory";
 import NotificationPage from "../pages/NotificationPage";
-  
+import Reports from "../pages/Reports";
+import OraganizationPage from "../pages/OraganizationPage";
+import EmployeeDetails from "../pages/EmployeeDetails";
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -33,5 +35,7 @@ export const sidebarRoutes = [
   { path: "/inventory", element: <Inventory /> },
   { path: "/notification-page", element: <NotificationPage /> },
   { path: "/buy-products", element: <BuyProducts /> },
-
+  { path: "/reports", element: <Reports /> },
+  { path: "/OraganizationPage", element: <OraganizationPage /> },
+  { path: "/EmployeeDetails", element: <EmployeeDetails /> },
 ];

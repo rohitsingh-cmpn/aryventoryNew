@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
 import NotificationPage from "../pages/NotificationPage";
+
 
 const Navbar = ({
   header,
@@ -37,9 +41,22 @@ const Navbar = ({
           </button>
 
           {/* Brand name */}
-          <h1 className={`text-gray-800 text-2xl font-bold ${className}`}>
-            NextGen Electronics
-          </h1>
+          <div className="flex items-end">
+            {" "}
+            <div>
+              <h1 className={`text-gray-800 text-2xl font-bold ${className}`}>
+                NextGen Electronics
+              </h1>
+            </div>
+            <div className="text-gray-600 p-1 hover:bg-gray-100 text-sm">
+              {" "}
+              <FontAwesomeIcon
+                className="text-xl  hover:bg-gray-100"
+                icon={faChevronDown}
+                onClick={() => navigate("/OraganizationPage")}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Notification Icon */}

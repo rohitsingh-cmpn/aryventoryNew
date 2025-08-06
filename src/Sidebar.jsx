@@ -33,13 +33,17 @@ const sideItem = [
   { icon: <MdOutlineInventory />, label: "Inventory", route: "/inventory" },
   { icon: <MdOutlineAutoGraph />, label: "Sales", route: "/sales" },
   { icon: <TbReportSearch />, label: "Reports", route: "/reports" },
+  {
+    icon: <TbReportSearch />,
+    label: "OraganizationPage",
+    route: "/OraganizationPage",
+  },
 ];
 
 const Sidebar = ({ isSidebarOpen }) => {
   const [isShrinked, setShrinked] = useState(false);
 
   const shrinkWidth = isShrinked ? "w-22" : "w-68";
-
 
   return (
     <div
