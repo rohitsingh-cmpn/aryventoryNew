@@ -15,13 +15,12 @@ import {
   ArrowLeft,
   ChevronDown,
   ChevronUp,
-  FilterIcon,
   User,
   Search,
   Plus,
 } from "lucide-react";
 import { useMemo } from "react";
-
+import FilterSection from "../components/FilterSidebar";
 
 export default function DeliveryStatus() {
   const [expandedSections, setExpandedSections] = useState({
@@ -69,7 +68,7 @@ export default function DeliveryStatus() {
     setSearchTerm("");
   };
 
-  const applyFilters = () => { 
+  const applyFilters = () => {
     console.log("Applied filters:", {
       category: selectedCategory,
       brands: selectedBrands,
@@ -356,13 +355,31 @@ export default function DeliveryStatus() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col bg-black-50">
+    <div className="h-screen overflow-hidden flex flex-col bg-gray-50">
       {/* Fixed Navbar */}
+      <div className="w-full shadow h-16 flex items-center px-6 bg-white z-10">
+        <div className="relative">
+          <Search
+            size={20}
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F89320] focus:border-[#F89320]"
+          />
+        </div>
+      </div>
 
       {/* Body Layout */}
       <div className="flex flex-1 p-4 overflow-hidden">
-        {/* Sidebar Filter Section (fixed) */}
-        <div className="w-[20%] min-w-[250px] bg-white border-r border-gray-200 p-4 h-[calc(100vh-64px)] sticky top-16 overflow-y-auto">
+        {/* Sidebar Filter Section (not fixed) */}
+        <div>
+          <FilterSection></FilterSection>
+        </div>
+        <div className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
           {/* Filters Header */}
           <div className="p-2">
             <h2 className="text-2xl font-medium text-gray-800">Filters</h2>
@@ -562,57 +579,33 @@ export default function DeliveryStatus() {
         </div>
 
         {/* Scrollable Main Content */}
-        <div className="flex-1  bg-gray-50">
+        <div className="flex-1 overflow-y-auto bg-gray-50">
           {/* Sticky Header */}
-          <div className=" sticky top-0 z-20 bg-white border-b border-gray-200 p-4">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              {/* Title */}
+          <div className="bg-white border-b border-gray-200 p-6 sticky top-0 z-10">
+            <div className="flex items-center justify-between">
               <h1 className="text-2xl font-semibold text-gray-900">
                 Inventory
               </h1>
-
-              {/* Right-side Controls */}
-              <div className="flex flex-wrap items-center gap-4">
-                {/* Search */}
-                <div className="relative flex-1 w-auto">
-                  <Search
-                    size={20}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F89320] focus:border-[#F89320] outline-none"
-                  />
-                </div>
-                {/* handle Mobile Filter Toggle */}
-                <div className="lg:hidden flex justify-end">
-                  <button
-                    onClick={() => console.log("Filter clicked")}
-                    className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                  >
-                    <FilterIcon className="w-4 h-4 mr-2" />
-                    Filter
-                  </button>
-                </div>
-                {/* Add Inventory Button */}
+              <div className="flex items-center space-x-4">
                 <button
-                  className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors whitespace-nowrap"
+                  className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors"
                   onClick={() => navigate("/addinventory")}
                 >
                   <Plus size={20} />
                   <span>Add Inventory</span>
                 </button>
-
-              
+                <div
+                  className="w-10 h-10 bg-[#F89320] rounded-full flex items-center text-white text-2xl justify-center"
+                  onClick={() => navigate("/notification-page")}
+                >
+                  <IoIosNotificationsOutline />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Products Grid */}
-          <div className="p-6  overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-[calc(100vh-200px)]">
+          <div className="p-6">
             <div className="grid grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
                 <div

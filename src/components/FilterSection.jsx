@@ -1,31 +1,69 @@
-{
-  /* filter section */
-}
-const FilterSideBar = ({
-  expandedSections,
-  toggleSection,
-  categories,
-  selectedCategory,
-  setSelectedCategory,
-  brands,
-  selectedBrands,
-  toggleBrand,
-  priceRange,
-  setPriceRange,
-  colors,
-  selectedColors,
-  toggleColor,
-  resetFilters,
-  applyFilters,
+import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+
+const CustomFilter = ({
+  categories = ["Mobile", "Headset", "Charger", "Power Bank", "Mobile Cover"],
+  brands = ["Apple", "Samsung", "Sony", "JBL", "Anker", "OnePlus"],
+  colors = ["Black", "White", "Blue", "Red", "Silver", "Gold"],
+  onApply,
+  onReset,
 }) => {
+  const [expandedSections, setExpandedSections] = useState({
+    categories: true,
+    brands: true,
+    priceRange: true,
+    colors: true,
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [priceRange, setPriceRange] = useState({ min: "", max: "", slider: 0 });
+  const [selectedColors, setSelectedColors] = useState([]);
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const toggleBrand = (brand) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
+
+  const toggleColor = (color) => {
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+    );
+  };
+
+  const resetFilters = () => {
+    setSelectedCategory(null);
+    setSelectedBrands([]);
+    setPriceRange({ min: "", max: "", slider: 0 });
+    setSelectedColors([]);
+    onReset && onReset();
+  };
+
+  const applyFilters = () => {
+    onApply &&
+      onApply({
+        category: selectedCategory,
+        brands: selectedBrands,
+        price: priceRange,
+        colors: selectedColors,
+      });
+  };
+
   return (
-    <div className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
-      {/* Filters Header */}
+    <div className="w-[20%] min-w-[250px] bg-white border-r border-gray-200 p-4 h-[calc(100vh-64px)] sticky top-16 overflow-y-auto">
       <div className="p-2">
         <h2 className="text-2xl font-medium text-gray-800">Filters</h2>
         <div className="border-b border-gray-200 mb-3" />
 
-        {/* Categories Section */}
+        {/* Categories */}
         <div className="mb-8">
           <button
             onClick={() => toggleSection("categories")}
@@ -62,7 +100,7 @@ const FilterSideBar = ({
           )}
         </div>
 
-        {/* Brands Section */}
+        {/* Brands */}
         <div className="mb-8">
           <button
             onClick={() => toggleSection("brands")}
@@ -92,7 +130,7 @@ const FilterSideBar = ({
           )}
         </div>
 
-        {/* Price Range Section */}
+        {/* Price Range */}
         <div className="mb-8">
           <button
             onClick={() => toggleSection("priceRange")}
@@ -151,7 +189,7 @@ const FilterSideBar = ({
           )}
         </div>
 
-        {/* Colors Section */}
+        {/* Colors */}
         <div className="mb-8">
           <button
             onClick={() => toggleSection("colors")}
@@ -194,7 +232,7 @@ const FilterSideBar = ({
           )}
         </div>
 
-        {/* Bottom Buttons */}
+        {/* Actions */}
         <div className="mt-8">
           <div className="flex space-x-3">
             <button
@@ -207,7 +245,7 @@ const FilterSideBar = ({
               onClick={applyFilters}
               className="flex-1 px-4 py-3 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 font-medium transition-colors"
             >
-             
+              Apply
             </button>
           </div>
         </div>
@@ -216,4 +254,4 @@ const FilterSideBar = ({
   );
 };
 
-export default FilterSideBar;
+export default CustomFilter;

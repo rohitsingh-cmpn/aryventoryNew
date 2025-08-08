@@ -316,7 +316,7 @@ const ProductCardList = memo(
   }
 );
 
-const OrderRequest = () => {
+const LowQuantityProducts = () => {
   const [filters, setFilters] = useState({
     category: null,
     brand: null,
@@ -559,12 +559,12 @@ const OrderRequest = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-full overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
         <main className=" p-4  flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
-            <div className="hidden min-w-[250px] lg:block w-1/5">
+            <div className="hidden lg:block w-1/5 h-full">
               <Card className="h-full rounded-xl shadow-lg border-0 flex flex-col sticky top-6">
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="mb-2">
@@ -702,8 +702,7 @@ const OrderRequest = () => {
                   </h1>
                 </div>
 
-                <div className="flex sm:flex items-center gap-2">
-                  {/* Search Bar */}
+                <div className="hidden sm:flex items-center gap-2">  
                   <div className="relative">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
@@ -712,16 +711,6 @@ const OrderRequest = () => {
                       onChange={handleSearchChange}
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
-                  </div>
-                  {/* handle Mobile Filter Toggle */}
-                  <div className="lg:hidden flex justify-end">
-                    <Button
-                      onClick={handleMobileFilterToggle}
-                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                    >
-                      <FilterIcon className="w-4 h-4 mr-2" />
-                      Filter
-                    </Button>
                   </div>
                   <Button
                     variant={viewMode === "grid" ? "default" : "outline"}
@@ -735,7 +724,6 @@ const OrderRequest = () => {
                   >
                     <GridIcon className="w-4 h-4" />
                   </Button>
-
                   <Button
                     variant={viewMode === "list" ? "default" : "outline"}
                     size="sm"
@@ -751,10 +739,19 @@ const OrderRequest = () => {
                 </div>
               </div>
 
-              {/* Products */}
+              <div className="lg:hidden mb-4 flex justify-end">
+                <Button
+                  onClick={handleMobileFilterToggle}
+                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                >
+                  <FilterIcon className="w-4 h-4 mr-2" />
+                  Filter
+                </Button>
+              </div>
+
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
@@ -1018,4 +1015,4 @@ const OrderRequest = () => {
   );
 };
 
-export default OrderRequest;
+export default LowQuantityProducts;

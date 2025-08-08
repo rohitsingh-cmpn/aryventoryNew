@@ -57,9 +57,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 p-4 flex flex-col gap-4">
+      <div className="h-[calc(100vh-65px)] overflow-y-auto bg-gray-100  p-4 flex flex-col gap-4">
         {/* Top Stats - grid 4 columns on lg+ */}
-        <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 text-orange-500">
+        <div className="grid bg-gray-100 grid-cols-2  lg:grid-cols-4 gap-4 text-orange-500">
           <StatCard icon={<FaGift />} label="Total Orders Today" value="₹150" />
           <StatCard
             icon={<FaShoppingBag />}
@@ -83,7 +83,7 @@ const Dashboard = () => {
         </div>
 
         {/* Chart + Right Cards */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:grid lg:grid-cols-4">
+        <div className="flex bg-gray-100  flex-col lg:flex-row gap-4 lg:grid lg:grid-cols-4">
           {/* Chart Container */}
           <SalesGraph />
 
@@ -107,7 +107,7 @@ const Dashboard = () => {
 
         {/* Bottom Section - Recent Activity */}
 
-        <div className="flex flex-col lg:flex-row  rounded-xl   lg:grid lg:grid-cols-20  ">
+        <div className="flex bg-gray-100  flex-col lg:flex-row  rounded-xl   lg:grid lg:grid-cols-20  ">
           <div className=" grid grid-cols-2  lg:col-span-5 gap-4 lg:grid-cols-1">
             <StatCard
               icon={<FaRegClock />}

@@ -18,6 +18,7 @@ import NotificationPage from "../pages/NotificationPage";
 import Reports from "../pages/Reports";
 import OraganizationPage from "../pages/OraganizationPage";
 import EmployeeDetails from "../pages/EmployeeDetails";
+import Sales from "../pages/Sales";
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -38,4 +39,5 @@ export const sidebarRoutes = [
   { path: "/reports", element: <Reports /> },
   { path: "/OraganizationPage", element: <OraganizationPage /> },
   { path: "/EmployeeDetails", element: <EmployeeDetails /> },
+  { path: "/sales", element: <Sales /> },
 ];

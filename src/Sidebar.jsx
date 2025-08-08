@@ -33,6 +33,7 @@ const sideItem = [
   { icon: <MdOutlineInventory />, label: "Inventory", route: "/inventory" },
   { icon: <MdOutlineAutoGraph />, label: "Sales", route: "/sales" },
   { icon: <TbReportSearch />, label: "Reports", route: "/reports" },
+  
   {
     icon: <TbReportSearch />,
     label: "OraganizationPage",
@@ -48,8 +49,8 @@ const Sidebar = ({ isSidebarOpen }) => {
   return (
     <div
       className={`
-    fixed md:static z-9 inset-y-0 left-0 bg-white transform transition-transform duration-300 ease-in-out
-    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+    fixed lg:static z-9 inset-y-0 left-0 bg-white transform transition-transform duration-300 ease-in-out
+    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
     ${isShrinked ? "w-22" : "w-68"}
     p-2 h-screen
   `}

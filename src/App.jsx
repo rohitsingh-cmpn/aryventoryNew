@@ -35,7 +35,7 @@ const LayoutWithSidebar = ({ children }) => {
       {/* Overlay for mobile */}
       {isSidebarOpen && (
         <div
-          className=" inset-0  bg-opacity-30 z-30 md:hidden"
+          className=" inset-0  bg-opacity-30 z-30 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}

@@ -53,7 +53,7 @@ const SalesGraph = () => {
             <select
               value={range}
               onChange={(e) => setRange(e.target.value)}
-              className="bg-[#F89320] text-white text-sm px-3 py-2 rounded-md hover:bg-orange-300 appearance-none focus:outline-none pr-8"
+              className="bg-[#F89320] text-white text-sm px-3 py-2 rounded-md  appearance-none focus:outline-none pr-8"
             >
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>

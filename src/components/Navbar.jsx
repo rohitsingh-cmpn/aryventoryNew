@@ -35,7 +35,7 @@ const Navbar = ({
           {/* Hamburger icon - only on mobile */}
           <button
             onClick={onToggleSidebar}
-            className="p-2 md:hidden text-gray-700 hover:bg-gray-100 rounded"
+            className="p-2 lg:hidden text-gray-700 hover:bg-gray-100 rounded"
           >
             <FaBars className="text-xl" />
           </button>
