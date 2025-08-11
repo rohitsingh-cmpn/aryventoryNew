@@ -105,7 +105,7 @@ const DateRangeSelector = () => {
         </button>
 
         {showDateDropdown && (
-          <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-10 min-w-48">
+          <div className="absolute  top-full left-0 mt-2  rounded-lg shadow-lg border border-gray-200 z-10 min-w-48">
             {dateOptions.map((option, index) => (
               <button
                 key={index}
@@ -121,8 +121,8 @@ const DateRangeSelector = () => {
 
       {/* Date Range Display */}
       {(selectedStartDate || selectedEndDate) && !showDatePicker && (
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mt-6">
-          <h3 className="text-lg font-medium mb-4">Selected Date Range</h3>
+        <div className="bg-white absolute right-6  rounded-lg p-2  shadow-sm border border-gray-200">
+          {/* <h3 className="font-medium ">Selected Date Range</h3> */}
           <div className="flex items-center gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">

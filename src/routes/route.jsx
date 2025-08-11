@@ -12,6 +12,7 @@ import RecycleBin from "../pages/RecycleBin";
 import Settings from "../pages/Settings";
 import ViewDetails from "../pages/ViewDetails";
 import OrderRequest from "../pages/OrderRequest";
+import Page from "../components/dummy";
 import Inventory from "../pages/InventoryPage";
 import AddInventory from "../pages/AddInventory";
 import NotificationPage from "../pages/NotificationPage";
@@ -24,6 +25,7 @@ export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/dashboardc", element: <Component /> },
   { path: "/suppliers", element: <Suppliers /> },
+  { path: "/dummy", element: <Page /> },
   { path: "/my-cart", element: <MyCart /> },
   { path: "/order-history", element: <OrderHistory /> },
   { path: "/order-request", element: <OrderRequest /> },

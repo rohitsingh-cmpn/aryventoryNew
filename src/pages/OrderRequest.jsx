@@ -9,6 +9,7 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useCallback, memo } from "react";
+import { FaArrowRight } from "react-icons/fa";
 
 const Card = memo(({ children, className = "" }) => (
   <div
@@ -187,22 +188,10 @@ const ProductCard = memo(({ product, viewMode, onAccept, onReject }) => {
           size="sm"
           className="flex-1/2 bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105 text-xs"
         >
-          View
+          View Product  
+          <FaArrowRight/>
         </Button>
-        <Button
-          size="sm"
-          onClick={handleAccept}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white transition-all duration-200 transform hover:scale-105 text-xs"
-        >
-          Accept
-        </Button>
-        <Button
-          size="sm"
-          onClick={handleReject}
-          className="flex-1 bg-red-600 hover:bg-red-700 text-white transition-all duration-200 transform hover:scale-105 text-xs"
-        >
-          Reject
-        </Button>
+        
       </div>
     </>
   );
@@ -538,14 +527,6 @@ const OrderRequest = () => {
     }));
   }, []);
 
-  const handleAcceptProduct = useCallback((productId) => {
-    console.log(`Accepted product ${productId}`);
-  }, []);
-
-  const handleRejectProduct = useCallback((productId) => {
-    console.log(`Rejected product ${productId}`);
-  }, []);
-
   const handleSearchChange = useCallback((e) => {
     setSearchQuery(e.target.value);
   }, []);
@@ -559,12 +540,12 @@ const OrderRequest = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-full overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-65px)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
-        <main className=" p-4  flex flex-col flex-1 ">
+        <main className=" p-4 flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
-            <div className="hidden min-w-[250px] lg:block w-1/5">
+            <div className="hidden lg:block w-1/5 h-full">
               <Card className="h-full rounded-xl shadow-lg border-0 flex flex-col sticky top-6">
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="mb-2">
@@ -694,7 +675,7 @@ const OrderRequest = () => {
             </div>
 
             {/* Products Container */}
-            <div className="flex-1 h-full">
+            <div className="flex-1">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex flex-row justify-between items-center sm:items-center">
                   <h1 className="mr-5 font-['Montserrat',Helvetica] text-2xl text-black ">
@@ -702,8 +683,7 @@ const OrderRequest = () => {
                   </h1>
                 </div>
 
-                <div className="flex sm:flex items-center gap-2">
-                  {/* Search Bar */}
+                <div className="hidden sm:flex items-center gap-2">
                   <div className="relative">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
@@ -712,16 +692,6 @@ const OrderRequest = () => {
                       onChange={handleSearchChange}
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
-                  </div>
-                  {/* handle Mobile Filter Toggle */}
-                  <div className="lg:hidden flex justify-end">
-                    <Button
-                      onClick={handleMobileFilterToggle}
-                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                    >
-                      <FilterIcon className="w-4 h-4 mr-2" />
-                      Filter
-                    </Button>
                   </div>
                   <Button
                     variant={viewMode === "grid" ? "default" : "outline"}
@@ -735,7 +705,6 @@ const OrderRequest = () => {
                   >
                     <GridIcon className="w-4 h-4" />
                   </Button>
-
                   <Button
                     variant={viewMode === "list" ? "default" : "outline"}
                     size="sm"
@@ -751,10 +720,19 @@ const OrderRequest = () => {
                 </div>
               </div>
 
-              {/* Products */}
+              <div className="lg:hidden mb-4 flex justify-end">
+                <Button
+                  onClick={handleMobileFilterToggle}
+                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                >
+                  <FilterIcon className="w-4 h-4 mr-2" />
+                  Filter
+                </Button>
+              </div>
+
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
@@ -778,14 +756,12 @@ const OrderRequest = () => {
                         <ProductCard
                           product={product}
                           viewMode={viewMode}
-                          onAccept={handleAcceptProduct}
-                          onReject={handleRejectProduct}
+                         
                         />
                       ) : (
                         <ProductCardList
                           product={product}
-                          onAccept={handleAcceptProduct}
-                          onReject={handleRejectProduct}
+                        
                           brandOptions={brandOptions}
                           categoryOptions={categoryOptions}
                         />
@@ -807,9 +783,10 @@ const OrderRequest = () => {
             </div>
           </div>
         </main>
+
         {/* Mobile Filter Modal */}
         {showMobileFilter && (
-          <div className="lg:hidden fixed inset-0  backdrop-blur-sm  bg-opacity-50 z-50 flex items-end">
+          <div className="lg:hidden fixed inset-0 bg-black/30 bg-opacity-50 z-50 flex items-end">
             <div className="bg-white w-full max-h-[85vh] rounded-t-xl transform transition-transform duration-300 ease-out animate-slide-up">
               <div className="p-4 border-b">
                 <div className="flex justify-between items-center">

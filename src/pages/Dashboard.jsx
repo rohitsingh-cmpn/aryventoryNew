@@ -19,9 +19,9 @@ const StatCard = ({
   <div
     className={`flex flex-col ${bg} p-5 2xl:p-10 rounded-2xl w-full shadow-sm lg:h-[200px] justify-between `}
   >
-    <div className="flex justify-end text-xl mb-2">{icon}</div>
+    <div className="flex justify-end text-4xl mb-2">{icon}</div>
     <div>
-      <span className="text-sm text-gray-600 ">{label}</span>
+      <span className="text-xl lg:text-2xl text-gray-600 ">{label}</span>
       <span
         className={`text-2xl font-semibold block text-gray-700 ${textColor}`}
       >
@@ -61,24 +61,16 @@ const Dashboard = () => {
         {/* Top Stats - grid 4 columns on lg+ */}
         <div className="grid bg-gray-100 grid-cols-2  lg:grid-cols-4 gap-4 text-orange-500">
           <StatCard icon={<FaGift />} label="Total Orders Today" value="₹150" />
-          <StatCard
-            icon={<FaShoppingBag />}
-            label="Out of Stock"
-            value="₹60"
-            bg="bg-violet-200"
-          />
+          <StatCard icon={<FaShoppingBag />} label="Out of Stock" value="₹60" />
           <StatCard
             icon={<FaMoneyBillWave />}
             label="Low Quantity Products"
             value="₹80"
-            bg="bg-green-200"
           />
           <StatCard
             icon={<FaTimes />}
             label="Total Orders in Current Month"
             value="₹60"
-            bg="bg-red-200"
-            textColor="text-red-600"
           />
         </div>
 

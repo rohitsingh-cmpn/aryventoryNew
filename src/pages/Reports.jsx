@@ -115,7 +115,7 @@ function Reports() {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl  font-bold text-gray-900">Reports</h2>
 
-          <div className="flex items-center space-x-3">
+          <div className=" flex items-center space-x-3">
             {/* Report Format Dropdown */}
             <div className="relative">
               <button
@@ -148,7 +148,7 @@ function Reports() {
             </div>
 
             {/* Date Picker */}
-            <div>
+            <div className="">
               <DateRangeSelector />
             </div>
           </div>

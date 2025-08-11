@@ -45,7 +45,7 @@ const GraphWithSelect = () => {
   const [range, setRange] = useState("daily");
 
   return (
-    <div className="w-full py-6 items-center max-w-4xl justify-between mx-auto">
+    <div className="w-full py-6  justify-between mx-auto">
       <div className="flex justify-between items-center pl-4 pr-1 mb-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-800">
