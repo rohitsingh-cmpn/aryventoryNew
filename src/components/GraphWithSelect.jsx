@@ -45,13 +45,13 @@ const GraphWithSelect = () => {
   const [range, setRange] = useState("daily");
 
   return (
-    <div className="w-full py-6  justify-between mx-auto">
+    <div className="w-full  mx-auto">
       <div className="flex justify-between items-center pl-4 pr-1 mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">
+          <h2 className=" sm:text-lg font-semibold text-gray-800">
             Employee Overview
           </h2>
-          <p className="text-sm text-gray-500">May 25, 2025 - Jun 25, 2025</p>
+          <p className="text-sm hidden sm:block text-gray-500">May 25, 2025 - Jun 25, 2025</p>
         </div>
         <div className="flex items-center gap-4">
           <button className="flex items-center gap-1 bg-[#F89320] text-white text-sm px-3 py-2 rounded-md hover:bg-orange-300">
@@ -77,12 +77,12 @@ const GraphWithSelect = () => {
           </div>
         </div>
       </div>
-       <div className="mt-10">
-        <ResponsiveContainer width="100%" height={300}>
+       <div className="mt-">
+        <ResponsiveContainer width="100%" height={350}>
         <BarChart data={employeeData[range]}>
-          <CartesianGrid strokeDasharray="3 3" />
+        
           <XAxis dataKey="name" />
-          <YAxis />
+         
           <Tooltip />
           <Bar dataKey="Abbas" stackId="a" fill="#6366f1" />
           <Bar dataKey="Ayub" stackId="a" fill="#22c55e" />

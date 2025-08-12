@@ -11,8 +11,17 @@ const datasets = {
     { date: "21/06", value: 90 },
     { date: "22/06", value: 160 },
     { date: "23/06", value: 130 },
+    { date: "19/06", value: 120 },
+    { date: "20/06", value: 150 },
+    { date: "21/06", value: 90 },
+    { date: "22/06", value: 160 },
+    { date: "23/06", value: 130 },
   ],
   weekly: [
+    { date: "Week 1", value: 400 },
+    { date: "Week 2", value: 500 },
+    { date: "Week 3", value: 450 },
+    { date: "Week 4", value: 600 },
     { date: "Week 1", value: 400 },
     { date: "Week 2", value: 500 },
     { date: "Week 3", value: 450 },
@@ -23,19 +32,27 @@ const datasets = {
     { date: "Feb", value: 1500 },
     { date: "Mar", value: 1100 },
     { date: "Apr", value: 1700 },
+    { date: "Jan", value: 1200 },
+    { date: "Feb", value: 1500 },
+    { date: "Mar", value: 1100 },
+    { date: "Apr", value: 1700 },
   ],
   yearly: [
     { date: "2021", value: 5200 },
     { date: "2022", value: 5800 },
     { date: "2023", value: 6100 },
     { date: "2024", value: 7200 },
+    { date: "2025", value: 5200 },
+    { date: "2026", value: 5800 },
+    { date: "2027", value: 6100 },
+    { date: "2028", value: 7200 },
   ],
 };
 
 const SalesGraph = () => {
   const [range, setRange] = useState("daily");
   return (
-    <div className="flex-1 bg-yellow-100 rounded-xl shadow-md p-6 max-w-full  md:col-span-3">
+    <div className="flex-1 bg-white rounded-xl shadow-md p-6 max-w-full  md:col-span-3">
       <div className="flex justify-between items-center mb-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-800">

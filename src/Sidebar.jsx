@@ -49,13 +49,13 @@ const Sidebar = ({ isSidebarOpen }) => {
   return (
     <div
       className={`
-    fixed lg:static z-9 inset-y-0 left-0 bg-white transform transition-transform duration-300 ease-in-out
+    fixed lg:static z-9 inset-y-0 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out
     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
     ${isShrinked ? "w-22" : "w-68"}
     p-2 h-screen
   `}
     >
-      <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 shadow-lg flex flex-col justify-between">
+      <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 flex flex-col justify-between">
         <div>
           {/* Top Logo */}
           <div className="flex items-center gap-3 h-14 mb-6">

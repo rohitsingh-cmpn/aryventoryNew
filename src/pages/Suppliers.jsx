@@ -168,7 +168,7 @@ function App() {
         {/* Suppliers Table */}
         <div className="flex-1 px-8 py-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 justify-between">
               <div className="grid grid-cols-4 gap-4">
                 <div className="font-semibold text-gray-700">Supplier</div>
                 <div className="font-semibold text-gray-700">Supplier Name</div>

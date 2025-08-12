@@ -545,7 +545,7 @@ const OrderRequest = () => {
         <main className=" p-4 flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
-            <div className="hidden lg:block w-1/5 h-full">
+            <div className="hidden lg:block mi-w-[250px] max-w-1/5 h-full">
               <Card className="h-full rounded-xl shadow-lg border-0 flex flex-col sticky top-6">
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="mb-2">

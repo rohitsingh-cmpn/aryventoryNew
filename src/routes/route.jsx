@@ -27,7 +27,7 @@ export const sidebarRoutes = [
   { path: "/suppliers", element: <Suppliers /> },
   { path: "/dummy", element: <Page /> },
   { path: "/my-cart", element: <MyCart /> },
-  { path: "/order-history", element: <OrderHistory /> },
+  { path: "/order-history", element: <OrderHistory />  },
   { path: "/order-request", element: <OrderRequest /> },
   { path: "/delivery-status", element: <DeliveryStatus /> },
   { path: "/subscription", element: <Subscription /> },
