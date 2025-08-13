@@ -101,7 +101,7 @@ const NotificationPage = ({ Nav }) => {
     space: 3,
     gap: 2,
     margin: 1,
-    text: 'sm',
+    text: "sm",
   };
 
   return (
@@ -221,7 +221,7 @@ const NotificationPage = ({ Nav }) => {
 
       {Nav && (
         <button
-          onClick={() => navigate("/notification-page")}
+          onClick={() => navigate("/notification-page", { replace: true })}
           className="text-sm italic ml-auto mr-4 text-[#F89320]  hover:underline"
         >
           see detail...

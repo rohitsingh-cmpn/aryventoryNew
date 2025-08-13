@@ -355,7 +355,7 @@ function EmployeeDetails() {
                     onClick={() => handleViewDetails(employee)}
                     className="bg-[#F89320] hover:bg-orange-300 text-white px-4 py-2 rounded-lg text-sm transition-colors"
                   >
-                    View Details
+                   Attendance
                   </button>
                 </div>
               </div>
@@ -473,9 +473,8 @@ function EmployeeDetails() {
                     <option value="">Select Role</option>
                     <option value="Manager">Manager</option>
                     <option value="Sales Representative">
-                      Sales Representative
+                      Staff
                     </option>
-                    <option value="Shopkeeper">Shopkeeper</option>
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
                 </div>

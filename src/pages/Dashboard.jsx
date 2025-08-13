@@ -1,193 +1,793 @@
-import React, { useState } from "react";
+import React from "react";
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { Slot } from "@radix-ui/react-slot";
+import { cva } from "class-variance-authority";
 import {
-  FaGift,
-  FaShoppingBag,
-  FaMoneyBillWave,
-  FaTimes,
-  FaRegClock,
-} from "react-icons/fa";
-import GraphWithSelect from "../components/GraphWithSelect"; // Assuming this is a separate component for the graph
-import SalesGraph from "../components/SalesGraph";
+  ChevronRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "lucide-react";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { BarChart, Bar } from "recharts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  fa1,
+  faAngleDown,
+  faAngleUp,
+  faArrowRight,
+  faArrowUp,
+  faArrowUpRightDots,
+  faArrowUpRightFromSquare,
+  faBan,
+  faCalendar,
+  faChartLine,
+  faCheck,
+  faLineChart,
+  faPenToSquare,
+  faThumbsDown,
+  faThumbsUp,
+  faTimes,
+  faTruck,
+  faTruckFast,
+  faUserTie,
+  faWarehouse,
+} from "@fortawesome/free-solid-svg-icons";
+import legends1 from "./../assets/legends1.png";
+import legends2 from "./../assets/legends2.png";
+import legends3 from "./../assets/legends3.png";
+import { useState } from "react";
 
-const StatCardTop = ({
-  icon,
-  label,
-  value,
-  bg = "bg-white",
-  textColor = "text-black",
-}) => (
-  <div
-    className={`flex flex-row p-1 gap-2 sm:p-5  rounded-2xl w-full shadow-sm h-full items-center  sm:gap-10 bg-white `}
-  >
-    <div className={`bg-green-200 ${bg} ${textColor} p-2 rounded-xl`}>
-      {" "}
-      <div className="flex justify-end sm:text-4xl ">{icon}</div>
-    </div>
-    <div>
-      <span className="text-xl lg:text-2xl text-gray-600  ">{label}</span>
-      <span
-        className={`text-xl sm:text-2xl font-semibold block text-gray-700 `}
+const cards = [
+  {
+    iconColor: "#29B659",
+    iconBgColor: "bg-[#B2FFCC]",
+    icon: faLineChart,
+    content: "Top Selling Product",
+    quantity: "80",
+  },
+  {
+    iconColor: "#FFD400",
+    iconBgColor: "bg-[#FFF2B2]",
+    icon: faUserTie,
+    content: "Current month's best Performer",
+    quantity: "80",
+  },
+  {
+    iconColor: "#30A7DE",
+    iconBgColor: "bg-[#B5E7FF]",
+    icon: faWarehouse,
+    content: "In hand",
+    quantity: "80",
+  },
+  {
+    iconColor: "#EDB421",
+    iconBgColor: "bg-[#FFEAB3]",
+    icon: faTruckFast,
+    content: "To be received",
+    quantity: "80",
+  },
+];
+
+const data2 = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+// const data = [
+//   {
+//     name: "Page A",
+//     uv: 4000,
+//     pv: 2400,
+//     amt: 2400,
+//   },
+//   {
+//     name: "Page B",
+//     uv: 3000,
+//     pv: 1398,
+//     amt: 2210,
+//   },
+//   {
+//     name: "Page C",
+//     uv: 2000,
+//     pv: 9800,
+//     amt: 2290,
+//   },
+//   {
+//     name: "Page D",
+//     uv: 2780,
+//     pv: 3908,
+//     amt: 2000,
+//   },
+//   {
+//     name: "Page E",
+//     uv: 1890,
+//     pv: 4800,
+//     amt: 2181,
+//   },
+//   {
+//     name: "Page F",
+//     uv: 2390,
+//     pv: 3800,
+//     amt: 2500,
+//   },
+//   {
+//     name: "Page G",
+//     uv: 3490,
+//     pv: 4300,
+//     amt: 2100,
+//   },
+// ];
+const data = {
+  daily: [
+    { date: "19/06", value: 120 },
+    { date: "20/06", value: 150 },
+    { date: "21/06", value: 90 },
+    { date: "22/06", value: 160 },
+    { date: "23/06", value: 130 },
+  ],
+  weekly: [
+    { date: "Week 1", value: 400 },
+    { date: "Week 2", value: 500 },
+    { date: "Week 3", value: 450 },
+    { date: "Week 4", value: 600 },
+  ],
+  monthly: [
+    { date: "Jan", value: 1200 },
+    { date: "Feb", value: 1500 },
+    { date: "Mar", value: 1100 },
+    { date: "Apr", value: 1700 },
+  ],
+  yearly: [
+    { date: "2021", value: 5200 },
+    { date: "2022", value: 5800 },
+    { date: "2023", value: 6100 },
+    { date: "2024", value: 7200 },
+  ],
+};
+// Data for stat cards
+const statCards = [
+  {
+    title: "Total Orders Today",
+    value: "80",
+    icon: faCheck,
+    color: "#29B659",
+    bg: "bg-[#B2FFCC]",
+  },
+  {
+    title: "Out of Stock",
+    value: "120",
+    icon: faTimes,
+    color: "#DE5858",
+    bg: "bg-[#FFB1B1]",
+  },
+  {
+    title: "Low Quality Products",
+    value: "20",
+    icon: faThumbsDown,
+    color: "#DE5858",
+    bg: "bg-[#FFB1B1]",
+  },
+  {
+    title: "Total Orders in current Month",
+    value: "10k",
+    icon: faCalendar,
+    color: "#3759FB",
+    bg: "bg-[#B5C2FF]",
+  },
+];
+
+const employeeData = {
+  daily: [
+    { name: "Mon", Abbas: 30, Ayub: 40, Haider: 20, JK: 30 },
+    { name: "Tue", Abbas: 50, Ayub: 30, Haider: 40, JK: 30 },
+    { name: "Wed", Abbas: 20, Ayub: 20, Haider: 30, JK: 20 },
+    { name: "Thu", Abbas: 60, Ayub: 40, Haider: 30, JK: 50 },
+    { name: "Fri", Abbas: 25, Ayub: 25, Haider: 25, JK: 25 },
+  ],
+  weekly: [
+    { name: "Week 1", Abbas: 100, Ayub: 150, Haider: 120, JK: 230 },
+    { name: "Week 2", Abbas: 200, Ayub: 100, Haider: 150, JK: 270 },
+    { name: "Week 3", Abbas: 150, Ayub: 200, Haider: 100, JK: 200 },
+    { name: "Week 4", Abbas: 220, Ayub: 180, Haider: 200, JK: 300 },
+  ],
+  monthly: [
+    { name: "Jan", Abbas: 600, Ayub: 700, Haider: 500, JK: 600 },
+    { name: "Feb", Abbas: 500, Ayub: 600, Haider: 400, JK: 600 },
+    { name: "Mar", Abbas: 700, Ayub: 800, Haider: 600, JK: 500 },
+    { name: "Apr", Abbas: 800, Ayub: 900, Haider: 700, JK: 600 },
+  ],
+  yearly: [
+    { name: "2021", Abbas: 3000, Ayub: 4000, Haider: 3500, JK: 4500 },
+    { name: "2022", Abbas: 4000, Ayub: 3000, Haider: 4000, JK: 4000 },
+    { name: "2023", Abbas: 5000, Ayub: 4500, Haider: 4000, JK: 4500 },
+    { name: "2024", Abbas: 6000, Ayub: 5500, Haider: 5000, JK: 5000 },
+  ],
+};
+
+// Data for date labels
+const dateLabels = [
+  "19/06",
+  "20/06",
+  "21/06",
+  "22/06",
+  "23/06",
+  "19/06",
+  "20/06",
+  "21/06",
+  "22/06",
+  "23/06",
+];
+
+// Data for bar chart
+const barData = [
+  {
+    height: "h-[151px]",
+    bg: "bg-[#49c4ff80]",
+    value: "₹3,37,682",
+    top: "top-16",
+  },
+  {
+    height: "h-[76px]",
+    bg: "bg-[#f4d1f780]",
+    value: "₹3,37,682",
+    top: "top-[139px]",
+  },
+  {
+    height: "h-48",
+    bg: "bg-[#f5c38f80]",
+    value: "₹3,37,682",
+    top: "top-[23px]",
+  },
+  {
+    height: "h-[118px]",
+    bg: "bg-[#22f4ef80]",
+    value: "₹3,37,682",
+    top: "top-[97px]",
+  },
+  {
+    height: "h-[216px]",
+    bg: "bg-[#7145fd80]",
+    value: "₹3,37,682",
+    top: "top-[-px]",
+  },
+];
+
+// Data for products
+const products = [
+  {
+    brand: "Samsung",
+    name: "Motorola Edge 50 Pro 5G with 125W Charger...",
+    price: "₹150",
+    quantity: "200",
+    image: "/rectangle-6306.svg",
+  },
+  {
+    brand: "Samsung",
+    name: "Motorola Edge 50 Pro 5G with 125W Charger...",
+    price: "₹150",
+    quantity: "200",
+    image: "/rectangle-6306.svg",
+  },
+];
+
+// UTILITY FUNCTION (replaces lib/utils)
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+const legends = [
+  {
+    name: "John...",
+    icon: legends1,
+  },
+  {
+    name: "Luca...",
+    icon: legends2,
+  },
+  {
+    name: "John...",
+    icon: legends3,
+  },
+  {
+    name: "Luca...",
+    icon: legends2,
+  },
+  {
+    name: "John...",
+    icon: legends1,
+  },
+  {
+    name: "John...",
+    icon: legends3,
+  },
+  {
+    name: "John...",
+    icon: legends1,
+  },
+  {
+    name: "Luca...",
+    icon: legends2,
+  },
+  {
+    name: "John...",
+    icon: legends3,
+  },
+];
+// --- UI COMPONENTS (previously converted){content,quantity,iconColor,icon,iconBgColor} , ---
+
+const CardFinal = (cards) => {
+  return (
+    <Card className="bg-[#FFFFFF] col-span-1 lg:col-span-2">
+      <CardContent className="flex p-5 w-full h-full">
+        <div className="flex  justify-end  flex-col h-full w-full">
+          <p className="font-['Montserrat',Helvetica] font-normal text-black text-xl">
+            {cards.content}
+          </p>
+          <p className="font-['Montserrat',Helvetica] font-semibold text-black text-4xl">
+            {cards.quantity}
+          </p>
+        </div>
+        <div className=" flex flex-col gap-5 lg:min-gap-5 justify-between ">
+          <FontAwesomeIcon
+            className={`p-3 text-xl rounded-xl  ${cards.iconBgColor}`}
+            icon={cards.icon}
+            color={cards.iconColor}
+          />
+          <div className="flex m-1 aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
+            <FontAwesomeIcon
+              icon={faArrowUp}
+              className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
+            />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+// Separator
+const Separator = React.forwardRef(
+  (
+    { className, orientation = "horizontal", decorative = true, ...props },
+    ref
+  ) => (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        "shrink-0 bg-border",
+        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        className
+      )}
+      {...props}
+    />
+  )
+);
+Separator.displayName = SeparatorPrimitive.Root.displayName;
+
+// Avatar
+const Avatar = React.forwardRef(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className
+    )}
+    {...props}
+  />
+));
+Avatar.displayName = AvatarPrimitive.Root.displayName;
+
+const AvatarImage = React.forwardRef(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+));
+AvatarImage.displayName = AvatarPrimitive.Image.displayName;
+
+const AvatarFallback = React.forwardRef(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className
+    )}
+    {...props}
+  />
+));
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
+
+// Select
+const Select = SelectPrimitive.Root;
+const SelectGroup = SelectPrimitive.Group;
+const SelectValue = SelectPrimitive.Value;
+
+const SelectTrigger = React.forwardRef(
+  ({ className, children, ...props }, ref) => (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronDownIcon className="h-4 w-4 opacity-50" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+);
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
+const SelectContent = React.forwardRef(
+  ({ className, children, position = "popper", ...props }, ref) => (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
+        className={cn(
+          "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          position === "popper" &&
+            "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          className
+        )}
+        position={position}
+        {...props}
       >
-        {value}
+        <SelectPrimitive.Viewport
+          className={cn(
+            "p-1",
+            position === "popper" &&
+              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+          )}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  )
+);
+SelectContent.displayName = SelectPrimitive.Content.displayName;
+
+const SelectItem = React.forwardRef(
+  ({ className, children, ...props }, ref) => (
+    <SelectPrimitive.Item
+      ref={ref}
+      className={cn(
+        "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-[#F89320] focus:text-[#F89320]-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+        <SelectPrimitive.ItemIndicator>
+          <CheckIcon className="h-4 w-4" />
+        </SelectPrimitive.ItemIndicator>
       </span>
-    </div>
-  </div>
+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    </SelectPrimitive.Item>
+  )
+);
+SelectItem.displayName = SelectPrimitive.Item.displayName;
+
+// Card
+const Card = React.forwardRef(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("rounded-xl bg-card text-card-foreground shadow", className)}
+    {...props}
+  />
+));
+Card.displayName = "Card";
+
+const CardContent = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("", className)} {...props} />
+));
+CardContent.displayName = "CardContent";
+
+// Button
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background shadow-sm hover:bg-[#F89320] hover:text-[#F89320]-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-[#F89320] hover:text-[#F89320]-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-9 w-9",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
 );
 
-
-const StatCard = ({
-  icon,
-  label,
-  value,
-  bg = "bg-white",
-  textColor = "text-black",
-}) => (
-  <div
-    className={`flex flex-col bg-white p-5 2xl:p-10 rounded-2xl w-full shadow-sm h-full justify-between `}
-  >
-   
-      <div className={`flex  justify-end text-4xl   mb-2`}>
-        <div className={`p-2 rounded-xl ${bg} ${textColor}`}> {icon}</div>
-      
-    </div>
-    <div>
-      <span className="text-xl lg:text-2xl text-gray-600 ">{label}</span>
-      <span
-        className={`text-2xl font-semibold block text-gray-700 `}
-      >
-        {value}
-      </span>
-    </div>
-  </div>
+const Button = React.forwardRef(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
 );
+Button.displayName = "Button";
 
-const Dashboard = () => {
-  const [range, setRange] = useState("daily");
-  const employees = [
-    {
-      name: "JK Paradise",
-      role: "Manager",
-      image:
-        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      name: "Abbas",
-      role: "Sales",
-      image:
-        "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg",
-    },
-    {
-      name: "Ayub",
-      role: "Support",
-      image:
-        "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
-    },
-    // etc...
-  ];
+const MacbookPro = () => {
+  const [selectedOption, setSelectedOption] = useState("daily");
+  const [selectedOptionBar, setSelectedOptionBar] = useState("daily");
+  const [IsOpenLine, setIsOpenLine] = useState(false);
+  const [IsOpenBar, setIsOpenBar] = useState(false);
 
   return (
-    <>
-      <div className="h-[calc(100vh-65px)] overflow-y-auto bg-gray-100 p-2  flex flex-col gap-4">
-        {/* Top Stats - grid 4 columns on lg+ */}
-        <div className="grid  grid-cols-2  lg:grid-cols-4 gap-4 ">
-          <StatCardTop
-            icon={<FaGift />}
-            label="Total Orders Today"
-            value="₹150"
-            bg="bg-green-200"
-            textColor="text-green-500"
-          />
-          <StatCardTop
-            icon={<FaShoppingBag />}
-            label="Out of Stock"
-            value="₹60"
-            bg="bg-red-200"
-            textColor="text-red-500"
-          />
-          <StatCardTop
-            icon={<FaMoneyBillWave />}
-            label="Low Quantity Products"
-            value="₹80"
-            bg="bg-red-200"
-            textColor="text-red-500"
-          />
-          <StatCardTop
-            icon={<FaTimes />}
-            label="Total Orders in Current Month"
-            value="₹60"
-            bg="bg-violet-200"
-            textColor="text-violet-500"
-          />
-        </div>
-
-        {/* Chart + Right Cards */}
-        <div className="flex  flex-col lg:flex-row gap-4 lg:grid lg:grid-cols-4">
-          {/* Chart Container */}
-          <SalesGraph />
-
-          {/* Right Side Cards - stacked vertically */}
-          <div className="grid grid-cols-2  gap-4 w-full text-orange-400  lg:grid-cols-1 ">
-            <StatCard
-              icon={<FaMoneyBillWave />}
-              label="Top Selling Product"
-              value="₹80"
-              bg="bg-green-200"
-              textColor="text-green-500"
-            />
-            <StatCard
-              icon={<FaTimes />}
-              label="Current month's Best Performers"
-              value="₹60"
-              bg="bg-yellow-200"
-              textColor="text-yellow-500"
-            />
-          </div>
-        </div>
-
-        {/* Bottom Section - Recent Activity */}
-
-        <div className="flex  flex-col lg:flex-row  rounded-xl   lg:grid lg:grid-cols-20  ">
-          <div className=" grid grid-cols-2  lg:col-span-5 gap-4 lg:grid-cols-1">
-            <StatCard
-              icon={<FaRegClock />}
-              label="In hand"
-              value="₹60"
-              bg="bg-blue-200"
-              textColor="text-blue-500"
-            />
-            <StatCard
-              icon={<FaRegClock />}
-              label="To be received"
-              value="₹80"
-              bg="bg-orange-200"
-              textColor="text-orange-400"
-            />
-          </div>
-          <div className="col-span-1  lg:col-span-15 grid grid-cols-1  lg:grid-cols-15   ">
-            <div className="  lg:col-span-10 ">
-              <div className="p-2">
-                <GraphWithSelect />
+    <div className="bg-[#F6F6F6] p-4 w-full h-[calc(100vh-65px)] overflow-y-auto">
+      <main className="grid grid-cols-4 w-full h-full gap-5">
+        <div className="grid grid-cols-4 w-full col-span-4 gap-4">
+          {statCards.map((stat, index) => (
+            <Card
+              key={index}
+              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full overflow-hidden"
+            >
+              <CardContent className="flex items-center my-2 ml-2">
+                <FontAwesomeIcon
+                  icon={stat.icon}
+                  color={stat.color}
+                  className={`${stat.bg} p-3 text-xl rounded-xl`}
+                />
+                <div className="flex ml-auto flex-col w-full h-full justify-center pl-4 ">
+                  <p className="font-['Montserrat',Helvetica] font-normal text-black text-xl">
+                    {stat.title}
+                  </p>
+                  <p className="font-['Montserrat',Helvetica] font-semibold text-black text-2xl">
+                    {stat.value}
+                  </p>
+                </div>
+              </CardContent>
+              <div className="flex  mt-auto aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
+                <FontAwesomeIcon
+                  icon={faArrowUp}
+                  className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
+                />
               </div>
-            </div>
-            <div className="flex w-full h-full lg:col-span-5 ">
-              <div className="p-5 flex w-full flex-col  bg-white rounded-xl ">
-                <h1 className="font-semibold 2xl:text-xl ">Legends</h1>
-                <div className="flex flex-row">
-                  {" "}
-                  {employees.map((emp, index) => (
-                    <div
-                      key={index}
-                      className=" flex-col items-center  p-2 bg-white rounded-lg "
-                    >
-                      <img
-                        src={emp.image}
-                        alt={emp.name}
-                        className="w-16 h-16 rounded-full object-cover border border-orange-300"
-                      />
-                      <div className="mt-2 text-sm font-medium text-gray-800">
-                        {emp.name}
+            </Card>
+          ))}
+        </div>
+
+        <div className="w-full h-full  flex col-span-4">
+          <div className="  grid grid-cols-4 w-full h-full gap-5">
+            <div className="flex w-full h-full lg:col-span-3 col-span-4 min-h-[300px]">
+              <Card className="bg-[#FFFFFF] flex flex-col w-full py-4 h-full ">
+                <div className="flex justify-between px-2 mx-4 mb-3 py-1">
+                  <div>
+                    <div className="text-lg">Sales Overview</div>
+
+                    <div className="text-[#757575] text-sm">
+                      May 25, 2025 - Jun 25, 2025
+                    </div>
+                  </div>
+                  <div className=" flex gap-3">
+                    <div>
+                      <button className="bg-[#F89320] h-fit text-white p-2 rounded-xl hover:bg-orange-300">
+                        <FontAwesomeIcon
+                          className="px-1"
+                          icon={faPenToSquare}
+                        />
+                      </button>
+                    </div>
+                    <div className="bg-[#F89320] rounded-xl h-fit flex p-1 py-1 relative">
+                      <select
+                        value={selectedOption}
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                        // onFocus={() => setIsOpenLine(true)}
+                        // onMouseDown={() => setIsOpenLine(false)}
+                        onClick={() => setIsOpenLine(!IsOpenLine)}
+                        onBlur={() => setIsOpenLine(false)}
+                        className=" text-white w-[110px] bg-[#F89320]  p-1 py-1 rounded-xl text-md appearance-none focus:outline-none"
+                      >
+                        <option className="" value="daily">
+                          Daily
+                        </option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                      </select>
+                      <div className="pointer-events-none text-white right-[10%] top-[20%] absolute">
+                        <FontAwesomeIcon
+                          className="p-0"
+                          icon={IsOpenLine ? faAngleUp : faAngleDown}
+                        />
                       </div>
-                      <div className="text-xs text-gray-500">{emp.role}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border border-gray-300 rounded-lg m-2 outline-none focus:outline-none">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart
+                      data={data.daily}
+                      margin={{ top: 5, right: 1, left: 1, bottom: 5 }}
+                    >
+                      <XAxis dataKey="date" />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#8884d8"
+                        activeDot={{ r: 8 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-2 w-full h-full lg:col-span-1 col-span-4 gap-5">
+              {cards.slice(0, 2).map((cards, index) => (
+                <CardFinal {...cards} key={index} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex col-span-4 w-full h-full">
+          <div className="grid grid-cols-4  w-full h-full gap-5">
+            {/* Left Column */}
+            <div className="grid grid-cols-2 w-full h-full lg:col-span-1 col-span-4 gap-5 ">
+              {/* In hand Card */}
+              {cards.slice(2, 4).map((cards, index) => (
+                <CardFinal {...cards} key={index} />
+              ))}
+            </div>
+
+            {/* Middle Column - Bar Chart */}
+            <div className="bg-[#FFFFFF] grid grid-cols-4 w-full h-full lg:col-span-3 col-span-4 min-h-[300px] rounded-xl">
+              <Card className="rounded-r-none flex flex-col col-span-3 w-full py-4 h-full ">
+                <div className="flex justify-between px-2 mx-4 mb-3 py-1">
+                  <div>
+                    <div className="text-lg">Staff Overview</div>
+
+                    <div className="text-[#757575] text-sm">
+                      May 25, 2025 - Jun 25, 2025
+                    </div>
+                  </div>
+                  <div className=" flex gap-3">
+                    <div>
+                      <button className="bg-[#F89320] h-fit text-white p-2 rounded-xl hover:bg-orange-300">
+                        <FontAwesomeIcon
+                          className="px-1"
+                          icon={faPenToSquare}
+                        />
+                      </button>
+                    </div>
+                    <div className="bg-[#F89320] rounded-xl h-fit flex p-1 py-1  relative">
+                      <select
+                        value={selectedOptionBar}
+                        onChange={(e) => setSelectedOptionBar(e.target.value)}
+                        // onFocus={() => setIsOpenLine(true)}
+                        // onMouseDown={() => setIsOpenLine(false)}
+                        onClick={() => setIsOpenBar(!IsOpenBar)}
+                        onBlur={() => setIsOpenBar(false)}
+                        className=" text-white w-[110px] p-1 bg-[#F89320]  py-1 rounded-xl text-md appearance-none focus:outline-none"
+                      >
+                        <option className="" value="daily">
+                          Daily
+                        </option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                      </select>
+                      <div className="pointer-events-none text-white right-[10%] top-[20%] absolute">
+                        <FontAwesomeIcon
+                          className="p-0"
+                          icon={IsOpenBar ? faAngleUp : faAngleDown}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    width={500}
+                    height={300}
+                    data={employeeData.daily}
+                    margin={{
+                      top: 20,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <XAxis dataKey="name" />
+
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="Abbas" stackId="a" fill="#3679F6" />
+                    <Bar dataKey="Ayub" stackId="a" fill="#8FF8F5" />
+                    <Bar dataKey="Haider" stackId="a" fill="#F5C38F" />
+                    <Bar dataKey="JK" stackId="a" fill="#EF4646" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Card>
+              <div className="flex justify-around flex-col p-3 ">
+                <div className=" p-2 text-xl">Legends</div>
+                <div className="grid place-items-center  grid-cols-3">
+                  {legends.map((legend, index) => (
+                    <div className="p-1  ">
+                      <img src={legend.icon} alt="" />
+                      <div>{legend.name}</div>
                     </div>
                   ))}
                 </div>
@@ -195,9 +795,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </main>
+    </div>
   );
 };
+export default MacbookPro;
 
-export default Dashboard;

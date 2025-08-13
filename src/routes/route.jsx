@@ -1,6 +1,6 @@
 // route.js
 import Dashboard from "../pages/Dashboard";
-import Component from "../pages/Dashboardcopy";
+import Demo from "../pages/Dashboardcopy";
 import Suppliers from "../pages/Suppliers";
 import MyCart from "../pages/MyCart";
 
@@ -22,8 +22,8 @@ import EmployeeDetails from "../pages/EmployeeDetails";
 import Sales from "../pages/Sales";
 
 export const sidebarRoutes = [
-  { path: "/dashboard", element: <Dashboard /> },
-  { path: "/dashboardc", element: <Component /> },
+  { path: "/dashboard", element: <Dashboard/> },
+  { path: "/dashboardc", element: <Demo /> },
   { path: "/suppliers", element: <Suppliers /> },
   { path: "/dummy", element: <Page /> },
   { path: "/my-cart", element: <MyCart /> },
