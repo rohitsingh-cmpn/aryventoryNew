@@ -41,24 +41,26 @@ const sideItem = [
   },
 ];
 
-const Sidebar = ({ isSidebarOpen }) => {
+const Sidebar = ({ isSidebarOpen, }) => {
   const [isShrinked, setShrinked] = useState(false);
 
-  const shrinkWidth = isShrinked ? "w-22" : "w-68";
+  const shrinkWidth = isShrinked ? "w-22" : "w-65";
 
   return (
     <div
       className={`
-    fixed lg:static z-99 inset-y-0 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out
-    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
-    ${isShrinked ? "w-22" : "w-68"}
-    p-2 h-screen
+    fixed lg:static z-99 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out
+    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 w-65
+    ${shrinkWidth} overflow-y-auto
+    p-2
+    top-[53px] lg:top-0
+    h-[calc(100vh-53px)] lg:h-screen
   `}
     >
       <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 flex flex-col justify-between">
         <div>
           {/* Top Logo */}
-          <div className="flex items-center gap-3 h-14 mb-6">
+          <div className="flex items-center gap-3 h-14 mb-3 lg:mb-6">
             <img
               src="https://t4.ftcdn.net/jpg/01/57/11/07/360_F_157110702_EKlFgF7zUdhSCYsOQ3XhtAH3re9lmK7q.jpg"
               alt="Profile"
@@ -75,7 +77,10 @@ const Sidebar = ({ isSidebarOpen }) => {
           </div>
 
           {/* Shrink Toggle */}
-          <div onClick={() => setShrinked(!isShrinked)}>
+          <div
+            className="hidden lg:block"
+            onClick={() => setShrinked(!isShrinked)}
+          >
             <SidebarItem icon={<FaBars />} label="Menu" isopen={!isShrinked} />
           </div>
 

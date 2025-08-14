@@ -600,7 +600,7 @@ const MacbookPro = () => {
           {statCards.map((stat, index) => (
             <Card
               key={index}
-              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full overflow-hidden"
+              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full  xl:py-10 overflow-hidden"
             >
               <CardContent className="flex items-center my-2 ml-2">
                 <FontAwesomeIcon
@@ -630,7 +630,7 @@ const MacbookPro = () => {
         <div className="w-full h-full  flex col-span-4">
           <div className="  grid grid-cols-4 w-full h-full gap-5">
             <div className="flex w-full h-full lg:col-span-3 col-span-4 min-h-[300px]">
-              <Card className="bg-[#FFFFFF] flex flex-col w-full py-4 h-full ">
+              <Card className="bg-[#FFFFFF] flex flex-col w-full py-4 h-full">
                 <div className="flex justify-between px-2 mx-4 mb-3 py-1">
                   <div>
                     <div className="text-lg">Sales Overview</div>
@@ -674,7 +674,7 @@ const MacbookPro = () => {
                     </div>
                   </div>
                 </div>
-                <div className="border border-gray-300 rounded-lg m-2 outline-none focus:outline-none">
+                <div className="  rounded-lg m-2 outline-none focus:outline-none">
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart
                       data={data.daily}
