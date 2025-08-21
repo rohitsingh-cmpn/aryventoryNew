@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../index.css';
 import {
   FaGift,
   FaShoppingBag,
@@ -82,7 +83,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="h-[calc(100vh-65px)] overflow-y-auto bg-gray-100 p-2  flex flex-col gap-4">
+      <div className="h-[calc(100vh-65px)] overflow-y-auto scrollbar-hide bg-gray-100 p-2  flex flex-col gap-4">
         {/* Top Stats - grid 4 columns on lg+ */}
         <div className="grid  grid-cols-2  lg:grid-cols-4 gap-4 ">
           <StatCardTop

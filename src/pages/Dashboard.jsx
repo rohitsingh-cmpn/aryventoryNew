@@ -1,4 +1,5 @@
 import React from "react";
+import '../index.css';
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
@@ -594,13 +595,13 @@ const MacbookPro = () => {
   const [IsOpenBar, setIsOpenBar] = useState(false);
 
   return (
-    <div className="bg-[#F6F6F6] p-4 w-full h-[calc(100vh-65px)] overflow-y-auto">
+    <div className="bg-[#F6F6F6] p-4 w-full h-[calc(100vh-65px)] overflow-y-auto scrollbar-hide">
       <main className="grid grid-cols-4 w-full h-full gap-5">
         <div className="grid grid-cols-4 w-full col-span-4 gap-4">
           {statCards.map((stat, index) => (
             <Card
               key={index}
-              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full  xl:py-10 overflow-hidden"
+              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full  xl:py-5 overflow-hidden"
             >
               <CardContent className="flex items-center my-2 ml-2">
                 <FontAwesomeIcon

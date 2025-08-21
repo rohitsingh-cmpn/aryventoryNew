@@ -19,7 +19,7 @@ import Navbar from "./components/Navbar";
 
 // ✅ Layout wrapper
 const LayoutWithSidebar = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
   const [isShrinked, setIsShrinked] = useState(false);
 // for small screen only
 

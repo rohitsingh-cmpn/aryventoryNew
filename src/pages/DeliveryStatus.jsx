@@ -715,7 +715,14 @@ export default function DeliveryStatusPage() {
                   <SearchIcon />
                 </div>
               </div>
-              <div className="p-1 bg-gray-100 rounded-lg flex space-x-1">
+              <div className="p-1 bg-gray-100 rounded-lg flex space-x-1"> <button
+                  onClick={() => setView("grid")}
+                  className={`p-2 rounded-md ${
+                    view === "grid" ? "bg-white shadow-sm" : ""
+                  }`}
+                >
+                  <GridIcon />
+                </button>
                 <button
                   onClick={() => setView("list")}
                   className={`p-2 rounded-md ${
@@ -724,14 +731,7 @@ export default function DeliveryStatusPage() {
                 >
                   <ListIcon />
                 </button>
-                <button
-                  onClick={() => setView("grid")}
-                  className={`p-2 rounded-md ${
-                    view === "grid" ? "bg-white shadow-sm" : ""
-                  }`}
-                >
-                  <GridIcon />
-                </button>
+               
               </div>
               <button
                 onClick={() => setMobileFilterOpen(true)}

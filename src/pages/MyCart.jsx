@@ -31,11 +31,11 @@ const sideItem = [
 const MyCart = () => {
   return (
     <>
-      <div className="  p-6 bg-gray-100 h-screen ">
+      <div className="  p-6 bg-gray-100 h-screen text-lg">
         <h1 className="text-2xl font-semibold mb-4">My Cart</h1>
         {/* table header */}
         <div className="bg-white rounded-2xl shadow p-4">
-          <div className="grid grid-cols-4 text-sm font-medium text-gray-700">
+          <div className="grid grid-cols-4  font-medium text-black">
             <div className="text-left">Profile</div>
             <div className="text-center">Organization Name</div>
             <div className="text-right">Contact</div>
@@ -46,7 +46,7 @@ const MyCart = () => {
         {sideItem.map((item, index) => (
           <div key={index} className="pt-4">
             <div className="bg-white rounded-xl shadow p-2">
-              <div className="grid grid-cols-4 items-center text-sm font-medium text-gray-700">
+              <div className="grid grid-cols-4 items-center  font-medium text-gray-700">
                 {/* Profile Image */}
                 <div className="col-span-1 text-left">
                   <img

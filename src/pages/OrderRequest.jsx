@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useCallback, memo } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import "../index.css";
 
 const Card = memo(({ children, className = "" }) => (
   <div
@@ -545,7 +546,7 @@ const OrderRequest = () => {
         <main className=" p-4 flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
-            <div className="hidden lg:block mi-w-[250px] max-w-1/5 h-full">
+            <div className="hidden lg:block mi-w-[250px] max-w-1/5 h-full ">
               <Card className="h-full rounded-xl shadow-lg border-0 flex flex-col sticky top-6">
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="mb-2">
@@ -556,7 +557,7 @@ const OrderRequest = () => {
 
                   <Separator className="mb-4" />
 
-                  <div className="flex-col scrollbar-thin  scrollbar-track-gray-100  max-h-[calc(100vh-280px)]  overflow-y-auto">
+                  <div className="flex-col max-h-[calc(100vh-280px)]  overflow-y-auto scrollbar-hide">
                     {/* Category Filter */}
                     <FilterSection
                       title="Category"
@@ -753,15 +754,10 @@ const OrderRequest = () => {
                       }}
                     >
                       {viewMode === "grid" ? (
-                        <ProductCard
-                          product={product}
-                          viewMode={viewMode}
-                         
-                        />
+                        <ProductCard product={product} viewMode={viewMode} />
                       ) : (
                         <ProductCardList
                           product={product}
-                        
                           brandOptions={brandOptions}
                           categoryOptions={categoryOptions}
                         />
