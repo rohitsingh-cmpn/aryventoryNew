@@ -110,12 +110,12 @@ const Sidebar = ({ isSidebarOpen, }) => {
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            {!isShrinked && (
-              <div className={``}>
+            {
+              <div className={`${isShrinked && 'hidden'}`}>
                 <div className="font-bold text-lg">Aryventory</div>
                 <span className="text-xs text-white/80">Version 1.3.1</span>
               </div>
-            )}
+            }
           </div>
         </div>
       </div>

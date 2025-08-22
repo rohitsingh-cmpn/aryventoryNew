@@ -20,9 +20,9 @@ import {
   Plus,
 } from "lucide-react";
 import { useMemo } from "react";
-import FilterSection from "../components/FilterSidebar";
+import FilterSection from "../../components/FilterSection";
 
-export default function DeliveryStatus() {
+export default function InventoryTotalProducts() {
   const [expandedSections, setExpandedSections] = useState({
     categories: true,
     brands: false,

@@ -248,7 +248,7 @@ function OraganizationPage() {
                 </div>
                 <button
                   className="px-2 py-1 bg-[#F89320] hover:bg-orange-300 text-white rounded-lg font-medium transition-colors float-right"
-                  onClick={() => navigate("/EmployeeDetails")}
+                  onClick={() => navigate("/employee-details")}
                 >
                   View Details
                 </button>

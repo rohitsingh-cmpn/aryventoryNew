@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import AddInventoryForm from "../components/AddInventoryForm";
 import AddBrandModal from "../components/AddBrandModal";
@@ -27,6 +28,7 @@ import {
   Headset,
   Plus,
 } from "lucide-react";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const gadgetIcons = {
   Mobile: <Smartphone className="text-4xl text-gray-400 mb-2" />,
@@ -54,7 +56,7 @@ const gadgetIcons = {
   "VR Headset": <Headset className="text-4xl text-gray-400 mb-2" />,
 };
 
-const AddInventory = () => {
+const AddInventory = ({setAddInventory,addInventory}) => {
   const [currentStep, setCurrentStep] = useState("category");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -168,16 +170,52 @@ const AddInventory = () => {
     return "Add Inventory";
   };
 
-  return (
-    <div className="flex flex-1/2">
-      <div className="min-h-screen bg-gray-100 p-2 lg:p-4">
-        
+  const [loaded, setLoaded] = useState(false);
 
-        {/* Step Views */}
+  useEffect(() => {
+    // trigger after first render
+    setLoaded(true);
+  }, []);
+
+  return (
+    <div
+      className={`
+        flex flex-col flex-1 justify-end rounded-r-2xl bg-gray-100  h-screen
+        transition-transform duration-700 ease-out transform
+        ${loaded ? "translate-x-0" : "translate-x-full"} overflow-y-auto
+      `}
+    >
+      <div className="h-full w-full rounded-r-2xl bg-gray-100 p-2 lg:p-4">
+        <div className="flex ml-2 mb-2">
+          {!(currentStep === "category") && (
+            <button
+              className="p-1  bg-[#F89320] w-[70px] text-white rounded-xl"
+              onClick={handleBack}
+            >
+              Back
+            </button>
+          )}
+          {currentStep === "category" && (
+            <button
+              className="p-1 w-[35px] text-white"
+              onClick={()=>setAddInventory(!addInventory)}
+            >
+              <FontAwesomeIcon icon={faTimes} color="black"/>
+            </button>
+          )}
+          <div className="flex grow items-center justify-center ">
+            <p className="text-2xl font-medium mr-15">Add Inventory</p>
+          </div>
+        </div>
         {currentStep === "category" && (
-          <>
+          <div
+            className={`w-full bg-gray-100 rounded-r-2xl 
+      transform transition-transform duration-500 ease-out
+      ${currentStep === "category" ? "translate-x-0" : "translate-x-full"}
+    `}
+          >
             <h2 className="text-lg font-semibold mb-2">Select Category</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-6">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-6">
               {categories.map((item) => (
                 <button
                   key={item}
@@ -191,9 +229,9 @@ const AddInventory = () => {
                 </button>
               ))}
             </div>
-
+            {/* Manageable Categories */}
             <h2 className="text-lg font-semibold mb-2">Manageable Category</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
               {manageableCategories.map((item) => (
                 <button
                   key={item.name}
@@ -212,11 +250,16 @@ const AddInventory = () => {
                 <span className="text-center">Manage Category</span>
               </button>
             </div>
-          </>
+          </div>
         )}
 
         {currentStep === "brand" && (
-          <>
+          <div
+            className={`w-full bg-gray-100 
+      transform transition-transform duration-500 ease-out
+      ${currentStep === "brand" ? "translate-x-0" : "translate-x-full"}
+    `}
+          >
             <div className="flex mt-3 justify-between items-center mb-2">
               <h2 className="text-lg font-semibold">Select Brand</h2>
               <button
@@ -226,7 +269,7 @@ const AddInventory = () => {
                 + Add Brand
               </button>
             </div>
-            <div className="bg-white p-3 rounded-xl shadow space-y-2 ">
+            <div className="bg-white p-3 rounded-xl shadow space-y-2">
               {brands.map((brand) => (
                 <div
                   key={brand}
@@ -242,11 +285,16 @@ const AddInventory = () => {
               onClose={() => setIsAddBrandModalOpen(false)}
               onAddBrand={handleAddBrand}
             />
-          </>
+          </div>
         )}
 
         {currentStep === "form" && (
-          <div className="flex-1 mt-4">
+          <div
+            className={` w-full bg-gray-100 
+      transform transition-transform duration-500 ease-out 
+      ${currentStep === "form" ? "translate-x-0" : "translate-x-full"}
+    `}
+          >
             <AddInventoryForm
               selectedCategory={selectedCategory}
               selectedBrand={selectedBrand}

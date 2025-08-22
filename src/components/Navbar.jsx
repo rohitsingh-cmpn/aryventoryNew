@@ -52,7 +52,7 @@ const Navbar = ({
                <FontAwesomeIcon
                  className="text-xl hover:bg-gray-100"
                  icon={faChevronDown}
-                 onClick={() => navigate("/OraganizationPage")}
+                 onClick={() => navigate("/organization-page")}
                />
              </div>
            </div>

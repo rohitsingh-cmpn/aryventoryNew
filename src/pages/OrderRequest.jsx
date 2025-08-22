@@ -685,6 +685,7 @@ const OrderRequest = () => {
                 </div>
 
                 <div className="hidden sm:flex items-center gap-2">
+                  {/* Search Input */}
                   <div className="relative">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
@@ -694,6 +695,17 @@ const OrderRequest = () => {
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
                   </div>
+
+                  <div className="lg:hidden flex justify-end">
+                    <Button
+                      onClick={handleMobileFilterToggle}
+                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    >
+                      <FilterIcon className="w-4 h-4 mr-2" />
+                      Filter
+                    </Button>
+                  </div>
+
                   <Button
                     variant={viewMode === "grid" ? "default" : "outline"}
                     size="sm"
@@ -721,19 +733,9 @@ const OrderRequest = () => {
                 </div>
               </div>
 
-              <div className="lg:hidden mb-4 flex justify-end">
-                <Button
-                  onClick={handleMobileFilterToggle}
-                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                >
-                  <FilterIcon className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
-              </div>
-
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-180px)] lg:max-h-[calc(100vh-180px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"

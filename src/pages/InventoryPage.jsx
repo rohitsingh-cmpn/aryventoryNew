@@ -21,7 +21,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useMemo } from "react";
-
+import AddInventory from "./AddInventory";
 
 export default function DeliveryStatus() {
   const [expandedSections, setExpandedSections] = useState({
@@ -354,10 +354,22 @@ export default function DeliveryStatus() {
     searchTerm,
   ]);
   const navigate = useNavigate();
+  const [addInventory, setAddInventory] = useState(false);
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col bg-black-50">
+    <div className="h-[calc(100vh-64px)]  flex flex-col bg-black-50">
       {/* Fixed Navbar */}
+
+      {addInventory && (
+        <div className="z-9999 fixed backdrop-blur-sm bg-black/30 bg-opacity-50 top-0 right-0 h-full w-full flex justify-end rounded-r-2xl">
+          <div className="h-full w-1/3">
+            <AddInventory
+              setAddInventory={setAddInventory}
+              addInventory={addInventory}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Body Layout */}
       <div className="flex flex-1 p-4 overflow-hidden">
@@ -590,23 +602,24 @@ export default function DeliveryStatus() {
                 {/* handle Mobile Filter Toggle */}
                 <div className="lg:hidden flex justify-end">
                   <button
+                   
                     onClick={() => console.log("Filter clicked")}
-                    className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    className="flex items-center bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
                   >
                     <FilterIcon className="w-4 h-4 mr-2" />
-                    Filter
+                    <div>Filter</div>
                   </button>
                 </div>
                 {/* Add Inventory Button */}
                 <button
                   className="flex items-center space-x-2 px-4 py-2 bg-[#F89320] text-white rounded-lg hover:bg-orange-300 transition-colors whitespace-nowrap"
-                  onClick={() => navigate("/addinventory")}
+                  onClick={() => {
+                    setAddInventory(true);
+                  }}
                 >
                   <Plus size={20} />
                   <span>Add Inventory</span>
                 </button>
-
-              
               </div>
             </div>
           </div>

@@ -20,15 +20,20 @@ import Reports from "../pages/Reports";
 import OraganizationPage from "../pages/OraganizationPage";
 import EmployeeDetails from "../pages/EmployeeDetails";
 import Sales from "../pages/Sales";
-import BestPerformer from "../pages/BestPerformer";
+import BestPerformer from "../pages/DashboardPages/BestPerformer";
+import CurrentMonthSales from "../pages/DashboardPages/CurrentMonthSales";
+import InventoryTotalProducts from "../pages/DashboardPages/InventoryTotalProducts";
+import LowQuantityProducts from "../pages/DashboardPages/LowQuantityProducts";
+import TopSellingProducts from "../pages/DashboardPages/TopSellingProducts";
+import OutOfStock from "../pages/DashboardPages/OutOfStock";
 
 export const sidebarRoutes = [
-  { path: "/dashboard", element: <Dashboard/> },
+  { path: "/dashboard", element: <Dashboard /> },
   { path: "/dashboardc", element: <Demo /> },
   { path: "/suppliers", element: <Suppliers /> },
   { path: "/dummy", element: <Page /> },
   { path: "/my-cart", element: <MyCart /> },
-  { path: "/order-history", element: <OrderHistory />  },
+  { path: "/order-history", element: <OrderHistory /> },
   { path: "/order-request", element: <OrderRequest /> },
   { path: "/delivery-status", element: <DeliveryStatus /> },
   { path: "/subscription", element: <Subscription /> },
@@ -40,7 +45,12 @@ export const sidebarRoutes = [
   { path: "/notification-page", element: <NotificationPage /> },
   { path: "/buy-products", element: <BuyProducts /> },
   { path: "/reports", element: <Reports /> },
-  { path: "/OraganizationPage", element: <OraganizationPage /> },
-  { path: "/EmployeeDetails", element: <EmployeeDetails /> },
+  { path: "/organization-page", element: <OraganizationPage /> },
+  { path: "/employee-details", element: <EmployeeDetails /> },
   { path: "/best-performer", element: <BestPerformer /> },
+  { path: "/current-month-sales", element: <CurrentMonthSales /> },
+  { path: "/inventory-total-products", element: <InventoryTotalProducts /> },
+  { path: "/low-quantity-products", element: <LowQuantityProducts /> },
+  { path: "/top-selling-products", element: <TopSellingProducts /> },
+  { path: "/out-of-stock", element: <OutOfStock /> },
 ];

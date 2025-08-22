@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import '../index.css';
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as SelectPrimitive from "@radix-ui/react-select";
@@ -59,6 +60,7 @@ const cards = [
     icon: faLineChart,
     content: "Top Selling Product",
     quantity: "80",
+    to : "/top-selling-products"
   },
   {
     iconColor: "#FFD400",
@@ -66,6 +68,7 @@ const cards = [
     icon: faUserTie,
     content: "Current month's best Performer",
     quantity: "80",
+    to : "/best-performer"
   },
   {
     iconColor: "#30A7DE",
@@ -73,6 +76,7 @@ const cards = [
     icon: faWarehouse,
     content: "In hand",
     quantity: "80",
+    to : "/delivery-status"
   },
   {
     iconColor: "#EDB421",
@@ -80,6 +84,7 @@ const cards = [
     icon: faTruckFast,
     content: "To be received",
     quantity: "80",
+    to : "/delivery-status"
   },
 ];
 
@@ -206,6 +211,7 @@ const statCards = [
     icon: faCheck,
     color: "#29B659",
     bg: "bg-[#B2FFCC]",
+    to : "/total-orders-today"
   },
   {
     title: "Out of Stock",
@@ -213,13 +219,15 @@ const statCards = [
     icon: faTimes,
     color: "#DE5858",
     bg: "bg-[#FFB1B1]",
+    to : "/out-of-stock"
   },
   {
-    title: "Low Quality Products",
+    title: "Low Quantity Products",
     value: "20",
     icon: faThumbsDown,
     color: "#DE5858",
     bg: "bg-[#FFB1B1]",
+    to : "/low-quantity-products"
   },
   {
     title: "Total Orders in current Month",
@@ -227,6 +235,7 @@ const statCards = [
     icon: faCalendar,
     color: "#3759FB",
     bg: "bg-[#B5C2FF]",
+    to : "/current-month-sales"
   },
 ];
 
@@ -370,6 +379,7 @@ const legends = [
 // --- UI COMPONENTS (previously converted){content,quantity,iconColor,icon,iconBgColor} , ---
 
 const CardFinal = (cards) => {
+  const navigate = useNavigate();
   return (
     <Card className="bg-[#FFFFFF] col-span-1 lg:col-span-2">
       <CardContent className="flex p-5 w-full h-full">
@@ -389,6 +399,7 @@ const CardFinal = (cards) => {
           />
           <div className="flex m-1 aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
             <FontAwesomeIcon
+              onClick={() => navigate(cards.to)}
               icon={faArrowUp}
               className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
             />
@@ -593,6 +604,7 @@ const MacbookPro = () => {
   const [selectedOptionBar, setSelectedOptionBar] = useState("daily");
   const [IsOpenLine, setIsOpenLine] = useState(false);
   const [IsOpenBar, setIsOpenBar] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#F6F6F6] p-4 w-full h-[calc(100vh-65px)] overflow-y-auto scrollbar-hide">
@@ -620,6 +632,7 @@ const MacbookPro = () => {
               </CardContent>
               <div className="flex  mt-auto aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
                 <FontAwesomeIcon
+                  onClick={() => navigate(stat.to)}
                   icon={faArrowUp}
                   className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
                 />

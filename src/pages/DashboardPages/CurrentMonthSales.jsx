@@ -698,7 +698,7 @@ const CurrentMonthSales = () => {
               <div className="flex justify-between items-center mb-4">
                 <div className="flex flex-row justify-between items-center sm:items-center">
                   <h1 className="mr-5 font-['Montserrat',Helvetica] text-2xl text-black ">
-                    Order Request
+                    Current Month Sales
                   </h1>
                 </div>
 
