@@ -458,9 +458,9 @@ const OrderHistory = () => {
       {/* Main Content */}
       <main className="flex-1 ">
         {/* Main Layout */}
-        <div className="flex flex-col p-4 sm:p-6 lg:p-8 lg:flex-row gap-8 h-[calc(100vh-150px)]">
+        <div className="flex lg:static flex-col  p-4   lg:flex-row gap-8 h-[calc(100vh-57px)]">
           {/* Desktop Filter Sidebar (Static) */}
-          <aside className="hidden lg:block w-1/3 xl:w-1/4 h-full">
+          <aside className="hidden lg:block w-1/4 xl:w-1/5 h-full">
             <FilterComponent
               initialFilters={filters}
               onFilterChange={handleFilterChange}
@@ -471,17 +471,17 @@ const OrderHistory = () => {
           {/* Cards Container */}
           <div className="flex-1 h-full flex flex-col">
             {/* Mobile Filter Button & View Toggle */}
-            <div className="flex  mb-4">
+            <div className="flex  mb-">
               {/* Search and Header */}
               <div className="flex flex-col sm:flex-row  mb-6 gap-4">
-                <h2 className="text-2xl text-gray-800">
-                  Order History ({filteredOrders.length})
+                <h2 className="text-2xl font-semibold text-gray-800">
+                  Buy Products  ({filteredOrders.length})
                 </h2>
               </div>
               <div className="flex  gap-2 ml-auto">
-                <div className="relative">
+                <div className="relative ">
                   <Input
-                    className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
+                    className="border-none outline-none bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg "
                     placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

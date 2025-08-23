@@ -45,8 +45,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // src/components/Acknowledgement.jsx (or whatever path you prefer)
 
 import React from "react";
-import backend from "../../../assets/backend-img.png";
-import uiuximage from "../../../assets/ui-ux-image.png";
+// import backend from "../../../assets/backend-img.png";
+// import uiuximage from "../../../assets/ui-ux-image.png";
 // import React from 'react';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHandshake } from '@fortawesome/free-solid-svg-icons';
@@ -109,7 +109,7 @@ const App = () => {
             <div className="bg-white rounded-lg -lg p-6 flex flex-col md:flex-row items-center md:items-start text-center md:text-left md:gap-4">
               {/* Placeholder image for backend team */}
               <img
-                src={backend}
+                src="https://static.vecteezy.com/system/resources/thumbnails/007/570/850/small/backend-development-line-icon-vector.jpg"
                 alt="Backend Development Team"
                 className="w-24 h-24 md:w-32 md:h-32 object-contain rounded-md mb-4 md:mb-0 flex-shrink-0"
               />
@@ -131,7 +131,7 @@ const App = () => {
             <div className="bg-white rounded-lg -lg p-6 flex flex-col md:flex-row items-center md:items-start text-center md:text-left md:gap-4">
               {/* Placeholder image for UI/UX team */}
               <img
-                src={uiuximage}
+                src="https://cdn.sanity.io/images/599r6htc/regionalized/121b95a7cd65588fe63417d7b87a474035f0ec83-1080x541.png?w=1200&q=70&fit=max&auto=format"
                 alt="UI/UX Design Team"
                 className="w-24 h-24 md:w-32 md:h-32 object-contain rounded-md mb-4 md:mb-0 flex-shrink-0"
               />

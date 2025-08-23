@@ -26,6 +26,21 @@ import InventoryTotalProducts from "../pages/DashboardPages/InventoryTotalProduc
 import LowQuantityProducts from "../pages/DashboardPages/LowQuantityProducts";
 import TopSellingProducts from "../pages/DashboardPages/TopSellingProducts";
 import OutOfStock from "../pages/DashboardPages/OutOfStock";
+import SettingPage from "../settings/settingPage";
+import About from "../settings/about";
+import AppVersion from "../settings/appVersion";
+import ContactUs from "../settings/contactUs";
+import FeedBack from "../settings/feedBack";
+import LogOut from "../settings/logOut";
+import OtherExpenses from "../settings/otherExpenses";
+import RateApp from "../settings/rateApp";
+import TermsAndCondition from "../settings/termsAndCondition";
+
+// Privacy & Security
+import Acknoledgement from "../settings/Privacy & Security/acKnowledgement";
+import ChangePassword from "../settings/Privacy & Security/changePassword";
+import PrivacyAndSecurity from "../settings/Privacy & Security/privacyandSecurity";
+import PrivacyPolicy from "../settings/Privacy & Security/privacyPolicy";
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -53,4 +68,17 @@ export const sidebarRoutes = [
   { path: "/low-quantity-products", element: <LowQuantityProducts /> },
   { path: "/top-selling-products", element: <TopSellingProducts /> },
   { path: "/out-of-stock", element: <OutOfStock /> },
+  { path: "/settings/settingPage", element: <SettingPage />},
+  { path: "/settings/about", element: <About /> },
+  { path: "/settings/appVersion", element: <AppVersion /> },
+  { path: "/settings/contactUs", element: <ContactUs /> },
+  { path: "/settings/feedBack", element: <FeedBack /> },
+  { path: "/settings/logOut", element: <LogOut /> },
+  { path: "/settings/otherExpenses", element: <OtherExpenses /> },
+  { path: "/settings/rateApp", element: <RateApp /> },
+  { path: "/settings/termsAndCondition", element: <TermsAndCondition /> },
+  { path: "/settings/privacyAndSecurity", element: <PrivacyAndSecurity /> },
+  { path: "/settings/privacyPolicy", element: <PrivacyPolicy /> },
+   { path: "/settings/acknowledgement", element: <Acknoledgement /> },
+   { path: "/settings/changePassword", element: <ChangePassword /> },
 ];

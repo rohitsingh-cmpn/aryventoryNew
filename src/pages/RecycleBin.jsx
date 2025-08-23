@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Search, Grid3X3, List, MoreVertical, Eye } from "lucide-react";
+import {
+  Search,
+  Grid3X3,
+  List,
+  MoreVertical,
+  Eye,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
 
 const RecyclePage = () => {
   const [selectedProducts, setSelectedProducts] = useState(new Set());
@@ -117,7 +125,7 @@ const RecyclePage = () => {
   return (
     <div className="flex-1 bg-gray-50 min-h-screen">
       {/* Header */}
-      
+
       {/* Content */}
       <div>
         {/* header-2 */}
@@ -230,11 +238,15 @@ const RecyclePage = () => {
                       </span>
                     </div>
 
-                    {/* View Details Button */}
-                    <div className="col-span-1 mt-3 sm:mt-0 flex justify-start sm:justify-end">
-                      <button className="bg-[#F89320] hover:bg-orange-300 text-white px-3 py-1 rounded-md text-sm flex items-center gap-1 transition-colors ">
-                        <Eye className="w-4 h-4" />
-                        View Details
+                    {/* Button */}
+                    <div className="flex gap-2">
+                      <button className="flex items-center gap-1 px-3 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
+                        <RotateCcw size={16} />
+                        
+                      </button>
+                      <button className="flex items-center gap-1 px-3 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                        <Trash2 size={16} />
+                       
                       </button>
                     </div>
                   </div>
@@ -242,51 +254,6 @@ const RecyclePage = () => {
               </div>
 
               {/* Responsive Card Layout for Small Screens */}
-              <div className="sm:hidden space-y-4 p-4">
-                {filteredProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-center gap-4 mb-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedProducts.has(product.id)}
-                        onChange={() => handleProductSelect(product.id)}
-                        className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400"
-                      />
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-20 h-20 rounded-lg object-cover"
-                      />
-                      <div className="flex-1">
-                        <p className="text-gray-900 font-medium">
-                          {product.name}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-1 text-sm text-gray-700">
-                      <div className="flex justify-between">
-                        <span>Quantity:</span>
-                        <span>{product.quantity}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Price:</span>
-                        <span>{formatPrice(product.price)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Deleted Date:</span>
-                        <span>{product.deletedDate}</span>
-                      </div>
-                    </div>
-                    <button className="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md text-sm flex items-center justify-center gap-1 transition-colors">
-                      <Eye className="w-4 h-4" />
-                      View Details
-                    </button>
-                  </div>
-                ))}
-              </div>
             </div>
           ) : (
             // Grid View

@@ -1,5 +1,5 @@
 import React from "react";
-import AryventoryLogo from "../../assets/Frame 2121454161.svg";
+// import AryventoryLogo from "../../assets/Frame 2121454161.svg";
 
 function AppVersion() {
   return (
@@ -7,7 +7,7 @@ function AppVersion() {
       {/* Logo */}
       <div className="w-30 h-30 sm:w-40 sm:h-40 mb-4">
         <img
-          src={AryventoryLogo}
+          src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
           alt="Aryventory Logo"
           className="w-full h-full object-contain"
         />

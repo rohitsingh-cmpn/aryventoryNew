@@ -83,7 +83,7 @@ import {
   faInstagram,
   faFacebookF,
 } from "@fortawesome/free-brands-svg-icons";
-import contactImg from "../../assets/contact-us.svg"; // replace with your filename
+// import contactImg from "../../assets/contact-us.svg"; // replace with your filename
 
 const ContactUs = () => {
   return (
@@ -152,7 +152,7 @@ const ContactUs = () => {
       {/* Illustration */}
       <div className="w-full md:w-1/2 p-5">
         <img
-          src={contactImg}
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB5r0ND0aiE0hCQH77l8m6Awm33EfodgWD4A&s"
           alt="Contact illustration"
           className="w-full h-auto rounded-lg"
         />

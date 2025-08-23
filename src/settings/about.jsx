@@ -16,8 +16,8 @@ import {
   faClipboardList,
   faPeopleCarry,
 } from "@fortawesome/free-solid-svg-icons";
-import shopkeeperImg from "../../assets/Frame 2121454161.svg";
-import shopImg from "../../assets/Frame 2121454161.svg";
+import shopkeeperImg from "../assets/126122.png";
+import shopImg from "../assets/126122.png";
 
 const data = [
   {

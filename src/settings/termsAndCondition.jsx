@@ -2,7 +2,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useState } from "react";
-import image from "../../assets/termsandcondition.svg";
+// import image from "../../assets/termsandcondition.svg";
 
 const termsData = [
   {
@@ -45,7 +45,11 @@ function TermsAndConditions() {
         Terms & Conditions
       </h2>
       <div className="flex flex-col">
-        <img src={image} className="h-60" alt="" />
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/010/751/448/non_2x/terms-and-conditions-icon-on-white-background-terms-sign-terms-and-conditions-symbol-flat-style-vector.jpg"
+          className="h-60"
+          alt=""
+        />
         <p className="mb-6 text-gray-700">
           By using Aryventory, you agree to comply with and be bound by the
           following terms and conditions | Terms" if you do not agree to these

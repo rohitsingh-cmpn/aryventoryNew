@@ -19,14 +19,17 @@ const SidebarItem = ({ icon, label, route, isopen }) => {
       <span>{icon}</span>
 
       {/* Floating label on hover */}
-      {!isopen && <div className={`absolute left-16 z-550 px-4 py-1 rounded-2xl bg-[#F89320] text-white text-lg whitespace-nowrap transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100  `}>
-        {label}
-      </div>}
-
+      <div className="hidden lg:block">
+        {!isopen && (
+          <div
+            className={`absolute left-16 z-550 px-4 py-1 rounded-2xl bg-[#F89320] text-white text-lg whitespace-nowrap transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100  overflow-visible `}
+          >
+            {label}
+          </div>
+        )}
+      </div>
       {/* Always shown if sidebar is open */}
-      { (
-        <span className="whitespace-nowrap overflow-hidden">{label}</span>
-      )}
+      {<span className="whitespace-nowrap overflow-hidden">{label}</span>}
     </Link>
   );
 };

@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  MdOutlineInventory,
-  MdOutlineAutoGraph,
-  MdOutlineSettings,
-} from "react-icons/md";
+import React, { useState, useEffect, useRef } from "react";
+import { MdOutlineInventory, MdOutlineSettings } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import {
   FaHome,
@@ -23,7 +19,6 @@ import SidebarItem from "./SidebarItem";
 const sideItem = [
   { icon: <FaHome />, label: "Dashboard", route: "/dashboard" },
   { icon: <MdOutlineInventory />, label: "Inventory", route: "/inventory" },
-  // { icon: <MdOutlineAutoGraph />, label: "Sales", route: "/sales" },
   { icon: <TbReportSearch />, label: "Reports", route: "/reports" },
   { icon: <FaTruck />, label: "Suppliers", route: "/suppliers" },
   { icon: <FaCartPlus />, label: "Buy Products", route: "/buy-products" },
@@ -35,25 +30,41 @@ const sideItem = [
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
 ];
 
-const Sidebar = ({ isSidebarOpen, }) => {
+const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
   const [isShrinked, setShrinked] = useState(false);
+  const sidebarRef = useRef(null);
 
-  // const shrinkWidth = isShrinked ? "w-23" : "w-65";
+  // Close sidebar if clicked outside (only on mobile)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        window.innerWidth < 1024 // only for mobile/tablet
+      ) {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setSidebarOpen]);
 
   return (
     <div
+      ref={sidebarRef}
       className={`
-    fixed lg:static z-50 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out flex-shrink-0
-
-    ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
-    ${isShrinked ? "lg:w-22" : "lg:w-64"} w-64
-  
-    p-2
-    top-[53px] lg:top-0
-    h-[calc(100vh-53px)] lg:h-screen
-  `}
+        fixed lg:static z-50 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out flex-shrink-0
+        ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0
+        ${isShrinked ? "lg:w-22" : "lg:w-64"} w-64
+        p-2
+        top-[53px] lg:top-0
+        h-[calc(100vh-53px)] lg:h-screen
+      `}
     >
-      <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 flex flex-col justify-between ">
+      <div className="h-full rounded-2xl bg-[#F89320] text-white p-4 flex flex-col justify-between">
         <div>
           {/* Top Logo */}
           <div className="flex items-center gap-3 h-14 mb-3 lg:mb-6">
@@ -62,14 +73,12 @@ const Sidebar = ({ isSidebarOpen, }) => {
               alt="Profile"
               className="w-10 h-10 rounded-full border border-white"
             />
-            {!isShrinked && (
-              <div>
-                <div className="font-bold text-lg whitespace-nowrap">
-                  JK Paradise
-                </div>
-                <span className="text-sm text-white/80">ShopKeeper</span>
+            <div className="overflow-hidden">
+              <div className="font-bold text-lg whitespace-nowrap">
+                JK Paradise
               </div>
-            )}
+              <span className="text-sm text-white/80">ShopKeeper</span>
+            </div>
           </div>
 
           {/* Shrink Toggle */}
@@ -85,10 +94,9 @@ const Sidebar = ({ isSidebarOpen, }) => {
           </div>
         </div>
 
-        <div className="overflow-y-auto scrollbar-hide h-full">
-          {" "}
-          {/* Sidebar Items */}
-          <div className="flex flex-col  gap-2 text-lg">
+        {/* Sidebar Items */}
+        <div className="overflow-auto scrollbar-hide h-full">
+          <div className="flex flex-col gap-2 text-lg">
             {sideItem.map((item, i) => (
               <SidebarItem key={i} {...item} isopen={!isShrinked} />
             ))}
@@ -100,22 +108,20 @@ const Sidebar = ({ isSidebarOpen, }) => {
           <SidebarItem
             icon={<MdOutlineSettings />}
             label="Settings"
-            route="/settings"
+            route="/settings/settingPage"
             isopen={!isShrinked}
           />
 
-          <div className="flex h-11 gap-2 items-center">
+          <div className="flex h-11 gap-2 overflow-hidden items-center">
             <img
               src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            {
-              <div className={`${isShrinked && 'hidden'}`}>
-                <div className="font-bold text-lg">Aryventory</div>
-                <span className="text-xs text-white/80">Version 1.3.1</span>
-              </div>
-            }
+            <div>
+              <div className="font-bold text-lg">Aryventory</div>
+              <span className="text-xs text-white/80">Version 1.3.1</span>
+            </div>
           </div>
         </div>
       </div>

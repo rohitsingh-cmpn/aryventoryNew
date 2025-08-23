@@ -30,9 +30,26 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 import { faUnlock } from "@fortawesome/free-solid-svg-icons/faUnlock";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
 import { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router";
-import { useSideBar } from "../../utils/context/SideBarContext";
-import { useNavigation } from "../../utils/context/settingContext";
+import {  useLocation, Outlet } from "react-router-dom";
+
+import { Link, NavLink, useNavigate } from "react-router";
+// import { useSideBar } from "../../utils/context/SideBarContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import Settings from "../pages/Settings";
+import SettingPage from "../settings/settingPage";
+import About from "../settings/about";
+import AppVersion from "../settings/appVersion";
+import ContactUs from "../settings/contactUs";
+import FeedBack from "../settings/feedBack";
+import LogOut from "../settings/logOut";
+import OtherExpenses from "../settings/otherExpenses";
+import RateApp from "../settings/rateApp";
+import TermsAndCondition from "../settings/termsAndCondition";
+import Acknoledgement from "../settings/Privacy & Security/acKnowledgement";
+import ChangePassword from "../settings/Privacy & Security/changePassword";
+import PrivacyAndSecurity from "../settings/Privacy & Security/privacyandSecurity";
+import PrivacyPolicy from "../settings/Privacy & Security/privacyPolicy";
 
 const content = [
   {
@@ -105,7 +122,7 @@ const Privacy = [
 ];
 
 function SettingSidebar() {
-  const { currentPage, navigate } = useNavigation();
+  const navigate = useNavigate();
 
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   // const {isMenuOpened, setIsMenuOpened} = useSideBar();
@@ -264,23 +281,52 @@ function SettingSidebar() {
 }
 
 function settingPage() {
-  const { currentPage, navigate } = useNavigation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className="flex flex-col w-full  rounded-2xl h-[calc(100vh-65px)]  duration-300 ease-in-out">
       <div className="flex flex-row w-full p-4 h-full gap-5 overflow-hidden">
         <div
           className={` sm:block sm:flex-1/5  ${
-            currentPage ? "flex-1 " : " hidden"
+            location.pathname.includes("/settings") ? "flex-1 " : " hidden"
           } ease-in-out rounded-2xl `}
         >
           <SettingSidebar />
         </div>
         <div
           className={` sm:block  ${`sm:`}  ${
-            currentPage ? " hidden" : " flex-1"
+            location.pathname.includes("/settings") ? " hidden" : " flex-1"
           } sm:flex-4/5  shadow-md`}
         >
+          {/* <BrowserRouter>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/settings" element={<Settings />}>
+                <Route index element={<SettingPage />} />
+                <Route path="about" element={<About />} />
+                <Route path="appVersion" element={<AppVersion />} />
+                <Route path="contactUs" element={<ContactUs />} />
+                <Route path="feedBack" element={<FeedBack />} />
+                <Route path="logOut" element={<LogOut />} />
+                <Route path="otherExpenses" element={<OtherExpenses />} />
+                <Route path="rateApp" element={<RateApp />} />
+                <Route
+                  path="termsAndCondition"
+                  element={<TermsAndCondition />}
+                />
+
+                {/* Privacy & Security */}
+                {/* <Route
+                  path="privacyAndSecurity"
+                  element={<PrivacyAndSecurity />}
+                />
+                <Route path="privacyPolicy" element={<PrivacyPolicy />} />
+                <Route path="acknowledgement" element={<Acknoledgement />} />
+                <Route path="changePassword" element={<ChangePassword />} />
+              </Route>
+            </Routes>
+          </BrowserRouter> */}
           <Outlet />
 
           <div></div>

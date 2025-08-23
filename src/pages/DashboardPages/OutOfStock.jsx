@@ -9,7 +9,7 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useCallback, memo } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Card = memo(({ children, className = "" }) => (
   <div
     className={`bg-white rounded-2xl shadow-sm border border-gray-200 ${className}`}
@@ -185,11 +185,12 @@ const ProductCard = memo(({ product, viewMode, onAccept, onReject }) => {
       <div className={`flex ${isList ? "flex-row gap-2" : "gap-2"}`}>
         <Button
           size="sm"
+          onClick={(product) => navigate("/view-details")}
           className="flex-1/2 bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105 text-xs"
         >
           View
         </Button>
-        <Button
+        {/* <Button
           size="sm"
           onClick={handleAccept}
           className="flex-1 bg-green-600 hover:bg-green-700 text-white transition-all duration-200 transform hover:scale-105 text-xs"
@@ -202,11 +203,11 @@ const ProductCard = memo(({ product, viewMode, onAccept, onReject }) => {
           className="flex-1 bg-red-600 hover:bg-red-700 text-white transition-all duration-200 transform hover:scale-105 text-xs"
         >
           Reject
-        </Button>
-      </div>
+        </Button> */}
+      </div> 
     </>
   );
-
+const navigate = useNavigate();
   return (
     <Card className="rounded-xl border-gray-200 hover:shadow-xl transition-all duration-300 transform  h-full">
       <CardContent className="p-6 flex flex-col h-full">
@@ -292,7 +293,7 @@ const ProductCardList = memo(
                   >
                     View
                   </Button>
-                  <Button
+                  {/* <Button
                     size="sm"
                     onClick={handleAccept}
                     className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs"
@@ -305,7 +306,7 @@ const ProductCardList = memo(
                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-xs"
                   >
                     Reject
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
@@ -349,7 +350,7 @@ const TopSellingProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Latest iPhone with advanced features",
-        inStock: true,
+        inStock: false,
         rating: 4.8,
       },
       {
@@ -362,7 +363,7 @@ const TopSellingProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Premium Samsung flagship phone",
-        inStock: true,
+        inStock: false,
         rating: 4.7,
       },
       {
@@ -388,7 +389,7 @@ const TopSellingProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "High-performance Xiaomi smartphone",
-        inStock: true,
+        inStock: false,
         rating: 4.5,
       },
       {
@@ -401,7 +402,7 @@ const TopSellingProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Premium noise-canceling headphones",
-        inStock: true,
+        inStock: false,
         rating: 4.9,
       },
       {
@@ -414,7 +415,7 @@ const TopSellingProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Professional laptop with M3 chip",
-        inStock: true,
+        inStock: false,
         rating: 4.8,
       },
     ],
@@ -557,9 +558,9 @@ const TopSellingProducts = () => {
   const handleMobileFilterToggle = useCallback(() => {
     setShowMobileFilter((prev) => !prev);
   }, []);
-
+  const navigate = useNavigate();
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh)] overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-57px)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
         <main className=" p-4  flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
@@ -702,8 +703,8 @@ const TopSellingProducts = () => {
                   </h1>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-2">
-                  <div className="relative">
+                <div className="flex  items-center gap-2">
+                  <div className="relative hidden sm:block">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
                       placeholder="Search products..."
@@ -711,6 +712,15 @@ const TopSellingProducts = () => {
                       onChange={handleSearchChange}
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
+                  </div>
+                  <div className="lg:hidden  ">
+                    <Button
+                      onClick={handleMobileFilterToggle}
+                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    >
+                      <FilterIcon className="w-4 h-4 mr-2" />
+                      Filter
+                    </Button>
                   </div>
                   <Button
                     variant={viewMode === "grid" ? "default" : "outline"}
@@ -739,19 +749,9 @@ const TopSellingProducts = () => {
                 </div>
               </div>
 
-              <div className="lg:hidden mb-4 flex justify-end">
-                <Button
-                  onClick={handleMobileFilterToggle}
-                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                >
-                  <FilterIcon className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
-              </div>
-
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"

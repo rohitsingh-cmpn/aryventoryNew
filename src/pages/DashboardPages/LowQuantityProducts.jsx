@@ -316,7 +316,7 @@ const ProductCardList = memo(
   }
 );
 
-const LowQuantityProducts = () => {
+const TopSellingProducts = () => {
   const [filters, setFilters] = useState({
     category: null,
     brand: null,
@@ -349,7 +349,7 @@ const LowQuantityProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Latest iPhone with advanced features",
-        inStock: true,
+        inStock: false,
         rating: 4.8,
       },
       {
@@ -362,7 +362,7 @@ const LowQuantityProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Premium Samsung flagship phone",
-        inStock: true,
+        inStock: false,
         rating: 4.7,
       },
       {
@@ -388,7 +388,7 @@ const LowQuantityProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "High-performance Xiaomi smartphone",
-        inStock: true,
+        inStock: false,
         rating: 4.5,
       },
       {
@@ -401,7 +401,7 @@ const LowQuantityProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Premium noise-canceling headphones",
-        inStock: true,
+        inStock: false,
         rating: 4.9,
       },
       {
@@ -414,7 +414,7 @@ const LowQuantityProducts = () => {
         image:
           "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
         description: "Professional laptop with M3 chip",
-        inStock: true,
+        inStock: false,
         rating: 4.8,
       },
     ],
@@ -559,7 +559,7 @@ const LowQuantityProducts = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh)] overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-57px)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
         <main className=" p-4  flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
@@ -575,7 +575,7 @@ const LowQuantityProducts = () => {
 
                   <Separator className="mb-4" />
 
-                  <div className="flex-col scrollbar-thin  scrollbar-track-gray-100  max-h-[calc(100vh-280px)]  overflow-y-auto">
+                  <div className="flex-col scrollbar-thin  scrollbar-track-gray-100  max-h-[calc(100vh-250px)]  overflow-y-auto">
                     {/* Category Filter */}
                     <FilterSection
                       title="Category"
@@ -702,7 +702,7 @@ const LowQuantityProducts = () => {
                   </h1>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-2">  
+                <div className="hidden sm:flex items-center gap-2">
                   <div className="relative">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
@@ -711,6 +711,15 @@ const LowQuantityProducts = () => {
                       onChange={handleSearchChange}
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
+                  </div>
+                  <div className="lg:hidden flex justify-end">
+                    <Button
+                      onClick={handleMobileFilterToggle}
+                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    >
+                      <FilterIcon className="w-4 h-4 mr-2" />
+                      Filter
+                    </Button>
                   </div>
                   <Button
                     variant={viewMode === "grid" ? "default" : "outline"}
@@ -739,19 +748,9 @@ const LowQuantityProducts = () => {
                 </div>
               </div>
 
-              <div className="lg:hidden mb-4 flex justify-end">
-                <Button
-                  onClick={handleMobileFilterToggle}
-                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                >
-                  <FilterIcon className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
-              </div>
-
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
@@ -1015,4 +1014,4 @@ const LowQuantityProducts = () => {
   );
 };
 
-export default LowQuantityProducts;
+export default TopSellingProducts;

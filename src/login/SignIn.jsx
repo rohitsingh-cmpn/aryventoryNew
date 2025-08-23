@@ -10,9 +10,9 @@ const SignIn = () => {
  };
 
   const images = [
-    "https://www.indifi.com/blog/wp-content/uploads/2022/05/Inventory.jpeg",
     "https://www.ppms.in/wp-content/uploads/2024/12/unnamed.jpg",
     "https://www.findmycrm.com/hubfs/free%20inventory%20management%20software.jpg",
+    "https://www.indifi.com/blog/wp-content/uploads/2022/05/Inventory.jpeg",
   ];
 
   // Cloned images for infinite loop

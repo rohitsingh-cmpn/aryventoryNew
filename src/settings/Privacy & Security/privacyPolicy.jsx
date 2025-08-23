@@ -1,5 +1,5 @@
 import React from "react";
-import privacypolicy from "../../../assets/privacypolicy.png";
+
 
 // PrivacyPolicy.js
 // import React from 'react';
@@ -58,7 +58,7 @@ const PrivacyPolicy = () => {
 
           {/* Icon and Introduction */}
           <div className="text-center my-6">
-            <img src={privacypolicy} alt="Privacy Policy" className="mx-auto" />
+            <img src="https://png.pngtree.com/png-clipart/20221007/original/pngtree-privacy-policy-png-image_8663889.png" alt="Privacy Policy" className="mx-auto" />
           </div>
 
           <p className="text-gray-600 mb-6 text-center">{policyData.intro}</p>

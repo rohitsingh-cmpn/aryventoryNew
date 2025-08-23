@@ -397,7 +397,7 @@ const CardFinal = (cards) => {
             icon={cards.icon}
             color={cards.iconColor}
           />
-          <div className="flex m-1 aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
+          <div className="flex m-1 hover:bg-gray-100 aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
             <FontAwesomeIcon
               onClick={() => navigate(cards.to)}
               icon={faArrowUp}
