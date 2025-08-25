@@ -168,12 +168,18 @@ function App() {
         {/* Suppliers Table */}
         <div className="flex-1 px-8 py-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 justify-between">
-              <div className="grid grid-cols-4 gap-4 ">
-                <div className="font-semibold text-gray-700">Supplier</div>
-                <div className="font-semibold text-gray-700">Supplier Name</div>
+            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 ">
+              <div className=" grid grid-cols-4 gap-4  ">
+                <div className="font-semibold text-gray-700  flex">
+                  Supplier
+                </div>
+                <div className="font-semibold text-gray-700 ">
+                  Supplier Name
+                </div>
                 <div className="font-semibold text-gray-700">Contact</div>
-                <div className="font-semibold text-gray-700">Actions</div>
+                <div className="font-semibold text-gray-700 justify-center flex">
+                  Actions
+                </div>
               </div>
             </div>
 
@@ -181,9 +187,9 @@ function App() {
               {filteredSuppliers.map((supplier) => (
                 <div
                   key={supplier.id}
-                  className="px-6 py-4 hover:bg-gray-50 transition-colors duration-150"
+                  className="px-6 py-4 hover:bg-gray-100 transition-colors duration-150"
                 >
-                  <div className="grid grid-cols-4 gap-4 items-center">
+                  <div className="grid grid-cols-4 gap-4 items-center justify-center">
                     <div>
                       <div
                         className={`w-10 h-10 ${supplier.color} rounded-full flex items-center justify-center shadow-md`}
@@ -201,7 +207,7 @@ function App() {
                     <div>
                       <span className="text-gray-600">{supplier.contact}</span>
                     </div>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-4 justify-center">
                       <button
                         onClick={() => editSupplier(supplier.id)}
                         className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition-colors duration-200 shadow-sm hover:shadow-md"

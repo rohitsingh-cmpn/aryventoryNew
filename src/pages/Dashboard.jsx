@@ -630,11 +630,11 @@ const MacbookPro = () => {
                   </p>
                 </div>
               </CardContent>
-              <div className="flex  mt-auto aspect-square items-center justify-center rounded-full border-[#EFEFF0] border">
+              <div className="flex  mt-auto aspect-square items-center justify-center hover:bg-gray-100 rounded-full border-[#EFEFF0] border">
                 <FontAwesomeIcon
                   onClick={() => navigate(stat.to)}
                   icon={faArrowUp}
-                  className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
+                  className="md:text-xl p-2 aspect-square  text-md text-[#888888] rotate-45"
                 />
               </div>
             </Card>
