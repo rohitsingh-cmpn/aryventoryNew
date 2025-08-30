@@ -8,11 +8,11 @@ const ViewDetails = () => {
   const { item } = location.state || {};
 
   const sideItem = [
-    { key: "Product Name", value: item?.name || "Unknown" },
-    { key: "Price", value: "₹1,29,000" },
-    { key: "Stock", value: "35 units" },
+    { key: "Product Name", value: item?.description || "Unknown" },
+    { key: "Price", value: item?.price || "₹1,29,000" },
+    { key: "Stock", value: item?.quantity || "35 units" },
     { key: "Barcode", value: "ER0053PR67" },
-    { key: "Brand", value: "Apple" },
+    { key: "Brand", value: item?.name },
     { key: "Model Number", value: "A3105" },
     { key: "Color", value: "Space Black" },
     { key: "Storage", value: "512 GB" },
@@ -55,8 +55,8 @@ const ViewDetails = () => {
           className="bg-white rounded-2xl shadow p-4 w-full md:w-1/2 flex items-center justify-center"
         >
           <img
-            src={item.profile}
-            alt={item.name}
+            src={item.image}
+            alt={item.description}
             className="min-w-[150px] min-h-[250px] max-w-[550px] object-contain rounded"
           />
         </motion.div>

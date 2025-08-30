@@ -4,31 +4,32 @@ import { Link } from "react-router-dom";
 const sideItem = [
   {
     profile:
-      "https://cdn.beebom.com/mobile/samsung-galaxy-s25-ultra-front-and-back-1.png",
-    name: "Iphone",
+      "https://t4.ftcdn.net/jpg/01/57/11/07/360_F_157110702_EKlFgF7zUdhSCYsOQ3XhtAH3re9lmK7q.jpg",
+    name: "Jk Paradise",
     contact: "9833050590",
   },
   {
     profile:
-      "https://i.gadgets360cdn.com/products/large/Xiaomi-14-Civi-db-709x800-1718178881.jpg",
-    name: "Iphone",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU-d5izA6q5lqRnUZ7-nteBq0aRnaUHvz3wA&s",
+    name: "Bharat Mahal",
     contact: "9833050590",
   },
   {
     profile:
-      "https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/305507_0_l9z9rj.png",
-    name: "Iphone",
+      "https://static.vecteezy.com/system/resources/previews/053/257/215/non_2x/abstract-neural-connect-network-technology-digital-modern-solution-logo-design-illustration-vector.jpg",
+    name: "Tech Solutions",
     contact: "9833050675",
   },
   {
     profile:
-      "https://rukminim2.flixcart.com/image/704/844/xif0q/mobile/b/p/t/-original-imahegqhrtpsz7sd.jpeg?q=90",
-    name: "Iphone",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReF9JAw6QO_9pzFf9k9Wcv0-QwXhpeChT54ubJ1OlpCykDN1B4EWs8EiTuCgLeqycnruU&usqp=CAU",
+    name: "Digital Hub",
     contact: "9833050590",
   },
   {
-    profile: "https://m.media-amazon.com/images/I/619lW2YtVhL.jpg",
-    name: "Iphone",
+    profile:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGFgFsMQFHuIpg52d8ZJbea4UbuTOxxGXlgA&s",
+    name: "Greenwood Furnishings",
     contact: "9833050590",
   },
 ];
@@ -67,11 +68,9 @@ const MyCart = () => {
                 <div className="col-span-1 text-center">{item.contact}</div>
 
                 {/* View Details Button */}
-                <div className="col-span-1 text-right">
-                  <Link to="/view-details"
-                  state={{ item}}
-                  >
-                    <button className="px-2 py-1 md:px-4 md:py-2 text-sm bg-[#F89320] text-white rounded-md hover:bg-orange-300 transition duration-200">
+                <div className="col-span-1 text-right md:px-4 xl:px-8 ">
+                  <Link to="/cart-item" state={{ item }}>
+                    <button className="px-2 py-1 md:px-4 md:py-2 text-sm bg-[#F89320] text-white rounded-xl hover:bg-orange-300 transition duration-200 ">
                       View Details
                     </button>
                   </Link>

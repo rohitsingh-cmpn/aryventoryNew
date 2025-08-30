@@ -3,6 +3,7 @@ import Dashboard from "../pages/Dashboard";
 import Demo from "../pages/Dashboardcopy";
 import Suppliers from "../pages/Suppliers";
 import MyCart from "../pages/MyCart";
+import CartItem from "../pages/CartItem";
 
 import OrderHistory from "../pages/OrderHistory";
 import BuyProducts from "../pages/BuyProducts";
@@ -48,6 +49,7 @@ export const sidebarRoutes = [
   { path: "/suppliers", element: <Suppliers /> },
   { path: "/dummy", element: <Page /> },
   { path: "/my-cart", element: <MyCart /> },
+  { path: "/cart-item", element: <CartItem /> },
   { path: "/order-history", element: <OrderHistory /> },
   { path: "/order-request", element: <OrderRequest /> },
   { path: "/delivery-status", element: <DeliveryStatus /> },
@@ -68,7 +70,7 @@ export const sidebarRoutes = [
   { path: "/low-quantity-products", element: <LowQuantityProducts /> },
   { path: "/top-selling-products", element: <TopSellingProducts /> },
   { path: "/out-of-stock", element: <OutOfStock /> },
-  { path: "/settings/settingPage", element: <SettingPage />},
+  { path: "/settings/settingPage", element: <SettingPage /> },
   { path: "/settings/about", element: <About /> },
   { path: "/settings/appVersion", element: <AppVersion /> },
   { path: "/settings/contactUs", element: <ContactUs /> },
@@ -79,6 +81,6 @@ export const sidebarRoutes = [
   { path: "/settings/termsAndCondition", element: <TermsAndCondition /> },
   { path: "/settings/privacyAndSecurity", element: <PrivacyAndSecurity /> },
   { path: "/settings/privacyPolicy", element: <PrivacyPolicy /> },
-   { path: "/settings/acknowledgement", element: <Acknoledgement /> },
-   { path: "/settings/changePassword", element: <ChangePassword /> },
+  { path: "/settings/acknowledgement", element: <Acknoledgement /> },
+  { path: "/settings/changePassword", element: <ChangePassword /> },
 ];

@@ -9,6 +9,7 @@ import {
   XIcon,
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useCallback, memo } from "react";
+import  "../../index.css";
 
 const Card = memo(({ children, className = "" }) => (
   <div
@@ -559,7 +560,7 @@ const CurrentMonthSales = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh)] overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-58px)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
         <main className=" p-4  flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
@@ -575,7 +576,7 @@ const CurrentMonthSales = () => {
 
                   <Separator className="mb-4" />
 
-                  <div className="flex-col scrollbar-thin  scrollbar-track-gray-100  max-h-[calc(100vh-280px)]  overflow-y-auto">
+                  <div className="flex-col scrollbar-thin  scrollbar-track-gray-100  max-h-[calc(100vh-280px)]  overflow-y-auto scrollbar-hide">
                     {/* Category Filter */}
                     <FilterSection
                       title="Category"
@@ -751,7 +752,7 @@ const CurrentMonthSales = () => {
 
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-300px)] lg:max-h-[calc(100vh-200px)]
+                overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"

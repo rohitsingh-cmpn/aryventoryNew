@@ -282,7 +282,7 @@ const FilterComponent = ({
   );
 
   return (
-    <Card className="w-full h-full rounded-2xl shadow-lg border-0 flex flex-col">
+    <Card className="w-full  h-[calc(100vh-65px)] rounded-2xl overflow-hidden shadow-lg border-0 flex flex-col overflow-y-auto">
       <CardContent className="p-5 flex-1 flex flex-col">
         <div className="mb-5">
           <h2 className="text-2xl">Filters</h2>
@@ -290,8 +290,8 @@ const FilterComponent = ({
         <Separator className="mb-6" />
 
         {/* Scrollable Filter Options */}
-        <div className="flex-1 overflow-y-auto pr-2 -mr-2">
-          <div className="flex justify-between">
+        <div className="flex-1 overflow-y-auto pr-2 -mr-2 h-full">
+          <div className="flex justify-between ">
             <SelectGroup
               label="Date"
               value={filters.date}
@@ -350,6 +350,7 @@ const FilterComponent = ({
       </CardContent>
     </Card>
   );
+
 };
 
 const OrderHistory = () => {
@@ -463,11 +464,11 @@ const OrderHistory = () => {
     setFilters({ date: null, month: null, year: null, status: null });
 
   return (
-    <div className="bg-[#f7f8fa] w-full h-full ">
+    <div className="flex h-[calc(100vh-57px)]  bg-[#f7f8fa] w-full overflow-y-auto ">
       {/* Main Content */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 p-4 ">
         {/* Main Layout */}
-        <div className="flex flex-col lg:flex-row gap-8 h-[calc(100vh-150px)]">
+        <div className="flex flex-col lg:flex-row gap-5 h-[calc(100vh-px)]">
           {/* Desktop Filter Sidebar (Static) */}
           <aside className="hidden lg:block w-1/3 xl:w-1/4 h-full">
             <FilterComponent
@@ -522,7 +523,7 @@ const OrderHistory = () => {
 
             {/* Cards Grid/List - Scrollable */}
             <div
-              className={`overflow-y-auto flex pr-2 -mr-2 scrollbar-thin scrollbar-thumb-[#f89320] scrollbar-track-gray-100
+              className={`overflow-y-auto flex pr-2 -mr-2 scrollbar-thin scrollbar-thumb-[] scrollbar-track-gray-100
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6"
@@ -611,7 +612,7 @@ const OrderHistory = () => {
         }
         .scrollbar-thin {
           scrollbar-width: thin;
-          scrollbar-color: #f89320 #e5e7eb;
+          scrollbar-color: #e5e7eb;
         }
         ::-webkit-scrollbar {
           width: 6px;
@@ -621,11 +622,11 @@ const OrderHistory = () => {
           border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb {
-          background: #f89320;
+          background: ;
           border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #e88418;
+          background: ;
         }
       `}</style>
     </div>

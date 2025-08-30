@@ -60,7 +60,7 @@ const cards = [
     icon: faLineChart,
     content: "Top Selling Product",
     quantity: "80",
-    to : "/top-selling-products"
+    to: "/top-selling-products",
   },
   {
     iconColor: "#FFD400",
@@ -68,15 +68,15 @@ const cards = [
     icon: faUserTie,
     content: "Current month's best Performer",
     quantity: "80",
-    to : "/best-performer"
+    to: "/best-performer",
   },
   {
     iconColor: "#30A7DE",
     iconBgColor: "bg-[#B5E7FF]",
     icon: faWarehouse,
-    content: "In hand",
+    content: "Inventory Products",
     quantity: "80",
-    to : "/delivery-status"
+    to: "/inventory",
   },
   {
     iconColor: "#EDB421",
@@ -84,7 +84,7 @@ const cards = [
     icon: faTruckFast,
     content: "To be received",
     quantity: "80",
-    to : "/delivery-status"
+    to: "/delivery-status",
   },
 ];
 
@@ -670,14 +670,16 @@ const MacbookPro = () => {
                         // onMouseDown={() => setIsOpenLine(false)}
                         onClick={() => setIsOpenLine(!IsOpenLine)}
                         onBlur={() => setIsOpenLine(false)}
-                        className=" text-white w-[110px] bg-[#F89320]  p-1 py-1 rounded-xl text-md appearance-none focus:outline-none"
+                        className=" text-white w-[110px] bg-[]  p-1 py-1 rounded-xl text-md appearance-none hover:outline-none focus:outline-none"
                       >
-                        <option className="" value="daily">
-                          Daily
-                        </option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
-                        <option value="yearly">Yearly</option>
+                        <div className="text-black  p-4">
+                          <option className="" value="daily">
+                            Daily
+                          </option>
+                          <option value="weekly">Weekly</option>
+                          <option value="monthly">Monthly</option>
+                          <option value="yearly">Yearly</option>
+                        </div>
                       </select>
                       <div className="pointer-events-none text-white right-[10%] top-[20%] absolute">
                         <FontAwesomeIcon

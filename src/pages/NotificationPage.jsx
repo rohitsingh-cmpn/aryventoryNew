@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Calendar, Package, AlertCircle, Users, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const NotificationPage = ({ Nav }) => {
+const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const popupRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setIsOpen]);
+
+  if (!isOpen) return null; // hide when closed
 
   const notifications = [
     {
@@ -107,8 +121,9 @@ const NotificationPage = ({ Nav }) => {
   return (
     <div
       className={`flex-1 ${!Nav && "h-full"} bg-white ${
-        Nav && "border-2 flex flex-col shadow-2xl rounded-2xl p-2"
+        Nav && "  flex flex-col shadow-2xl rounded-2xl p-2  outline-none "
       }`}
+      ref={popupRef}
     >
       {/* Header */}
       {!Nav && (
@@ -221,8 +236,11 @@ const NotificationPage = ({ Nav }) => {
 
       {Nav && (
         <button
-          onClick={() => navigate("/notification-page", { replace: true })}
-          className="text-sm italic ml-auto mr-4 text-[#F89320]  hover:underline"
+          onClick={() => {
+            setIsOpen(false); // close mini popup
+            navigate("/notification-page"); // go to full page
+          }}
+          className="text-sm italic ml-auto mr-4 text-[#F89320] hover:underline"
         >
           see detail...
         </button>
