@@ -54,7 +54,6 @@ function App() {
       color: "bg-indigo-500",
     },
   ]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSupplier, setNewSupplier] = useState({ name: "", contact: "" });
   const [searchTerm, setSearchTerm] = useState("");
@@ -137,13 +136,13 @@ function App() {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col h-[calc(100vh-64px)] scrollbar-hide overflow-auto bg-gray-50">
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <div className=" border-gray-200 px-8 py-6">
-          <div className="flex justify-between items-center">
+        <div className="border-gray-200 px-4 md:px-8 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
             <h1 className="text-2xl font-bold text-gray-800">Suppliers</h1>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row w-full md:w-auto space-y-2 sm:space-y-0 sm:space-x-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -151,12 +150,12 @@ function App() {
                   placeholder="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="pl-10 pr-4 py-2 w-full sm:w-64 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 />
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-[#F89320] hover:bg-orange-300 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200 shadow-md hover:shadow-lg"
+                className="bg-[#F89320] hover:bg-orange-300 text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-colors duration-200 shadow-md hover:shadow-lg"
               >
                 <span>Add Supplier</span>
                 <Plus className="w-4 h-4" />
@@ -165,24 +164,19 @@ function App() {
           </div>
         </div>
 
-        {/* Suppliers Table */}
-        <div className="flex-1 px-8 py-6">
+        {/* Desktop Suppliers Table - Hidden on mobile */}
+        <div className="hidden md:block flex-1 px-8 py-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 ">
-              <div className=" grid grid-cols-4 gap-4  ">
-                <div className="font-semibold text-gray-700  flex">
-                  Supplier
-                </div>
-                <div className="font-semibold text-gray-700 ">
-                  Supplier Name
-                </div>
+            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+              <div className="grid grid-cols-4 gap-4">
+                <div className="font-semibold text-gray-700 flex">Supplier</div>
+                <div className="font-semibold text-gray-700">Supplier Name</div>
                 <div className="font-semibold text-gray-700">Contact</div>
                 <div className="font-semibold text-gray-700 justify-center flex">
                   Actions
                 </div>
               </div>
             </div>
-
             <div className="divide-y divide-gray-200">
               {filteredSuppliers.map((supplier) => (
                 <div
@@ -225,7 +219,6 @@ function App() {
                 </div>
               ))}
             </div>
-
             {filteredSuppliers.length === 0 && (
               <div className="px-6 py-12 text-center">
                 <div className="text-gray-400 text-lg mb-2">
@@ -238,12 +231,68 @@ function App() {
             )}
           </div>
         </div>
+
+        {/* Mobile Suppliers Cards - Hidden on desktop */}
+        <div className="md:hidden px-4 py-6 space-y-4">
+          {filteredSuppliers.map((supplier) => (
+            <div
+              key={supplier.id}
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-4"
+            >
+              <div className="flex items-center space-x-4">
+                <div
+                  className={`w-12 h-12 ${supplier.color} rounded-full flex items-center justify-center shadow-md flex-shrink-0`}
+                >
+                  <span className="text-white font-semibold text-lg">
+                    {supplier.avatar}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 truncate">
+                    {supplier.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm">{supplier.contact}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => editSupplier(supplier.id)}
+                    className="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition-colors duration-200 shadow-sm hover:shadow-md"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => deleteSupplier(supplier.id)}
+                    className="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center transition-colors duration-200 shadow-sm hover:shadow-md"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {filteredSuppliers.length === 0 && (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+              <div className="text-gray-400 text-lg mb-2">
+                No suppliers found
+              </div>
+              <div className="text-gray-500 text-sm">
+                Try adjusting your search or add a new supplier
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Add Supplier Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50  flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-2xl w-96 p-6 transform transition-all duration-200">
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 transform transition-all duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Add Supplier</h2>
               <button
@@ -293,8 +342,16 @@ function App() {
 
       {/* Edit Supplier Modal */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50  flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-2xl w-96 p-6 transform transition-all duration-200">
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => {
+            setIsEditModalOpen(false);
+          }}
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 transform transition-all duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Edit Supplier</h2>
               <button

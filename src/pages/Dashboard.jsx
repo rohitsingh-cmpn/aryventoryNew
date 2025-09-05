@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import '../index.css';
+import "../index.css";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
@@ -52,6 +52,7 @@ import legends1 from "./../assets/legends1.png";
 import legends2 from "./../assets/legends2.png";
 import legends3 from "./../assets/legends3.png";
 import { useState } from "react";
+import SalesGraph from "../components/SalesGraph";
 
 const cards = [
   {
@@ -89,95 +90,22 @@ const cards = [
 ];
 
 const data2 = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
+  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
+  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
+  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
+  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
+  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
 ];
-// const data = [
-//   {
-//     name: "Page A",
-//     uv: 4000,
-//     pv: 2400,
-//     amt: 2400,
-//   },
-//   {
-//     name: "Page B",
-//     uv: 3000,
-//     pv: 1398,
-//     amt: 2210,
-//   },
-//   {
-//     name: "Page C",
-//     uv: 2000,
-//     pv: 9800,
-//     amt: 2290,
-//   },
-//   {
-//     name: "Page D",
-//     uv: 2780,
-//     pv: 3908,
-//     amt: 2000,
-//   },
-//   {
-//     name: "Page E",
-//     uv: 1890,
-//     pv: 4800,
-//     amt: 2181,
-//   },
-//   {
-//     name: "Page F",
-//     uv: 2390,
-//     pv: 3800,
-//     amt: 2500,
-//   },
-//   {
-//     name: "Page G",
-//     uv: 3490,
-//     pv: 4300,
-//     amt: 2100,
-//   },
-// ];
-const data = {
+
+const datasets = {
   daily: [
+    { date: "19/06", value: 120 },
+    { date: "20/06", value: 150 },
+    { date: "21/06", value: 90 },
+    { date: "22/06", value: 160 },
+    { date: "23/06", value: 130 },
     { date: "19/06", value: 120 },
     { date: "20/06", value: 150 },
     { date: "21/06", value: 90 },
@@ -189,8 +117,16 @@ const data = {
     { date: "Week 2", value: 500 },
     { date: "Week 3", value: 450 },
     { date: "Week 4", value: 600 },
+    { date: "Week 1", value: 400 },
+    { date: "Week 2", value: 500 },
+    { date: "Week 3", value: 450 },
+    { date: "Week 4", value: 600 },
   ],
   monthly: [
+    { date: "Jan", value: 1200 },
+    { date: "Feb", value: 1500 },
+    { date: "Mar", value: 1100 },
+    { date: "Apr", value: 1700 },
     { date: "Jan", value: 1200 },
     { date: "Feb", value: 1500 },
     { date: "Mar", value: 1100 },
@@ -201,9 +137,13 @@ const data = {
     { date: "2022", value: 5800 },
     { date: "2023", value: 6100 },
     { date: "2024", value: 7200 },
+    { date: "2025", value: 5200 },
+    { date: "2026", value: 5800 },
+    { date: "2027", value: 6100 },
+    { date: "2028", value: 7200 },
   ],
 };
-// Data for stat cards
+
 const statCards = [
   {
     title: "Total Orders Today",
@@ -211,7 +151,7 @@ const statCards = [
     icon: faCheck,
     color: "#29B659",
     bg: "bg-[#B2FFCC]",
-    to : "/total-orders-today"
+    to: "/total-orders-today",
   },
   {
     title: "Out of Stock",
@@ -219,7 +159,7 @@ const statCards = [
     icon: faTimes,
     color: "#DE5858",
     bg: "bg-[#FFB1B1]",
-    to : "/out-of-stock"
+    to: "/out-of-stock",
   },
   {
     title: "Low Quantity Products",
@@ -227,7 +167,7 @@ const statCards = [
     icon: faThumbsDown,
     color: "#DE5858",
     bg: "bg-[#FFB1B1]",
-    to : "/low-quantity-products"
+    to: "/low-quantity-products",
   },
   {
     title: "Total Orders in current Month",
@@ -235,7 +175,7 @@ const statCards = [
     icon: faCalendar,
     color: "#3759FB",
     bg: "bg-[#B5C2FF]",
-    to : "/current-month-sales"
+    to: "/current-month-sales",
   },
 ];
 
@@ -267,7 +207,6 @@ const employeeData = {
   ],
 };
 
-// Data for date labels
 const dateLabels = [
   "19/06",
   "20/06",
@@ -281,7 +220,6 @@ const dateLabels = [
   "23/06",
 ];
 
-// Data for bar chart
 const barData = [
   {
     height: "h-[151px]",
@@ -315,7 +253,6 @@ const barData = [
   },
 ];
 
-// Data for products
 const products = [
   {
     brand: "Samsung",
@@ -333,67 +270,35 @@ const products = [
   },
 ];
 
-// UTILITY FUNCTION (replaces lib/utils)
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
 const legends = [
-  {
-    name: "John...",
-    icon: legends1,
-  },
-  {
-    name: "Luca...",
-    icon: legends2,
-  },
-  {
-    name: "John...",
-    icon: legends3,
-  },
-  {
-    name: "Luca...",
-    icon: legends2,
-  },
-  {
-    name: "John...",
-    icon: legends1,
-  },
-  {
-    name: "John...",
-    icon: legends3,
-  },
-  {
-    name: "John...",
-    icon: legends1,
-  },
-  {
-    name: "Luca...",
-    icon: legends2,
-  },
-  {
-    name: "John...",
-    icon: legends3,
-  },
+  { name: "Johnathan Smith", icon: legends1 },
+  { name: "Lucas Kumar", icon: legends2 },
+  { name: "John Doe", icon: legends3 },
+  { name: "Lucas Fernandes", icon: legends2 },
+  { name: "John Parker", icon: legends1 },
+  { name: "John Williams", icon: legends3 },
 ];
-// --- UI COMPONENTS (previously converted){content,quantity,iconColor,icon,iconBgColor} , ---
 
 const CardFinal = (cards) => {
   const navigate = useNavigate();
   return (
     <Card className="bg-[#FFFFFF] col-span-1 lg:col-span-2">
       <CardContent className="flex p-5 w-full h-full">
-        <div className="flex  justify-end  flex-col h-full w-full">
-          <p className="font-['Montserrat',Helvetica] font-normal text-black text-xl">
+        <div className="flex justify-end flex-col h-full w-full">
+          <p className="font-['Montserrat',Helvetica] font-normal text-black text-sm sm:text-xl">
             {cards.content}
           </p>
-          <p className="font-['Montserrat',Helvetica] font-semibold text-black text-4xl">
+          <p className="font-['Montserrat',Helvetica] font-semibold text-black text-xl sm:text-4xl">
             {cards.quantity}
           </p>
         </div>
-        <div className=" flex flex-col gap-5 lg:min-gap-5 justify-between ">
+        <div className="flex flex-col gap-5 justify-between">
           <FontAwesomeIcon
-            className={`p-3 text-xl rounded-xl  ${cards.iconBgColor}`}
+            className={`p-2 sm:p-3 text-lg sm:text-xl rounded-xl ${cards.iconBgColor}`}
             icon={cards.icon}
             color={cards.iconColor}
           />
@@ -401,7 +306,7 @@ const CardFinal = (cards) => {
             <FontAwesomeIcon
               onClick={() => navigate(cards.to)}
               icon={faArrowUp}
-              className="md:text-xl p-2 aspect-square text-md text-[#888888] rotate-45"
+              className="text-sm sm:md:text-xl p-1 sm:p-2 aspect-square text-xs sm:text-md text-[#888888] rotate-45"
             />
           </div>
         </div>
@@ -410,7 +315,6 @@ const CardFinal = (cards) => {
   );
 };
 
-// Separator
 const Separator = React.forwardRef(
   (
     { className, orientation = "horizontal", decorative = true, ...props },
@@ -431,7 +335,6 @@ const Separator = React.forwardRef(
 );
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
-// Avatar
 const Avatar = React.forwardRef(({ className, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
@@ -465,7 +368,6 @@ const AvatarFallback = React.forwardRef(({ className, ...props }, ref) => (
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-// Select
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
@@ -539,7 +441,6 @@ const SelectItem = React.forwardRef(
 );
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-// Card
 const Card = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
@@ -554,7 +455,6 @@ const CardContent = React.forwardRef(({ className, ...props }, ref) => (
 ));
 CardContent.displayName = "CardContent";
 
-// Button
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
@@ -601,7 +501,9 @@ Button.displayName = "Button";
 
 const MacbookPro = () => {
   const [selectedOption, setSelectedOption] = useState("daily");
+  const [salesRange, setSalesRange] = useState("daily");
   const [selectedOptionBar, setSelectedOptionBar] = useState("daily");
+  const [range, setRange] = useState("daily");
   const [IsOpenLine, setIsOpenLine] = useState(false);
   const [IsOpenBar, setIsOpenBar] = useState(false);
   const navigate = useNavigate();
@@ -613,90 +515,82 @@ const MacbookPro = () => {
           {statCards.map((stat, index) => (
             <Card
               key={index}
-              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full  xl:py-5 overflow-hidden"
+              className="bg-[#FFFFFF] justify-between flex w-full py-3 px-3 col-span-2 xl:col-span-1 h-full overflow-hidden"
             >
               <CardContent className="flex items-center my-2 ml-2">
                 <FontAwesomeIcon
                   icon={stat.icon}
                   color={stat.color}
-                  className={`${stat.bg} p-3 text-xl rounded-xl`}
+                  className={`${stat.bg} p-2 sm:p-3 text-lg sm:text-xl rounded-xl`}
                 />
-                <div className="flex ml-auto flex-col w-full h-full justify-center pl-4 ">
-                  <p className="font-['Montserrat',Helvetica] font-normal text-black text-xl">
+                <div className="flex ml-auto flex-col w-full h-full justify-center pl-4">
+                  <p className="font-['Montserrat',Helvetica] font-normal text-black text-sm sm:text-xl">
                     {stat.title}
                   </p>
-                  <p className="font-['Montserrat',Helvetica] font-semibold text-black text-2xl">
+                  <p className="font-['Montserrat',Helvetica] font-semibold text-black text-lg sm:text-2xl">
                     {stat.value}
                   </p>
                 </div>
               </CardContent>
-              <div className="flex  mt-auto aspect-square items-center justify-center hover:bg-gray-100 rounded-full border-[#EFEFF0] border">
+              <div className="hidden sm:flex mt-auto aspect-square items-center justify-center hover:bg-gray-100 rounded-full border-[#EFEFF0] border">
                 <FontAwesomeIcon
                   onClick={() => navigate(stat.to)}
                   icon={faArrowUp}
-                  className="md:text-xl p-2 aspect-square  text-md text-[#888888] rotate-45"
+                  className="text-sm sm:md:text-xl p-1 sm:p-2 aspect-square text-xs sm:text-md text-[#888888] rotate-45"
                 />
               </div>
             </Card>
           ))}
         </div>
-
-        <div className="w-full h-full  flex col-span-4">
-          <div className="  grid grid-cols-4 w-full h-full gap-5">
+        <div className="w-full h-full flex col-span-4">
+          <div className="grid grid-cols-4 w-full h-full gap-5">
             <div className="flex w-full h-full lg:col-span-3 col-span-4 min-h-[300px]">
               <Card className="bg-[#FFFFFF] flex flex-col w-full py-4 h-full">
                 <div className="flex justify-between px-2 mx-4 mb-3 py-1">
                   <div>
-                    <div className="text-lg">Sales Overview</div>
-
-                    <div className="text-[#757575] text-sm">
+                    <div className="text-sm sm:text-lg">Sales Overview</div>
+                    <div className="text-[#757575] text-xs sm:text-sm">
                       May 25, 2025 - Jun 25, 2025
                     </div>
                   </div>
-                  <div className=" flex gap-3">
+                  <div className="flex gap-3">
                     <div>
-                      <button className="bg-[#F89320] h-fit text-white p-2 rounded-xl hover:bg-orange-300">
+                      <button className="bg-[#F89320] h-fit text-white p-1 sm:p-2 rounded-xl hover:bg-orange-300">
                         <FontAwesomeIcon
-                          className="px-1"
+                          className="text-sm sm:text-base px-1"
                           icon={faPenToSquare}
                         />
                       </button>
                     </div>
                     <div className="bg-[#F89320] rounded-xl h-fit flex p-1 py-1 relative">
                       <select
-                        value={selectedOption}
-                        onChange={(e) => setSelectedOption(e.target.value)}
-                        // onFocus={() => setIsOpenLine(true)}
-                        // onMouseDown={() => setIsOpenLine(false)}
+                        value={salesRange}
+                        onChange={(e) => setSalesRange(e.target.value)}
                         onClick={() => setIsOpenLine(!IsOpenLine)}
                         onBlur={() => setIsOpenLine(false)}
-                        className=" text-white w-[110px] bg-[]  p-1 py-1 rounded-xl text-md appearance-none hover:outline-none focus:outline-none"
+                        className="text-white w-[110px] bg-[#F89320] p-1 py-1 rounded-xl text-sm appearance-none hover:outline-none focus:outline-none"
                       >
-                        <div className="text-black  p-4">
-                          <option className="" value="daily">
-                            Daily
-                          </option>
-                          <option value="weekly">Weekly</option>
-                          <option value="monthly">Monthly</option>
-                          <option value="yearly">Yearly</option>
-                        </div>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
                       </select>
                       <div className="pointer-events-none text-white right-[10%] top-[20%] absolute">
                         <FontAwesomeIcon
-                          className="p-0"
+                          className="text-sm sm:text-base p-0"
                           icon={IsOpenLine ? faAngleUp : faAngleDown}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="  rounded-lg m-2 outline-none focus:outline-none">
+                <div className="rounded-lg m-2 outline-none focus:outline-none">
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart
-                      data={data.daily}
+                      data={datasets[salesRange]}
                       margin={{ top: 5, right: 1, left: 1, bottom: 5 }}
                     >
-                      <XAxis dataKey="date" />
+                      <XAxis dataKey="date" fontSize={10} />
                       <Tooltip />
                       <Line
                         type="monotone"
@@ -709,7 +603,6 @@ const MacbookPro = () => {
                 </div>
               </Card>
             </div>
-
             <div className="grid grid-cols-2 w-full h-full lg:col-span-1 col-span-4 gap-5">
               {cards.slice(0, 2).map((cards, index) => (
                 <CardFinal {...cards} key={index} />
@@ -717,95 +610,86 @@ const MacbookPro = () => {
             </div>
           </div>
         </div>
-
         <div className="flex col-span-4 w-full h-full">
-          <div className="grid grid-cols-4  w-full h-full gap-5">
-            {/* Left Column */}
-            <div className="grid grid-cols-2 w-full h-full lg:col-span-1 col-span-4 gap-5 ">
-              {/* In hand Card */}
+          <div className="grid grid-cols-4 w-full h-full gap-5">
+            <div className="grid grid-cols-2 w-full h-full lg:col-span-1 col-span-4 gap-5">
               {cards.slice(2, 4).map((cards, index) => (
                 <CardFinal {...cards} key={index} />
               ))}
             </div>
-
-            {/* Middle Column - Bar Chart */}
-            <div className="bg-[#FFFFFF] grid grid-cols-4 w-full h-full lg:col-span-3 col-span-4 min-h-[300px] rounded-xl">
-              <Card className="rounded-r-none flex flex-col col-span-3 w-full py-4 h-full ">
+            <div className="grid grid-cols-3 bg-[#FFFFFF] w-full h-full lg:col-span-3 col-span-4 min-h-[300px] rounded-xl relative">
+              <Card className="rounded-r-none flex flex-col w-full pt-4 h-full col-span-3 md:col-span-2">
                 <div className="flex justify-between px-2 mx-4 mb-3 py-1">
                   <div>
-                    <div className="text-lg">Staff Overview</div>
-
-                    <div className="text-[#757575] text-sm">
+                    <div className="text-sm sm:text-lg">Staff Overview</div>
+                    <div className="text-[#757575] text-xs sm:text-sm">
                       May 25, 2025 - Jun 25, 2025
                     </div>
                   </div>
-                  <div className=" flex gap-3">
+                  <div className="flex gap-3">
                     <div>
-                      <button className="bg-[#F89320] h-fit text-white p-2 rounded-xl hover:bg-orange-300">
+                      <button className="bg-[#F89320] h-fit text-white p-1 sm:p-2 rounded-xl hover:bg-orange-300">
                         <FontAwesomeIcon
-                          className="px-1"
+                          className="text-sm sm:text-base px-1"
                           icon={faPenToSquare}
                         />
                       </button>
                     </div>
-                    <div className="bg-[#F89320] rounded-xl h-fit flex p-1 py-1  relative">
+                    <div className="bg-[#F89320] rounded-xl h-fit flex p-1 py-1 relative">
                       <select
-                        value={selectedOptionBar}
-                        onChange={(e) => setSelectedOptionBar(e.target.value)}
-                        // onFocus={() => setIsOpenLine(true)}
-                        // onMouseDown={() => setIsOpenLine(false)}
+                        value={range}
+                        onChange={(e) => setRange(e.target.value)}
                         onClick={() => setIsOpenBar(!IsOpenBar)}
                         onBlur={() => setIsOpenBar(false)}
-                        className=" text-white w-[110px] p-1 bg-[#F89320]  py-1 rounded-xl text-md appearance-none focus:outline-none"
+                        className="text-white w-[110px] bg-[#F89320] p-1 py-1 rounded-xl text-sm appearance-none focus:outline-none"
                       >
-                        <option className="" value="daily">
-                          Daily
-                        </option>
+                        <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
                         <option value="yearly">Yearly</option>
                       </select>
                       <div className="pointer-events-none text-white right-[10%] top-[20%] absolute">
                         <FontAwesomeIcon
-                          className="p-0"
+                          className="text-sm sm:text-base p-0"
                           icon={IsOpenBar ? faAngleUp : faAngleDown}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    width={500}
-                    height={300}
-                    data={employeeData.daily}
-                    margin={{
-                      top: 20,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <XAxis dataKey="name" />
-
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={employeeData[range]}>
+                    <XAxis dataKey="name" fontSize={10} />
                     <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Abbas" stackId="a" fill="#3679F6" />
-                    <Bar dataKey="Ayub" stackId="a" fill="#8FF8F5" />
-                    <Bar dataKey="Haider" stackId="a" fill="#F5C38F" />
-                    <Bar dataKey="JK" stackId="a" fill="#EF4646" />
+                    <Bar dataKey="Abbas" stackId="a" fill="#6366f1" />
+                    <Bar dataKey="Ayub" stackId="a" fill="#22c55e" />
+                    <Bar dataKey="Haider" stackId="a" fill="#facc15" />
+                    <Bar dataKey="JK" stackId="a" fill="#f97316" />
                   </BarChart>
                 </ResponsiveContainer>
               </Card>
-              <div className="flex justify-around flex-col p-3 ">
-                <div className=" p-2 text-xl">Legends</div>
-                <div className="grid place-items-center  grid-cols-3">
-                  {legends.map((legend, index) => (
-                    <div className="p-1  ">
-                      <img src={legend.icon} alt="" />
-                      <div>{legend.name}</div>
-                    </div>
-                  ))}
+              <div className="flex md:col-span-1 col-span-3 flex-col p-3">
+                <div className="p-2 text-sm sm:text-xl font-semibold">
+                  Legends
+                </div>
+                <div className="overflow-y-auto sm:h-[300px] h-[250px] scrollbar-hide">
+                  <div className="flex flex-col gap-4">
+                    {legends.map((legend, index) => (
+                      <div className="flex items-center space-y-2" key={index}>
+                        <img
+                          src={legend.icon}
+                          alt={legend.name}
+                          className="min-w-8 h-8 sm:min-w-14 sm:h-14 cursor-pointer"
+                          title={legend.name}
+                        />
+                        <div className="relative group w-full max-w-[120px] sm:max-w-[140px] overflow-auto">
+                          <p className="truncate text-xs sm:text-sm text-center m-2 cursor-pointer">
+                            {legend.name}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -815,5 +699,5 @@ const MacbookPro = () => {
     </div>
   );
 };
-export default MacbookPro;
 
+export default MacbookPro;

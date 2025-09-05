@@ -44,7 +44,7 @@ const ViewDetails = () => {
       animate={{ opacity: 1, x: 0 }} // slide into place
       exit={{ opacity: 0, x: -100 }} // slide out left
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="bg-gray-100 p-5 min-h-screen"
+      className="bg-gray-100 p-5 h-[calc(100vh-64px)] overflow-y-auto scrollbar-hide"
     >
       <div className="flex flex-col md:flex-row gap-6">
         {/* Image Section */}

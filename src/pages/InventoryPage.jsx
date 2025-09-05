@@ -361,8 +361,14 @@ export default function DeliveryStatus() {
       {/* Fixed Navbar */}
 
       {addInventory && (
-        <div className="z-9999 fixed backdrop-blur-sm bg-black/30 bg-opacity-50 top-0 right-0 h-full w-full flex justify-end rounded-r-2xl">
-          <div className="h-full w-1/3">
+        <div
+          className="z-9999 fixed backdrop-blur-sm bg-black/30 bg-opacity-50 top-0 right-0 h-full w-full flex justify-end rounded-r-2xl"
+          onClick={() => setAddInventory(false)}
+        >
+          <div
+            className="h-full w-[100%] lg:w-[50%] xl:w-[40%]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <AddInventory
               setAddInventory={setAddInventory}
               addInventory={addInventory}

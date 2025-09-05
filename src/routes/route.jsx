@@ -42,6 +42,7 @@ import Acknoledgement from "../settings/Privacy & Security/acKnowledgement";
 import ChangePassword from "../settings/Privacy & Security/changePassword";
 import PrivacyAndSecurity from "../settings/Privacy & Security/privacyandSecurity";
 import PrivacyPolicy from "../settings/Privacy & Security/privacyPolicy";
+import BillingSummary from "../pages/BillingSummary";
 
 export const sidebarRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -54,6 +55,7 @@ export const sidebarRoutes = [
   { path: "/order-request", element: <OrderRequest /> },
   { path: "/delivery-status", element: <DeliveryStatus /> },
   { path: "/subscription", element: <Subscription /> },
+  { path: "/billing-summary", element: <BillingSummary /> },
   { path: "/recycle-bin", element: <RecycleBin /> },
   { path: "/settings", element: <Settings /> },
   { path: "/view-details", element: <ViewDetails /> },

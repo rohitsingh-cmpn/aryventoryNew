@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MdOutlineInventory, MdOutlineSettings } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
+import { Link, useLocation } from "react-router-dom";
 import {
   FaHome,
   FaTruck,
@@ -13,8 +14,6 @@ import {
   FaTrash,
   FaBars,
 } from "react-icons/fa";
-
-import SidebarItem from "./SidebarItem";
 
 const sideItem = [
   { icon: <FaHome />, label: "Dashboard", route: "/dashboard" },
@@ -29,6 +28,42 @@ const sideItem = [
   { icon: <FaCreditCard />, label: "Subscription", route: "/subscription" },
   { icon: <FaTrash />, label: "Recycle Bin", route: "/recycle-bin" },
 ];
+
+// Moved SidebarItem outside of Sidebar component for better structure
+const SidebarItem = ({ icon, label, route, isOpen, onClick }) => {
+  const location = useLocation();
+  const isActive = location.pathname === route;
+
+  return (
+    <Link
+      to={route}
+      onClick={onClick}
+      className={`flex relative items-center gap-3 px-3 py-2  rounded-lg group
+        ${
+          isActive
+            ? "bg-white text-orange-500 font-semibold"
+            : "hover:bg-orange-300"
+        }
+      `}
+    >
+      <span className="flex h-7 pt-2">{icon}</span>
+      {/* Floating label on hover - only when sidebar is shrunk */}
+      <div className="hidden lg:block">
+        {!isOpen && (
+          <div
+            className={`absolute left-full top-1/2 transform -translate-y-1/2 ml-2 z-50 px-4 py-1 rounded-2xl bg-[#F89320] text-white text-lg whitespace-nowrap transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100`}
+          >
+            {label}
+          </div>
+        )}
+      </div>
+      {/* Always shown if sidebar is open */}
+     
+        <span className="  whitespace-nowrap overflow-hidden">{label}</span>
+     
+    </Link>
+  );
+};
 
 const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
   const [isShrinked, setShrinked] = useState(false);
@@ -50,11 +85,18 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [setSidebarOpen]);
 
+  // Handle sidebar item click - close sidebar on mobile
+  const handleItemClick = () => {
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <div
       ref={sidebarRef}
       className={`
-        fixed lg:static z-50 left-0 bg-[#FFFFFF] transform transition-transform duration-300 ease-in-out flex-shrink-0
+        fixed lg:static z-50 left-0 transform transition-all duration-300 ease-in-out flex-shrink-0
         ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0
@@ -83,10 +125,10 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
 
           {/* Shrink Toggle */}
           <div
-            className="hidden lg:block"
+            className="hidden lg:block cursor-pointer"
             onClick={() => setShrinked(!isShrinked)}
           >
-            <SidebarItem icon={<FaBars />} label="Menu" isopen={!isShrinked} />
+            <SidebarItem icon={<FaBars />} label="Menu" isOpen={!isShrinked} />
           </div>
 
           <div className="py-2">
@@ -95,10 +137,15 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
         </div>
 
         {/* Sidebar Items */}
-        <div className="overflow-auto scrollbar-hide h-full">
+        <div className="overflow-y-auto scrollbar-hide h-full">
           <div className="flex flex-col gap-2 text-lg">
             {sideItem.map((item, i) => (
-              <SidebarItem key={i} {...item} isopen={!isShrinked} />
+              <SidebarItem
+                key={i}
+                {...item}
+                isOpen={!isShrinked}
+                onClick={handleItemClick}
+              />
             ))}
           </div>
         </div>
@@ -109,16 +156,16 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
             icon={<MdOutlineSettings />}
             label="Settings"
             route="/settings/settingPage"
-            isopen={!isShrinked}
+            isOpen={!isShrinked}
+            onClick={handleItemClick}
           />
-
           <div className="flex h-11 gap-2 overflow-hidden items-center">
             <img
               src="https://aryventory.com/assets/AryVentory-Drwj0Dr8.jpg"
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            <div>
+            <div >
               <div className="font-bold text-lg">Aryventory</div>
               <span className="text-xs text-white/80">Version 1.3.1</span>
             </div>

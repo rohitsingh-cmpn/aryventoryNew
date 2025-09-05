@@ -141,7 +141,7 @@ const FilterSection = memo(
 
 // Memoized ProductCard component
 const ProductCard = memo(({ product, viewMode, onAccept, onReject }) => {
-  const isList = viewMode === "list";
+  const isList = viewMode === "grid";
 
   const handleAccept = useCallback(() => {
     onAccept(product.id);
@@ -189,10 +189,9 @@ const ProductCard = memo(({ product, viewMode, onAccept, onReject }) => {
           size="sm"
           className="flex-1/2 bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105 text-xs"
         >
-          View Product  
-          <FaArrowRight/>
+          View Product
+          <FaArrowRight />
         </Button>
-        
       </div>
     </>
   );
@@ -316,7 +315,7 @@ const OrderRequest = () => {
   });
   const [searchQuery, setSearchQuery] = useState("");
   const [showMobileFilter, setShowMobileFilter] = useState(false);
-  const [viewMode, setViewMode] = useState("grid");
+  const [viewMode, setViewMode] = useState("list");
   const [isMobile, setIsMobile] = useState(false);
 
   const [expandedSections, setExpandedSections] = useState({
@@ -448,7 +447,7 @@ const OrderRequest = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
       if (window.innerWidth < 768) {
-        setViewMode("list");
+        setViewMode("grid");
       }
     };
 
@@ -541,7 +540,7 @@ const OrderRequest = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh-65px)] overflow-hidden justify-center w-full ">
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-64px)] overflow-hidden justify-center w-full ">
       <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
         <main className=" p-4 flex flex-col flex-1 ">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
@@ -684,7 +683,7 @@ const OrderRequest = () => {
                   </h1>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   {/* Search Input */}
                   <div className="relative">
                     <Input
@@ -693,7 +692,7 @@ const OrderRequest = () => {
                       value={searchQuery}
                       onChange={handleSearchChange}
                     />
-                    <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
+                    <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-4 h-4" />
                   </div>
 
                   <div className="lg:hidden flex justify-end">
@@ -701,41 +700,44 @@ const OrderRequest = () => {
                       onClick={handleMobileFilterToggle}
                       className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
                     >
-                      <FilterIcon className="w-4 h-4 mr-2" />
+                      <FilterIcon className="w-4 h-4 " />
                       Filter
                     </Button>
                   </div>
 
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleViewModeChange("grid")}
-                    className={`transition-all duration-200 ${
-                      viewMode === "grid"
-                        ? "bg-[#f89320] hover:bg-[#e88418]"
-                        : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
-                    }`}
-                  >
-                    <GridIcon className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleViewModeChange("list")}
-                    className={`transition-all duration-200 ${
-                      viewMode === "list"
-                        ? "bg-[#f89320] hover:bg-[#e88418]"
-                        : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
-                    }`}
-                  >
-                    <ListIcon className="w-4 h-4" />
-                  </Button>
+                  <div className=" gap-2 hidden md:flex ">
+                    {" "}
+                    <Button
+                      variant={viewMode === "grid" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handleViewModeChange("grid")}
+                      className={`transition-all duration-200 ${
+                        viewMode === "grid"
+                          ? "bg-[#f89320] hover:bg-[#e88418]"
+                          : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
+                      }`}
+                    >
+                      <GridIcon className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant={viewMode === "list" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handleViewModeChange("list")}
+                      className={`transition-all duration-200 ${
+                        viewMode === "list"
+                          ? "bg-[#f89320] hover:bg-[#e88418]"
+                          : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
+                      }`}
+                    >
+                      <ListIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
 
               <div
                 className={`
-                overflow-y-auto max-h-[calc(100vh-180px)] lg:max-h-[calc(100vh-180px)]
+                overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]
                 ${
                   viewMode === "grid"
                     ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
@@ -842,36 +844,6 @@ const OrderRequest = () => {
                 </FilterSection>
 
                 <FilterSection
-                  title="Price Range"
-                  sectionKey="price"
-                  expandedSections={expandedSections}
-                  toggleSection={toggleSection}
-                >
-                  <div className="space-y-3">
-                    <div className="flex gap-2">
-                      <Input
-                        type="number"
-                        placeholder="Min"
-                        value={filters.priceMin}
-                        onChange={(e) =>
-                          handlePriceChange("priceMin", e.target.value)
-                        }
-                        className="flex-1 h-10"
-                      />
-                      <Input
-                        type="number"
-                        placeholder="Max"
-                        value={filters.priceMax}
-                        onChange={(e) =>
-                          handlePriceChange("priceMax", e.target.value)
-                        }
-                        className="flex-1 h-10"
-                      />
-                    </div>
-                  </div>
-                </FilterSection>
-
-                <FilterSection
                   title="Color"
                   sectionKey="color"
                   expandedSections={expandedSections}
@@ -887,6 +859,36 @@ const OrderRequest = () => {
                         label={color.label}
                       />
                     ))}
+                  </div>
+                </FilterSection>
+
+                <FilterSection
+                  title="Price Range"
+                  sectionKey="price"
+                  expandedSections={expandedSections}
+                  toggleSection={toggleSection}
+                >
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <Input
+                        type="number"
+                        placeholder="Min"
+                        value={filters.priceMin}
+                        onChange={(e) =>
+                          handlePriceChange("priceMin", e.target.value)
+                        }
+                        className="flex-1 h-10 border-2 border-gray-200 focus:border-[#f89320] rounded-lg focus:outline-none focus:ring-0"
+                      />
+                      <Input
+                        type="number"
+                        placeholder="Max"
+                        value={filters.priceMax}
+                        onChange={(e) =>
+                          handlePriceChange("priceMax", e.target.value)
+                        }
+                        className="flex-1 h-10 border-2  border-gray-200 focus:border-[#f89320] rounded-lg focus:outline-none focus:ring-0"
+                      />
+                    </div>
                   </div>
                 </FilterSection>
               </div>

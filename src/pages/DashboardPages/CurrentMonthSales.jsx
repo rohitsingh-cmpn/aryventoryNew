@@ -703,8 +703,8 @@ const CurrentMonthSales = () => {
                   </h1>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-2">
-                  <div className="relative">
+                <div className=" flex items-center gap-2">
+                  <div className="relative  ">
                     <Input
                       className=" bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
                       placeholder="Search products..."
@@ -713,41 +713,43 @@ const CurrentMonthSales = () => {
                     />
                     <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
                   </div>
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleViewModeChange("grid")}
-                    className={`transition-all duration-200 ${
-                      viewMode === "grid"
-                        ? "bg-[#f89320] hover:bg-[#e88418]"
-                        : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
-                    }`}
-                  >
-                    <GridIcon className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handleViewModeChange("list")}
-                    className={`transition-all duration-200 ${
-                      viewMode === "list"
-                        ? "bg-[#f89320] hover:bg-[#e88418]"
-                        : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
-                    }`}
-                  >
-                    <ListIcon className="w-4 h-4" />
-                  </Button>
+                  <div className="lg:hidden  flex justify-end">
+                    <Button
+                      onClick={handleMobileFilterToggle}
+                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    >
+                      <FilterIcon className="w-4 h-4 mr-2" />
+                      Filter
+                    </Button>
+                  </div>
+                  <div className="hidden sm:flex flex-row gap-2">
+                    {" "}
+                    <Button
+                      variant={viewMode === "grid" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handleViewModeChange("grid")}
+                      className={`transition-all duration-200 ${
+                        viewMode === "grid"
+                          ? "bg-[#f89320] hover:bg-[#e88418]"
+                          : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
+                      }`}
+                    >
+                      <GridIcon className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant={viewMode === "list" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handleViewModeChange("list")}
+                      className={`transition-all duration-200 ${
+                        viewMode === "list"
+                          ? "bg-[#f89320] hover:bg-[#e88418]"
+                          : "border-[#f89320] text-[#f89320] hover:bg-[#f89320] hover:text-white"
+                      }`}
+                    >
+                      <ListIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-
-              <div className="lg:hidden mb-4 flex justify-end">
-                <Button
-                  onClick={handleMobileFilterToggle}
-                  className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
-                >
-                  <FilterIcon className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
               </div>
 
               <div

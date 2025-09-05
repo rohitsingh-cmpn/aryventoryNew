@@ -85,19 +85,22 @@ const SalesGraph = () => {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={datasets[range]}>
-          <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-          <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#2563eb"
-            strokeWidth={2}
-            dot={{ r: 4, fill: "#2563eb", strokeWidth: 2, stroke: "#fff" }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="flex-1 w-full h-64 md:h-80">
+        {" "}
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={datasets[range]}>
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#2563eb"
+              strokeWidth={2}
+              dot={{ r: 4, fill: "#2563eb", strokeWidth: 2, stroke: "#fff" }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
       <div className="text-sm md:text-base text-center text-gray-600 font-medium mt- pt-2 italic border-t border-gray-300 select-none">
         Data on {range.charAt(0).toUpperCase() + range.slice(1)} Based

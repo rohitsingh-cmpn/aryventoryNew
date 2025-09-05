@@ -17,9 +17,12 @@ const Navbar = ({
   const navigate = useNavigate();
   const location = useLocation();
   const isNotificationPage = location.pathname === "/notification-page";
+  const isOrganizationPage = location.pathname === "/organization-page";
+
 
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef(null);
+  const [open, setOpen] = useState(false);
 
   // ✅ Close popup when clicking outside
   useEffect(() => {
@@ -58,13 +61,13 @@ const Navbar = ({
            <h1 className={`text-gray-800 text-lg sm:text-2xl font-bold whitespace-nowrap ${className}`}>
              NextGen Electronics
            </h1>
-           <div className="text-gray-600 p-1 hover:bg-gray-100 text-sm">
+       {!isOrganizationPage &&<div className="text-gray-600 p-1 hover:bg-gray-100 text-sm">
              <FontAwesomeIcon
                className="text-xl hover:bg-gray-100"
                icon={faChevronDown}
-               onClick={() => navigate("/organization-page")}
+               onClick={() =>{ navigate("/organization-page"); }}
              />
-           </div>
+           </div>}
          </div>
        </div>
 

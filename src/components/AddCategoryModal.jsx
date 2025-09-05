@@ -67,6 +67,7 @@ const gadgetIcons = [
 const AddCategoryModal = ({ onClose, onAdd }) => {
   const [categoryName, setCategoryName] = useState("");
   const [selectedIcon, setSelectedIcon] = useState(null);
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleAdd = () => {
     if (categoryName.trim() && selectedIcon) {
@@ -77,23 +78,32 @@ const AddCategoryModal = ({ onClose, onAdd }) => {
       });
       setCategoryName("");
       setSelectedIcon(null);
+      setIsAdded(true);
+
+      // Reset the added state after animation
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 1000);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/30">
-      <div className="bg-white p-6 rounded-xl w-[600px] max-h-[90vh] overflow-y-auto relative shadow-lg">
+    <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/30" onClick={onClose}>
+      <div
+        className={`bg-white p-6 rounded-xl w-[600px] max-h-[90vh] overflow-y-auto relative shadow-lg transition-all duration-300 ${
+          isAdded ? "ring-4 ring-orange-400" : ""
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-lg p-1 rounded-full hover:bg-gray-100"
+          className="absolute top-3 right-3 text-white  text-lg p-1 rounded-md bg-[#F89320] hover:bg-orange-300"
         >
           <X className="w-5 h-5" />
         </button>
-
         <h3 className="font-semibold mb-4 text-xl">Add New Category</h3>
-
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block  font-medium text-gray-700 mb-2">
             Category Name
           </label>
           <input
@@ -104,7 +114,6 @@ const AddCategoryModal = ({ onClose, onAdd }) => {
             className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 hover:border-orange-300 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100"
           />
         </div>
-
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Select Icon
@@ -130,7 +139,6 @@ const AddCategoryModal = ({ onClose, onAdd }) => {
             })}
           </div>
         </div>
-
         <div className="flex gap-3">
           <button
             onClick={onClose}
@@ -145,7 +153,7 @@ const AddCategoryModal = ({ onClose, onAdd }) => {
               ${
                 categoryName.trim() && selectedIcon
                   ? "bg-[#F89320] text-white hover:bg-orange-400"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-[#F89320] text-white hover:bg-orange-400 cursor-not-allowed"
               }`}
           >
             Add Category

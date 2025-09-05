@@ -7,10 +7,10 @@ import {
   CheckIcon,
   ShareIcon,
   XIcon,
+  FileText,
 } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import FilterDate from "./filterDate";
-
 const Card = ({ children, className = "" }) => (
   <div
     className={`bg-white rounded-2xl shadow-sm border border-gray-200 ${className}`}
@@ -18,11 +18,9 @@ const Card = ({ children, className = "" }) => (
     {children}
   </div>
 );
-
 const CardContent = ({ children, className = "" }) => (
-  <div className={`p-6 ${className}`}>{children}</div>
+  <div className={`p- ${className}`}>{children}</div>
 );
-
 const Button = ({
   children,
   variant = "default",
@@ -32,21 +30,18 @@ const Button = ({
 }) => {
   const baseStyle =
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
-
   const variants = {
     default: "bg-[#f89320] text-white hover:bg-[#f89320]/90",
     outline:
       "border border-[#f89320] text-[#f89320] bg-transparent hover:bg-[#f89320]/10",
     ghost: "hover:bg-accent hover:text-accent-foreground",
   };
-
   const sizes = {
     default: "h-10 py-2 px-4",
     sm: "h-9 px-3 rounded-md",
     lg: "h-11 px-8 rounded-md",
     icon: "h-10 w-10",
   };
-
   return (
     <button
       className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className} cursor-pointer`}
@@ -56,47 +51,45 @@ const Button = ({
     </button>
   );
 };
-
 const Input = ({ className, ...props }) => (
   <input
     className={`flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     {...props}
   />
 );
-
 const Separator = ({ className }) => (
   <hr className={`border-gray-200 ${className}`} />
 );
-
 const OrderCard = ({ order, viewMode = "grid" }) => {
   const getStatusClasses = (status) => {
     switch (status.toLowerCase()) {
       case "approved":
-        return "text-[#38c468] bg-[#38c468]/10";
+        return "text-[#38c468] ";
       case "rejected":
-        return "text-[#ef4444] bg-[#ef4444]/10";
+        return "text-[#ef4444] ";
       case "expired":
-        return "text-[#f59e0b] bg-[#f59e0b]/10";
+        return "text-[#f59e0b] ";
       default:
-        return "text-gray-500 bg-gray-500/10";
+        return "text-gray-500 ";
     }
   };
-
-  const StatusBadge = ({ status }) => (
-    <div
-      className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getStatusClasses(
-        status
-      )}`}
-    >
-      {status === "approved" && <CheckIcon className="w-4 h-4" />}
-      {status === "rejected" && <XIcon className="w-4 h-4" />}
-      {status === "expired" && (
-        <div className="w-3 h-3 rounded-full bg-current" />
-      )}
-      <span>{status}</span>
-    </div>
-  );
-
+  const StatusBadge = ({ status }) => {
+    const statusLower = status.toLowerCase();
+    return (
+      <div
+        className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getStatusClasses(
+          status
+        )}`}
+      >
+        {statusLower === "approved" && <CheckIcon className="w-4 h-4" />}
+        {statusLower === "rejected" && <XIcon className="w-4 h-4" />}
+        {statusLower === "expired" && (
+          <div className="w-3 h-3 rounded-full bg-current" />
+        )}
+        <span>{status}</span>
+      </div>
+    );
+  };
   // --- List View ---
   if (viewMode === "list") {
     return (
@@ -117,7 +110,15 @@ const OrderCard = ({ order, viewMode = "grid" }) => {
               </div>
               <div className="flex justify-between items-center mb-2">
                 <p className="text-sm text-gray-500">{order.phone}</p>
-                <p className="text-sm text-gray-500">Qty: {order.quantity}</p>
+                <p className="text-sm text-gray-500">
+                  Quantity: {order.quantity}
+                </p>
+              </div>
+              {/* Added address field in list view */}
+              <div className="mb-2">
+                <p className="text-sm text-gray-500 truncate">
+                  {order.address}
+                </p>
               </div>
               <div className="flex justify-between items-center">
                 <StatusBadge status={order.status} />
@@ -138,34 +139,33 @@ const OrderCard = ({ order, viewMode = "grid" }) => {
       </Card>
     );
   }
-
   // --- Grid View (Default) ---
   return (
     <Card className="rounded-[20px] hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-      <CardContent className="p-5 flex flex-col flex-1">
-        <div className="flex justify-between items-start mb-4">
+      <CardContent className="p-4 flex flex-col flex-1">
+        <div className="flex justify-between items-start  ">
           <StatusBadge status={order.status} />
           <div className="text-right">
-            <p className="font-bold text-2xl text-gray-900">{order.price}</p>
-            <p className="text-sm text-gray-500 mt-1">Qty: {order.quantity}</p>
+            <p className="font-semibold text-xl text-gray-900">{order.price}</p>
+            <p className="text-xl  text-gray-900 ">
+              Quantity: {order.quantity}
+            </p>
           </div>
         </div>
-
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex  gap-4 mb-4">
           <img
             src={order.image}
             alt={order.customer}
             className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
           />
           <div className="min-w-0">
-            <p className="text-xl font-bold text-gray-800 truncate">
+            <p className="text-xl font-semibold text-gray-800 truncate">
               {order.customer}
             </p>
             <p className="text-base text-gray-500 mt-1">{order.phone}</p>
           </div>
         </div>
-
-        <div className="flex-1 mb-4 space-y-3">
+        <div className="flex-1 flex flex-row  space-y-3 justify-between gap-5">
           <div>
             <p className="text-sm font-medium text-gray-400">Address</p>
             <p className="text-base text-gray-700 line-clamp-2">
@@ -173,29 +173,28 @@ const OrderCard = ({ order, viewMode = "grid" }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-400">Requested On</p>
+            <p className="text-sm font-medium text-gray-400 text-nowrap">
+              Requested On
+            </p>
             <p className="text-base text-gray-700">{order.requestedDate}</p>
           </div>
         </div>
-
         <div className="flex gap-3 mt-auto">
-          <Button className="flex-1 py-3 h-auto text-base">
-            <span className="font-medium">View Product</span>
+          <Button className="flex-1 py-2 h-auto text-base">
+            <span className=" text-md font-normal">View Product</span>
             <ArrowRightIcon className="w-5 h-5 ml-2" />
           </Button>
           <Button
             size="icon"
-            variant="outline"
-            className="h-auto aspect-square py-3"
+            className="h-auto bg-[#F89320] aspect-square py-2"
           >
-            <ShareIcon className="w-5 h-5" />
+            <FileText className="w-6 h-6 text-white " />
           </Button>
         </div>
       </CardContent>
     </Card>
   );
 };
-
 const FilterComponent = ({
   initialFilters,
   onFilterChange,
@@ -204,41 +203,34 @@ const FilterComponent = ({
   onClose,
 }) => {
   const [filters, setFilters] = useState(initialFilters);
-
   const [showDatePicker, setshowDatePicker] = useState(null);
-
   // const currentYear = new Date().getFullYear();
   // const dateOptions = [{ value: "", label: "Any Day" }, ...Array.from({ length: 31 }, (_, i) => ({ value: i + 1, label: `${i + 1}` }))];
   // const monthOptions = [{ value: "", label: "Any Month" }, { value: 1, label: "Jan" }, { value: 2, label: "Feb" }, { value: 3, label: "Mar" }, { value: 4, label: "Apr" }, { value: 5, label: "May" }, { value: 6, label: "Jun" }, { value: 7, label: "Jul" }, { value: 8, label: "Aug" }, { value: 9, label: "Sep" }, { value: 10, label: "Oct" }, { value: 11, label: "Nov" }, { value: 12, label: "Dec" }];
   // const yearOptions = [{ value: "", label: "Any Year" }, ...Array.from({ length: 11 }, (_, i) => ({ value: currentYear - 5 + i, label: `${currentYear - 5 + i}` }))];
   const statusOptions = ["Approved", "Rejected", "Expired"];
-
   const handleSelectChange = (type, value) => {
     setFilters((prev) => ({
       ...prev,
       [type]: value === "" ? null : parseInt(value),
     }));
   };
-
   const handleStatusClick = (status) => {
     setFilters((prev) => ({
       ...prev,
       status: prev.status === status ? null : status,
     }));
   };
-
   const applyFilters = () => {
     onFilterChange(filters);
     if (isMobile && onClose) onClose();
   };
-
   const resetFilters = () => {
     const freshFilters = { date: null, month: null, year: null, status: null };
     setFilters(freshFilters);
     onReset();
     if (isMobile && onClose) onClose();
   };
-
   const SelectGroup = ({ label, value, options, cancel }) => (
     // <div className="mb-4">
     //     <label className="block text-sm font-medium text-gray-500 mb-2">{label}</label>
@@ -248,7 +240,6 @@ const FilterComponent = ({
     // </div>
     <FilterDate options={options} cancel={cancel} />
   );
-
   return (
     <Card className="w-full h-full rounded-2xl shadow-lg border-0 flex flex-col">
       <CardContent className="p-5 flex-1 flex flex-col">
@@ -256,7 +247,6 @@ const FilterComponent = ({
           <h2 className="text-2xl">Filters</h2>
         </div>
         <Separator className="mb-6" />
-
         {/* Scrollable Filter Options */}
         <div className="flex-1 overflow-y-auto pr-2 -mr-2">
           <div className="mb-4">
@@ -267,27 +257,23 @@ const FilterComponent = ({
               {/* <SelectGroup label="" value={filters.date} options={3} onChange={(e) => handleSelectChange('date', e.target.value)} />
               <SelectGroup label="" value={filters.month} options={2} onChange={(e) => handleSelectChange('month', e.target.value)} />
               <SelectGroup label="" value={filters.year} options={1} onChange={(e) => handleSelectChange('year', e.target.value)} /> */}
-
               <div className="flex flex-wrap gap-2">
                 <Button
                   onClick={() => setshowDatePicker(3)}
                   children={"Date"}
                   className="flex-1  text-center"
                 ></Button>
-
                 <Button
                   onClick={() => setshowDatePicker(2)}
                   children={"Month"}
                   className="flex-1 text-center"
                 ></Button>
-
                 <Button
                   onClick={() => setshowDatePicker(1)}
                   children={"Year"}
                   className="flex-1 text-center"
                 ></Button>
               </div>
-
               {/* {  && 
                 <div className=" fixed inset-0   flex items-center justify-center backdrop-blur-sm bg-white/30 bg-opacity-60 z-500 ">
                   <SelectGroup options={showDatePicker} cancel={setshowDatePicker} />
@@ -302,7 +288,6 @@ const FilterComponent = ({
               )}
             </div>
           </div>
-
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-500 mb-2">
               Status
@@ -321,7 +306,6 @@ const FilterComponent = ({
             </div>
           </div>
         </div>
-
         {/* Sticky Bottom Buttons */}
         <div className="mt-auto pt-5 flex gap-4 border-t border-gray-200">
           <Button
@@ -342,7 +326,6 @@ const FilterComponent = ({
     </Card>
   );
 };
-
 const OrderHistory = () => {
   const [filters, setFilters] = useState({
     date: null,
@@ -353,7 +336,6 @@ const OrderHistory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
-
   const allOrders = [
     {
       id: 1,
@@ -421,7 +403,6 @@ const OrderHistory = () => {
       dateObj: new Date(2025, 6, 25),
     },
   ];
-
   const filteredOrders = useMemo(() => {
     return allOrders.filter((order) => {
       const searchLower = searchQuery.toLowerCase();
@@ -447,12 +428,9 @@ const OrderHistory = () => {
       return true;
     });
   }, [allOrders, filters, searchQuery]);
-
   const handleFilterChange = (newFilters) => setFilters(newFilters);
-
   const resetFilters = () =>
     setFilters({ date: null, month: null, year: null, status: null });
-
   return (
     <div className="bg-[#f7f8fa] w-full h-full flex">
       {/* Main Content */}
@@ -467,7 +445,6 @@ const OrderHistory = () => {
               onReset={resetFilters}
             />
           </aside>
-
           {/* Cards Container */}
           <div className="flex-1 h-full flex flex-col">
             {/* Mobile Filter Button & View Toggle */}
@@ -475,7 +452,7 @@ const OrderHistory = () => {
               {/* Search and Header */}
               <div className="flex flex-col sm:flex-row  mb-6 gap-4">
                 <h2 className="text-2xl font-semibold text-gray-800">
-                  Buy Products  ({filteredOrders.length})
+                  Buy Products ({filteredOrders.length})
                 </h2>
               </div>
               <div className="flex  gap-2 ml-auto">
@@ -494,23 +471,25 @@ const OrderHistory = () => {
                     Filter
                   </Button>
                 </div>
-                <Button
-                  variant={viewMode === "grid" ? "default" : "outline"}
-                  size="icon"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <GridIcon className="w-5 h-5" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "outline"}
-                  size="icon"
-                  onClick={() => setViewMode("list")}
-                >
-                  <ListIcon className="w-5 h-5" />
-                </Button>
+                <div className=" gap-2 hidden md:flex">
+                  {" "}
+                  <Button
+                    variant={viewMode === "grid" ? "default" : "outline"}
+                    size="icon"
+                    onClick={() => setViewMode("grid")}
+                  >
+                    <GridIcon className="w-5 h-5" />
+                  </Button>
+                  <Button
+                    variant={viewMode === "list" ? "default" : "outline"}
+                    size="icon"
+                    onClick={() => setViewMode("list")}
+                  >
+                    <ListIcon className="w-5 h-5" />
+                  </Button>
+                </div>
               </div>
             </div>
-
             {/* Cards Grid/List - Scrollable */}
             <div
               className={`overflow-y-auto flex pr-2 -mr-2 scrollbar-thin scrollbar-thumb-[#f89320] scrollbar-track-gray-100
@@ -550,7 +529,6 @@ const OrderHistory = () => {
           </div>
         </div>
       </main>
-
       {/* Mobile Filter Modal */}
       {showMobileFilter && (
         <div className="lg:hidden fixed inset-0  backdrop-blur-sm bg-white/30 bg-opacity-60 z-500 flex items-end">
@@ -578,7 +556,6 @@ const OrderHistory = () => {
           </div>
         </div>
       )}
-
       {/* Inline Styles for Animations */}
       <style jsx global>{`
         @keyframes fadeInUp {
@@ -624,5 +601,4 @@ const OrderHistory = () => {
     </div>
   );
 };
-
 export default OrderHistory;
