@@ -398,8 +398,8 @@ const AddInventory = ({ setAddInventory, addInventory }) => {
   return (
     <div
       className={`
-        flex flex-col flex-1 justify-end rounded-r-2xl bg-gray-100  h-screen
-        transition-transform duration-500 ease-out transform
+        flex flex-col flex-1 justify-end  bg-gray-100  h-screen
+        transition-transform duration-500 ease-out transform mt-[56px]
         ${loaded ? "translate-x-0" : "translate-x-full"} overflow-y-auto
       `}
     >

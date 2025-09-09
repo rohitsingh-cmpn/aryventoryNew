@@ -1,571 +1,860 @@
 import {
   FilterIcon,
   GridIcon,
-  ListIcon,
   SearchIcon,
-  ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   CheckIcon,
-  ShareIcon,
   XIcon,
-  FileText,
+  MoveRight,
+  ArrowRightFromLine,
+  MoveRightIcon,
+  AlignRight,
+  ChevronRight,
 } from "lucide-react";
-import React, { useState, useMemo } from "react";
-import FilterDate from "./filterDate";
-const Card = ({ children, className = "" }) => (
+import React, { useState, useMemo, useEffect, useCallback, memo } from "react";
+import { FaArrowRight } from "react-icons/fa";
+import "../index.css";
+import { useNavigate } from "react-router-dom";
+
+const Card = memo(({ children, className = "" }) => (
   <div
     className={`bg-white rounded-2xl shadow-sm border border-gray-200 ${className}`}
   >
     {children}
   </div>
+));
+
+const CardContent = memo(({ children, className = "" }) => (
+  <div className={` ${className}`}>{children}</div>
+));
+
+const Button = memo(
+  ({
+    children,
+    variant = "default",
+    size = "default",
+    className = "",
+    ...props
+  }) => {
+    const baseStyle =
+      "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
+    const variants = {
+      default: "bg-[#f89320] text-white hover:bg-[#f89320]/90",
+      outline:
+        "border border-[#f89320] text-[#f89320] bg-transparent hover:bg-[#f89320]/10",
+      ghost: "hover:bg-accent hover:text-accent-foreground",
+    };
+    const sizes = {
+      default: "h-10 py-2 px-4",
+      sm: "h-9 px-3 rounded-md",
+      lg: "h-11 px-8 rounded-md",
+      icon: "h-10 w-10",
+    };
+    return (
+      <button
+        className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className} cursor-pointer`}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
 );
-const CardContent = ({ children, className = "" }) => (
-  <div className={`p- ${className}`}>{children}</div>
-);
-const Button = ({
-  children,
-  variant = "default",
-  size = "default",
-  className = "",
-  ...props
-}) => {
-  const baseStyle =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
-  const variants = {
-    default: "bg-[#f89320] text-white hover:bg-[#f89320]/90",
-    outline:
-      "border border-[#f89320] text-[#f89320] bg-transparent hover:bg-[#f89320]/10",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-  };
-  const sizes = {
-    default: "h-10 py-2 px-4",
-    sm: "h-9 px-3 rounded-md",
-    lg: "h-11 px-8 rounded-md",
-    icon: "h-10 w-10",
-  };
-  return (
+
+const Input = memo(({ className, ...props }) => (
+  <input
+    className={`flex h-10 w-full rounded-md  bg-transparent px-3 py-2 text-sm  placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    {...props}
+  />
+));
+
+const Separator = memo(({ className }) => (
+  <hr className={`border-gray-200 ${className}`} />
+));
+
+// Memoized FilterButton component
+const FilterButton = memo(
+  ({ isSelected, onClick, children, className = "" }) => (
     <button
-      className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className} cursor-pointer`}
-      {...props}
+      onClick={onClick}
+      className={`
+    rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 transform hover:scale-105
+    ${
+      isSelected
+        ? "bg-[#f89320] text-white shadow-md"
+        : "bg-white text-black border border-gray-200 hover:bg-gray-50 hover:border-[#f89320]"
+    } ${className}
+    `}
     >
       {children}
     </button>
-  );
-};
-const Input = ({ className, ...props }) => (
-  <input
-    className={`flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-    {...props}
-  />
+  )
 );
-const Separator = ({ className }) => (
-  <hr className={`border-gray-200 ${className}`} />
-);
-const OrderCard = ({ order, viewMode = "grid" }) => {
-  const getStatusClasses = (status) => {
-    switch (status.toLowerCase()) {
-      case "approved":
-        return "text-[#38c468] ";
-      case "rejected":
-        return "text-[#ef4444] ";
-      case "expired":
-        return "text-[#f59e0b] ";
-      default:
-        return "text-gray-500 ";
-    }
-  };
-  const StatusBadge = ({ status }) => {
-    const statusLower = status.toLowerCase();
-    return (
-      <div
-        className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getStatusClasses(
-          status
-        )}`}
+
+// Memoized ColorButton component
+const ColorButton = memo(({ color, isSelected, onClick, label }) => (
+  <button
+    onClick={onClick}
+    className={`
+    w-10 h-10 rounded-full border-2 transition-all duration-200 transform hover:scale-110
+    ${isSelected ? "border-[#f89320] shadow-lg" : "border-gray-300"}
+    `}
+    style={{ backgroundColor: color.color }}
+    title={color.label}
+  >
+    {isSelected && (
+      <CheckIcon
+        className="w-5 h-5 mx-auto"
+        style={{
+          color:
+            color.color === "#FFFFFF" || color.color === "#94A3B8"
+              ? "#000000"
+              : "#FFFFFF",
+        }}
+      />
+    )}
+  </button>
+));
+
+// Memoized FilterSection component
+const FilterSection = memo(
+  ({ title, children, sectionKey, expandedSections, toggleSection }) => (
+    <div className="mb-4">
+      <button
+        onClick={() => toggleSection(sectionKey)}
+        className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
       >
-        {statusLower === "approved" && <CheckIcon className="w-4 h-4" />}
-        {statusLower === "rejected" && <XIcon className="w-4 h-4" />}
-        {statusLower === "expired" && (
-          <div className="w-3 h-3 rounded-full bg-current" />
+        <h3 className="font-medium text-lg font-['Montserrat',Helvetica]">
+          {title}
+        </h3>
+        {expandedSections[sectionKey] ? (
+          <ChevronUpIcon className="w-5 h-5 text-gray-600" />
+        ) : (
+          <ChevronDownIcon className="w-5 h-5 text-gray-600" />
         )}
-        <span>{status}</span>
-      </div>
-    );
-  };
-  // --- List View ---
-  if (viewMode === "list") {
+      </button>
+      {expandedSections[sectionKey] && (
+        <div className="mt-3 px-2 animate-fadeIn">{children}</div>
+      )}
+    </div>
+  )
+);
+
+const ProductCard = memo(
+  ({
+    product,
+    onAddToCart,
+    onUpdateQuantity,
+    onRemoveFromCart,
+    onViewDetails,
+  }) => {
+    const [quantity, setQuantity] = useState(0);
+    const isInCart = quantity > 0;
+
+    const handleAddToCart = useCallback(() => {
+      setQuantity(1);
+      onAddToCart(product, 1);
+    }, [product, onAddToCart]);
+
+    const handleIncreaseQuantity = useCallback(() => {
+      const newQuantity = quantity + 1;
+      setQuantity(newQuantity);
+      onUpdateQuantity(product, newQuantity);
+    }, [product, quantity, onUpdateQuantity]);
+
+    const handleDecreaseQuantity = useCallback(() => {
+      if (quantity > 1) {
+        const newQuantity = quantity - 1;
+        setQuantity(newQuantity);
+        onUpdateQuantity(product, newQuantity);
+      } else {
+        setQuantity(0);
+        onRemoveFromCart(product);
+      }
+    }, [product, quantity, onUpdateQuantity, onRemoveFromCart]);
+
+    // Handle card click to navigate to product details
+    const handleCardClick = useCallback(() => {
+      onViewDetails(product.id);
+    }, [product.id, onViewDetails]);
+
     return (
-      <Card className="rounded-[20px] hover:shadow-xl transition-all duration-300 w-full">
-        <CardContent className="p-4">
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-4">
+      <Card
+        className="rounded-xl border-gray-200 hover:shadow-xl transition-all duration-300 transform h-full cursor-pointer"
+        onClick={handleCardClick}
+      >
+        <CardContent className="p-4 flex flex-col h-full">
+          <div className="relative flex justify-center">
             <img
-              src={order.image}
-              alt={order.customer}
-              className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
+              className="w-full h-48 rounded-lg object-contain"
+              alt={product.name}
+              src={product.image}
             />
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-1">
-                <p className="text-lg font-bold text-gray-800 truncate">
-                  {order.customer}
-                </p>
-                <p className="text-lg font-bold text-gray-900">{order.price}</p>
-              </div>
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm text-gray-500">{order.phone}</p>
-                <p className="text-sm text-gray-500">
-                  Quantity: {order.quantity}
-                </p>
-              </div>
-              {/* Added address field in list view */}
-              <div className="mb-2">
-                <p className="text-sm text-gray-500 truncate">
-                  {order.address}
-                </p>
-              </div>
-              <div className="flex justify-between items-center">
-                <StatusBadge status={order.status} />
-                <p className="text-sm text-gray-500"> {order.requestedDate}</p>
-              </div>
+          </div>
+          <div className="flex-1 flex justify-between">
+            <div>
+              <h3 className="font-semibold text-lg text-gray-800">
+                {product.brand}
+              </h3>
+              <h3 className="text-lg text-gray-900">
+                supplier: {product.supplier}
+              </h3>
+              <h3 className="text-lg text-gray-900">
+                Color:{product.color}{" "}
+                <div
+                  className="h-4 w-4 ml-1 rounded-full inline-block border border-gray-500"
+                  style={{ backgroundColor: product.color }}
+                ></div>
+              </h3>
             </div>
-            <div className="flex sm:flex-col lg:flex-row gap-2 w-full sm:w-auto justify-end">
-              <Button size="sm" className="w-full sm:w-auto">
-                <span className="font-medium">View</span>
-                <ArrowRightIcon className="w-4 h-4 ml-2" />
-              </Button>
-              <Button size="icon" variant="outline">
-                <ShareIcon className="w-4 h-4" />
-              </Button>
+            <div>
+              <ChevronRight />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mb-2">
+            <div className="font- text-xl">
+              ₹{product.price.toLocaleString()}
+            </div>
+            <div onClick={(e) => e.stopPropagation()}>
+              {isInCart ? (
+                <div className="flex items-center">
+                  <Button
+                    onClick={handleDecreaseQuantity}
+                    size="sm"
+                    className="bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105 rounded-l-md rounded-r-none"
+                  >
+                    -
+                  </Button>
+                  <span className="px-3 py-1 bg-gray-100 text-gray-800 min-w-[40px] text-center">
+                    {quantity}
+                  </span>
+                  <Button
+                    onClick={handleIncreaseQuantity}
+                    size="sm"
+                    className="bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105 rounded-r-md rounded-l-none"
+                  >
+                    +
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  onClick={handleAddToCart}
+                  size="sm"
+                  className="w-full bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105"
+                >
+                  Add to Cart
+                </Button>
+              )}
             </div>
           </div>
         </CardContent>
       </Card>
     );
   }
-  // --- Grid View (Default) ---
-  return (
-    <Card className="rounded-[20px] hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-      <CardContent className="p-4 flex flex-col flex-1">
-        <div className="flex justify-between items-start  ">
-          <StatusBadge status={order.status} />
-          <div className="text-right">
-            <p className="font-semibold text-xl text-gray-900">{order.price}</p>
-            <p className="text-xl  text-gray-900 ">
-              Quantity: {order.quantity}
-            </p>
-          </div>
-        </div>
-        <div className="flex  gap-4 mb-4">
-          <img
-            src={order.image}
-            alt={order.customer}
-            className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
-          />
-          <div className="min-w-0">
-            <p className="text-xl font-semibold text-gray-800 truncate">
-              {order.customer}
-            </p>
-            <p className="text-base text-gray-500 mt-1">{order.phone}</p>
-          </div>
-        </div>
-        <div className="flex-1 flex flex-row  space-y-3 justify-between gap-5">
-          <div>
-            <p className="text-sm font-medium text-gray-400">Address</p>
-            <p className="text-base text-gray-700 line-clamp-2">
-              {order.address}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-gray-400 text-nowrap">
-              Requested On
-            </p>
-            <p className="text-base text-gray-700">{order.requestedDate}</p>
-          </div>
-        </div>
-        <div className="flex gap-3 mt-auto">
-          <Button className="flex-1 py-2 h-auto text-base">
-            <span className=" text-md font-normal">View Product</span>
-            <ArrowRightIcon className="w-5 h-5 ml-2" />
-          </Button>
-          <Button
-            size="icon"
-            className="h-auto bg-[#F89320] aspect-square py-2"
-          >
-            <FileText className="w-6 h-6 text-white " />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-const FilterComponent = ({
-  initialFilters,
-  onFilterChange,
-  onReset,
-  isMobile = false,
-  onClose,
-}) => {
-  const [filters, setFilters] = useState(initialFilters);
-  const [showDatePicker, setshowDatePicker] = useState(null);
-  // const currentYear = new Date().getFullYear();
-  // const dateOptions = [{ value: "", label: "Any Day" }, ...Array.from({ length: 31 }, (_, i) => ({ value: i + 1, label: `${i + 1}` }))];
-  // const monthOptions = [{ value: "", label: "Any Month" }, { value: 1, label: "Jan" }, { value: 2, label: "Feb" }, { value: 3, label: "Mar" }, { value: 4, label: "Apr" }, { value: 5, label: "May" }, { value: 6, label: "Jun" }, { value: 7, label: "Jul" }, { value: 8, label: "Aug" }, { value: 9, label: "Sep" }, { value: 10, label: "Oct" }, { value: 11, label: "Nov" }, { value: 12, label: "Dec" }];
-  // const yearOptions = [{ value: "", label: "Any Year" }, ...Array.from({ length: 11 }, (_, i) => ({ value: currentYear - 5 + i, label: `${currentYear - 5 + i}` }))];
-  const statusOptions = ["Approved", "Rejected", "Expired"];
-  const handleSelectChange = (type, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [type]: value === "" ? null : parseInt(value),
-    }));
-  };
-  const handleStatusClick = (status) => {
-    setFilters((prev) => ({
-      ...prev,
-      status: prev.status === status ? null : status,
-    }));
-  };
-  const applyFilters = () => {
-    onFilterChange(filters);
-    if (isMobile && onClose) onClose();
-  };
-  const resetFilters = () => {
-    const freshFilters = { date: null, month: null, year: null, status: null };
-    setFilters(freshFilters);
-    onReset();
-    if (isMobile && onClose) onClose();
-  };
-  const SelectGroup = ({ label, value, options, cancel }) => (
-    // <div className="mb-4">
-    //     <label className="block text-sm font-medium text-gray-500 mb-2">{label}</label>
-    //     <select value={value || ""} onChange={onChange} className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-[#f89320] focus:border-[#f89320]">
-    //         {options.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-    //     </select>
-    // </div>
-    <FilterDate options={options} cancel={cancel} />
-  );
-  return (
-    <Card className="w-full h-full rounded-2xl shadow-lg border-0 flex flex-col">
-      <CardContent className="p-5 flex-1 flex flex-col">
-        <div className="mb-5">
-          <h2 className="text-2xl">Filters</h2>
-        </div>
-        <Separator className="mb-6" />
-        {/* Scrollable Filter Options */}
-        <div className="flex-1 overflow-y-auto pr-2 -mr-2">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-500 mb-4">
-              Date
-            </label>
-            <div className="flex flex-col  justify-center gap-2">
-              {/* <SelectGroup label="" value={filters.date} options={3} onChange={(e) => handleSelectChange('date', e.target.value)} />
-              <SelectGroup label="" value={filters.month} options={2} onChange={(e) => handleSelectChange('month', e.target.value)} />
-              <SelectGroup label="" value={filters.year} options={1} onChange={(e) => handleSelectChange('year', e.target.value)} /> */}
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  onClick={() => setshowDatePicker(3)}
-                  children={"Date"}
-                  className="flex-1  text-center"
-                ></Button>
-                <Button
-                  onClick={() => setshowDatePicker(2)}
-                  children={"Month"}
-                  className="flex-1 text-center"
-                ></Button>
-                <Button
-                  onClick={() => setshowDatePicker(1)}
-                  children={"Year"}
-                  className="flex-1 text-center"
-                ></Button>
-              </div>
-              {/* {  && 
-                <div className=" fixed inset-0   flex items-center justify-center backdrop-blur-sm bg-white/30 bg-opacity-60 z-500 ">
-                  <SelectGroup options={showDatePicker} cancel={setshowDatePicker} />
-                </div>} */}
-              {showDatePicker > 0 && (
-                <div className="px-2 pt-2">
-                  <SelectGroup
-                    options={showDatePicker}
-                    cancel={setshowDatePicker}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-500 mb-2">
-              Status
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {statusOptions.map((opt) => (
-                <Button
-                  key={opt}
-                  variant={filters.status === opt ? "default" : "outline"}
-                  onClick={() => handleStatusClick(opt)}
-                  className="flex-1 text-center"
-                >
-                  {opt}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* Sticky Bottom Buttons */}
-        <div className="mt-auto pt-5 flex gap-4 border-t border-gray-200">
-          <Button
-            variant="outline"
-            onClick={resetFilters}
-            className="flex-1 h-[50px] text-base"
-          >
-            Reset
-          </Button>
-          <Button
-            onClick={applyFilters}
-            className="flex-1 h-[50px] text-base transform hover:scale-105"
-          >
-            Apply
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-const OrderHistory = () => {
+);
+
+const BuyProducts = () => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
-    date: null,
-    month: null,
-    year: null,
-    status: null,
+    category: null,
+    brand: null,
+    priceMin: "",
+    priceMax: "",
+    color: null,
   });
   const [searchQuery, setSearchQuery] = useState("");
   const [showMobileFilter, setShowMobileFilter] = useState(false);
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
-  const allOrders = [
-    {
-      id: 1,
-      status: "Approved",
-      price: "₹ 60,000",
-      quantity: 20,
-      customer: "JK Paradise",
-      phone: "9594665866",
-      image:
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&q=80",
-      address: "43/D4 Sai Krupa Society, Malwani, Malad West",
-      requestedDate: "01-07-2025",
-      dateObj: new Date(2025, 6, 1),
-    },
-    {
-      id: 2,
-      status: "Rejected",
-      price: "₹ 45,000",
-      quantity: 15,
-      customer: "Bharat Mahal",
-      phone: "9922916988",
-      image:
-        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80",
-      address: "Malwani Mahada, Mumbai",
-      requestedDate: "15-06-2025",
-      dateObj: new Date(2025, 5, 15),
-    },
-    {
-      id: 3,
-      status: "Expired",
-      price: "₹ 75,000",
-      quantity: 30,
-      customer: "Tech Solutions",
-      phone: "9876543210",
-      image:
-        "https://images.unsplash.com/photo-1540574163024-5735f30345f5?w=400&q=80",
-      address: "Andheri East, Mumbai",
-      requestedDate: "20-05-2025",
-      dateObj: new Date(2025, 4, 20),
-    },
-    {
-      id: 4,
-      status: "Approved",
-      price: "₹ 90,000",
-      quantity: 25,
-      customer: "Digital Hub",
-      phone: "9123456789",
-      image:
-        "https://images.unsplash.com/photo-1598300042247-d088c209a14b?w=400&q=80",
-      address: "Bandra West, Mumbai",
-      requestedDate: "10-07-2025",
-      dateObj: new Date(2025, 6, 10),
-    },
-    {
-      id: 5,
-      status: "Approved",
-      price: "₹ 1,20,000",
-      quantity: 40,
-      customer: "Greenwood Furnishings",
-      phone: "9820098200",
-      image:
-        "https://images.unsplash.com/photo-1567016432779-1fee749b5a45?w=400&q=80",
-      address: "Powai, Hiranandani Gardens",
-      requestedDate: "25-07-2025",
-      dateObj: new Date(2025, 6, 25),
-    },
-  ];
-  const filteredOrders = useMemo(() => {
-    return allOrders.filter((order) => {
-      const searchLower = searchQuery.toLowerCase();
-      if (
-        searchQuery &&
-        !order.customer.toLowerCase().includes(searchLower) &&
-        !order.phone.includes(searchQuery) &&
-        !order.address.toLowerCase().includes(searchLower)
-      ) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    category: true,
+    brand: true,
+    price: true,
+    color: true,
+  });
+  const [cartItems, setCartItems] = useState([]);
+
+  // Memoize static data to prevent recreation
+  const allProducts = useMemo(
+    () => [
+      {
+        id: 1,
+        name: "Motorola Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "black",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Apple iphone 14 pro phone with advanced features",
+        inStock: true,
+        rating: 4.8,
+        supplier: "John's Electronics",
+      },
+      {
+        id: 2,
+        name: "Apple iphone 14 pro Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "blue",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Apple iphone 14 pro phone with advanced features",
+        inStock: true,
+        rating: 4.7,
+        supplier: "John's Electronics",
+      },
+      {
+        id: 3,
+        name: "Apple iphone 14 pro Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "white",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Apple iphone 14 pro phone with advanced features",
+        inStock: false,
+        rating: 4.6,
+        supplier: "John's Electronics",
+      },
+      {
+        id: 4,
+        name: "Apple iphone 14 pro Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "green",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Apple iphone 14 pro phone with advanced features",
+        inStock: true,
+        rating: 4.5,
+        supplier: "John's Electronics",
+      },
+      {
+        id: 5,
+        name: "Apple iphone 14 pro Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "red",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Apple iphone 14 pro phone with advanced features",
+        inStock: true,
+        rating: 4.9,
+        supplier: "John's Electronics",
+      },
+      {
+        id: 6,
+        name: "Apple iphone 14 pro Edge 50 Pro 5G with 12.5W Charger",
+        category: "mobile",
+        brand: "Apple iphone 14 pro",
+        price: 150,
+        color: "silver",
+        image:
+          "https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Communication/Mobiles/Images/300787_0_hezn4b.png?tr=w-600",
+        description: "Latest Motorola phone with advanced features",
+        inStock: true,
+        rating: 4.8,
+        supplier: "John's Electronics",
+      },
+    ],
+    []
+  );
+
+  const categoryOptions = useMemo(
+    () => [
+      { value: "mobile", label: "Mobile" },
+      { value: "headset", label: "Headset" },
+      { value: "laptop", label: "Laptop" },
+      { value: "tablet", label: "Tablet" },
+    ],
+    []
+  );
+
+  const brandOptions = useMemo(
+    () => [
+      { value: "motorola", label: "Motorola" },
+      { value: "apple", label: "Apple" },
+      { value: "samsung", label: "Samsung" },
+      { value: "xiaomi", label: "Xiaomi" },
+      { value: "sony", label: "Sony" },
+    ],
+    []
+  );
+
+  const colorOptions = useMemo(
+    () => [
+      { value: "black", label: "Black", color: "#000000" },
+      { value: "white", label: "White", color: "#FFFFFF" },
+      { value: "blue", label: "Blue", color: "#3B82F6" },
+      { value: "green", label: "Green", color: "#10B981" },
+      { value: "red", label: "Red", color: "#EF4444" },
+      { value: "silver", label: "Silver", color: "#94A3B8" },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Memoize filtered products with proper dependencies
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter((product) => {
+      // Search filter
+      if (searchQuery) {
+        const searchLower = searchQuery.toLowerCase();
+        if (
+          !product.name.toLowerCase().includes(searchLower) &&
+          !product.description.toLowerCase().includes(searchLower) &&
+          !product.brand.toLowerCase().includes(searchLower)
+        ) {
+          return false;
+        }
+      }
+      if (filters.category && product.category !== filters.category) {
         return false;
       }
-      if (
-        filters.status &&
-        order.status.toLowerCase() !== filters.status.toLowerCase()
-      )
+      if (filters.brand && product.brand !== filters.brand) {
         return false;
-      if (filters.date && order.dateObj.getDate() !== filters.date)
+      }
+      if (filters.priceMin && product.price < parseInt(filters.priceMin)) {
         return false;
-      if (filters.month && order.dateObj.getMonth() + 1 !== filters.month)
+      }
+      if (filters.priceMax && product.price > parseInt(filters.priceMax)) {
         return false;
-      if (filters.year && order.dateObj.getFullYear() !== filters.year)
+      }
+      if (filters.color && product.color !== filters.color) {
         return false;
+      }
       return true;
     });
-  }, [allOrders, filters, searchQuery]);
-  const handleFilterChange = (newFilters) => setFilters(newFilters);
-  const resetFilters = () =>
-    setFilters({ date: null, month: null, year: null, status: null });
+  }, [allProducts, filters, searchQuery]);
+
+  // Memoize callback functions to prevent recreation
+  const handleFilterChange = useCallback((filterType, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [filterType]: prev[filterType] === value ? null : value,
+    }));
+  }, []);
+
+  const handlePriceChange = useCallback((type, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setFilters({
+      category: null,
+      brand: null,
+      priceMin: "",
+      priceMax: "",
+      color: null,
+    });
+  }, []);
+
+  const toggleSection = useCallback((section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  }, []);
+
+  const handleSearchChange = useCallback((e) => {
+    setSearchQuery(e.target.value);
+  }, []);
+
+  const handleMobileFilterToggle = useCallback(() => {
+    setShowMobileFilter((prev) => !prev);
+  }, []);
+
+  const handleAddToCart = useCallback((product) => {
+    setCartItems((prev) => [...prev, product]);
+  }, []);
+
+  const handleViewCart = useCallback(() => {
+    navigate("/my-cart");
+  }, [navigate]);
+
+  // Handle navigation to product details page
+  const handleViewDetails = useCallback(
+    (productId) => {
+      navigate(`/view-details${productId}`);
+    },
+    [navigate]
+  );
+
   return (
-    <div className="bg-[#f7f8fa] w-full h-full flex">
-      {/* Main Content */}
-      <main className="flex-1 ">
-        {/* Main Layout */}
-        <div className="flex lg:static flex-col  p-4   lg:flex-row gap-8 h-[calc(100vh-57px)]">
-          {/* Desktop Filter Sidebar (Static) */}
-          <aside className="hidden lg:block w-1/4 xl:w-1/5 h-full">
-            <FilterComponent
-              initialFilters={filters}
-              onFilterChange={handleFilterChange}
-              onReset={resetFilters}
-            />
-          </aside>
-          {/* Cards Container */}
-          <div className="flex-1 h-full flex flex-col">
-            {/* Mobile Filter Button & View Toggle */}
-            <div className="flex  mb-">
-              {/* Search and Header */}
-              <div className="flex flex-col sm:flex-row  mb-6 gap-4">
-                <h2 className="text-2xl font-semibold text-gray-800">
-                  Buy Products ({filteredOrders.length})
-                </h2>
-              </div>
-              <div className="flex  gap-2 ml-auto">
-                <div className="relative ">
-                  <Input
-                    className="border-none outline-none bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg "
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  <SearchIcon className="absolute right-2  top-5 transform -translate-y-1/2 text-[#757575] w-5 h-5" />
-                </div>
-                <div className="lg:hidden">
-                  <Button onClick={() => setShowMobileFilter(true)}>
-                    <FilterIcon className="w-4 h-4 mr-2" />
-                    Filter
-                  </Button>
-                </div>
-                <div className=" gap-2 hidden md:flex">
-                  {" "}
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "outline"}
-                    size="icon"
-                    onClick={() => setViewMode("grid")}
-                  >
-                    <GridIcon className="w-5 h-5" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "outline"}
-                    size="icon"
-                    onClick={() => setViewMode("list")}
-                  >
-                    <ListIcon className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-            {/* Cards Grid/List - Scrollable */}
-            <div
-              className={`overflow-y-auto flex pr-2 -mr-2 scrollbar-thin scrollbar-thumb-[#f89320] scrollbar-track-gray-100
-                ${
-                  viewMode === "grid"
-                    ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6"
-                    : "flex flex-col gap-4"
-                }
-            `}
-            >
-              {filteredOrders.length > 0 ? (
-                filteredOrders.map((order, index) => (
-                  <div
-                    key={order.id}
-                    className="transform transition-all duration-300 "
-                    style={{
-                      animation: "fadeInUp 0.5s ease-out forwards",
-                      animationDelay: `${index * 80}ms`,
-                      opacity: 0,
-                    }}
-                  >
-                    <OrderCard order={order} viewMode={viewMode} />
+    <div className="bg-[#f6f6f6] flex h-[calc(100vh-64px)] overflow-hidden justify-center w-full">
+      <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
+        <main className="p-4 flex flex-col flex-1">
+          <div className="flex flex-col lg:flex-row gap-6 h-full">
+            {/* Desktop Filter Sidebar */}
+            <div className="hidden lg:block mi-w-[250px] max-w-1/5 h-full">
+              <Card className="h-full rounded-xl shadow-lg border-0 flex flex-col sticky top-6">
+                <CardContent className="p-6 flex-1 flex flex-col">
+                  <div className="mb-2">
+                    <h2 className="font-medium text-2xl font-['Montserrat',Helvetica]">
+                      Filters
+                    </h2>
                   </div>
-                ))
-              ) : (
-                <div className="col-span-full flex flex-col items-center justify-center text-center py-12 h-full">
-                  <div className="text-6xl mb-4">📦</div>
-                  <h3 className="text-2xl font-semibold text-gray-700">
-                    No Orders Found
-                  </h3>
-                  <p className="text-gray-500 mt-2">
-                    Try adjusting your filters or search terms.
-                  </p>
+                  <Separator className="mb-4" />
+                  <div className="flex-col max-h-[calc(100vh-280px)]  overflow-y-auto scrollbar-hide">
+                    {/* Category Filter */}
+                    <FilterSection
+                      title="Category"
+                      sectionKey="category"
+                      expandedSections={expandedSections}
+                      toggleSection={toggleSection}
+                    >
+                      <div className="flex flex-wrap gap-2">
+                        {categoryOptions.map((option) => (
+                          <FilterButton
+                            key={option.value}
+                            isSelected={filters.category === option.value}
+                            onClick={() =>
+                              handleFilterChange("category", option.value)
+                            }
+                          >
+                            {option.label}
+                          </FilterButton>
+                        ))}
+                      </div>
+                    </FilterSection>
+                    {/* Brand Filter */}
+                    <FilterSection
+                      title="Brand"
+                      sectionKey="brand"
+                      expandedSections={expandedSections}
+                      toggleSection={toggleSection}
+                    >
+                      <div className="flex flex-wrap gap-2">
+                        {brandOptions.map((option) => (
+                          <FilterButton
+                            key={option.value}
+                            isSelected={filters.brand === option.value}
+                            onClick={() =>
+                              handleFilterChange("brand", option.value)
+                            }
+                          >
+                            {option.label}
+                          </FilterButton>
+                        ))}
+                      </div>
+                    </FilterSection>
+                    {/* Price Range Filter */}
+                    <FilterSection
+                      title="Price Range"
+                      sectionKey="price"
+                      expandedSections={expandedSections}
+                      toggleSection={toggleSection}
+                    >
+                      <div className="flex-wrap space-y-3">
+                        <div className="flex gap-2">
+                          <Input
+                            type="number"
+                            placeholder="Min"
+                            value={filters.priceMin}
+                            onChange={(e) =>
+                              handlePriceChange("priceMin", e.target.value)
+                            }
+                            className="flex-1 h-10"
+                          />
+                          <Input
+                            type="number"
+                            placeholder="Max"
+                            value={filters.priceMax}
+                            onChange={(e) =>
+                              handlePriceChange("priceMax", e.target.value)
+                            }
+                            className="flex-1 h-10"
+                          />
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Enter price range in ₹
+                        </div>
+                      </div>
+                    </FilterSection>
+                    {/* Color Filter */}
+                    <FilterSection
+                      title="Color"
+                      sectionKey="color"
+                      expandedSections={expandedSections}
+                      toggleSection={toggleSection}
+                    >
+                      <div className="flex flex-wrap gap-3">
+                        {colorOptions.map((color) => (
+                          <ColorButton
+                            key={color.value}
+                            color={color}
+                            isSelected={filters.color === color.value}
+                            onClick={() =>
+                              handleFilterChange("color", color.value)
+                            }
+                            label={color.label}
+                          />
+                        ))}
+                      </div>
+                    </FilterSection>
+                  </div>
+                  <div className="mt-auto pt-4 flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={resetFilters}
+                      className="flex-1 h-12 rounded-lg border-[#f89320] text-[#f89320] hover:bg-[#f89320]/10 transition-all duration-200"
+                    >
+                      Reset
+                    </Button>
+                    <Button className="flex-1 h-12 rounded-lg bg-[#f89320] hover:bg-[#e88418] text-white transition-all duration-200 transform hover:scale-105">
+                      Apply
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            {/* Products Container */}
+            <div className="flex-1">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-row justify-between items-center sm:items-center">
+                  <h1 className="mr-5 font-['Montserrat',Helvetica] text-2xl text-black">
+                    Buy Products
+                  </h1>
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
-      {/* Mobile Filter Modal */}
-      {showMobileFilter && (
-        <div className="lg:hidden fixed inset-0  backdrop-blur-sm bg-white/30 bg-opacity-60 z-500 flex items-end">
-          <div className="bg-white w-full max-h-[85vh] rounded-t-2xl transform transition-transform duration-300 ease-out animate-slide-up flex flex-col">
-            <div className="p-4 border-b flex justify-between items-center">
-              <h3 className="text-lg font-bold">Filter Orders</h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowMobileFilter(false)}
-                className="text-gray-500 rounded-full"
+                <div className="flex items-center gap-2">
+                  {/* Search Input */}
+                  <div className="relative">
+                    <Input
+                      className="bg-white rounded-[44px] font-['Montserrat',Helvetica] text-base lg:text-lg"
+                      placeholder="Search products..."
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
+                    <SearchIcon className="absolute right-5 top-1/2 transform -translate-y-1/2 text-[#757575] w-4 h-4" />
+                  </div>
+                  {/* View Cart Button */}
+                  <Button
+                    onClick={handleViewCart}
+                    className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200 flex items-center"
+                  >
+                    View Cart
+                    {cartItems.length > 0 && (
+                      <span className="ml-2 bg-white text-[#f89320] rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                        {cartItems.length}
+                      </span>
+                    )}
+                  </Button>
+                  <div className="lg:hidden flex justify-end">
+                    <Button
+                      onClick={handleMobileFilterToggle}
+                      className="bg-[#f89320] hover:bg-[#e88418] text-white rounded-lg transition-all duration-200"
+                    >
+                      <FilterIcon className="w-4 h-4" />
+                      Filter
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`
+                overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]
+                grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6
+                transition-all duration-300 ease-in-out
+                scrollbar-thin scrollbar-thumb-[#f89320] scrollbar-track-gray-100
+                `}
               >
-                ✕
-              </Button>
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              <FilterComponent
-                initialFilters={filters}
-                onFilterChange={handleFilterChange}
-                onReset={resetFilters}
-                onClose={() => setShowMobileFilter(false)}
-                isMobile={true}
-              />
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product, index) => (
+                    <div
+                      key={product.id}
+                      className="transform transition-all duration-300"
+                      style={{
+                        animationDelay: `${index * 100}ms`,
+                        animation: "fadeInUp 0.6s ease-out forwards",
+                      }}
+                    >
+                      <ProductCard
+                        product={product}
+                        onAddToCart={(product, quantity) => {
+                          // Add product to cart with initial quantity
+                        }}
+                        onUpdateQuantity={(product, newQuantity) => {
+                          // Update quantity of existing product in cart
+                        }}
+                        onRemoveFromCart={(product) => {
+                          // Remove product from cart
+                        }}
+                        onViewDetails={handleViewDetails}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
+                    <div className="text-6xl mb-4">🔍</div>
+                    <h3 className="text-xl font-medium text-gray-600 mb-2">
+                      No products found
+                    </h3>
+                    <p className="text-gray-500">
+                      Try adjusting your filters or search terms
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {/* Inline Styles for Animations */}
-      <style jsx global>{`
+        </main>
+        {/* Mobile Filter Modal */}
+        {showMobileFilter && (
+          <div className="lg:hidden fixed inset-0 bg-black/30 bg-opacity-50 z-50 flex items-end">
+            <div className="bg-white w-full max-h-[85vh] rounded-t-xl transform transition-transform duration-300 ease-out animate-slide-up">
+              <div className="p-4 border-b">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-medium">Filter Products</h3>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setShowMobileFilter(false)}
+                    className="text-gray-500"
+                  >
+                    <XIcon className="w-5 h-5" />
+                  </Button>
+                </div>
+              </div>
+              <div className="overflow-y-auto max-h-[65vh] p-4 space-y-4">
+                <FilterSection
+                  title="Category"
+                  sectionKey="category"
+                  expandedSections={expandedSections}
+                  toggleSection={toggleSection}
+                >
+                  <div className="flex gap-2">
+                    {categoryOptions.map((option) => (
+                      <FilterButton
+                        key={option.value}
+                        isSelected={filters.category === option.value}
+                        onClick={() =>
+                          handleFilterChange("category", option.value)
+                        }
+                      >
+                        {option.label}
+                      </FilterButton>
+                    ))}
+                  </div>
+                </FilterSection>
+                <FilterSection
+                  title="Brand"
+                  sectionKey="brand"
+                  expandedSections={expandedSections}
+                  toggleSection={toggleSection}
+                >
+                  <div className="flex gap-2">
+                    {brandOptions.map((option) => (
+                      <FilterButton
+                        key={option.value}
+                        isSelected={filters.brand === option.value}
+                        onClick={() =>
+                          handleFilterChange("brand", option.value)
+                        }
+                      >
+                        {option.label}
+                      </FilterButton>
+                    ))}
+                  </div>
+                </FilterSection>
+                <FilterSection
+                  title="Color"
+                  sectionKey="color"
+                  expandedSections={expandedSections}
+                  toggleSection={toggleSection}
+                >
+                  <div className="flex flex-wrap gap-3">
+                    {colorOptions.map((color) => (
+                      <ColorButton
+                        key={color.value}
+                        color={color}
+                        isSelected={filters.color === color.value}
+                        onClick={() => handleFilterChange("color", color.value)}
+                        label={color.label}
+                      />
+                    ))}
+                  </div>
+                </FilterSection>
+                <FilterSection
+                  title="Price Range"
+                  sectionKey="price"
+                  expandedSections={expandedSections}
+                  toggleSection={toggleSection}
+                >
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <Input
+                        type="number"
+                        placeholder="Min"
+                        value={filters.priceMin}
+                        onChange={(e) =>
+                          handlePriceChange("priceMin", e.target.value)
+                        }
+                        className="flex-1 h-10 border-2 border-gray-200 focus:border-[#f89320] rounded-lg focus:outline-none focus:ring-0"
+                      />
+                      <Input
+                        type="number"
+                        placeholder="Max"
+                        value={filters.priceMax}
+                        onChange={(e) =>
+                          handlePriceChange("priceMax", e.target.value)
+                        }
+                        className="flex-1 h-10 border-2  border-gray-200 focus:border-[#f89320] rounded-lg focus:outline-none focus:ring-0"
+                      />
+                    </div>
+                  </div>
+                </FilterSection>
+              </div>
+              <div className="p-4 border-t flex gap-3">
+                <Button
+                  variant="outline"
+                  onClick={resetFilters}
+                  className="flex-1 h-12 rounded-lg border-[#f89320] text-[#f89320]"
+                >
+                  Reset
+                </Button>
+                <Button
+                  onClick={() => setShowMobileFilter(false)}
+                  className="flex-1 h-12 rounded-lg bg-[#f89320] hover:bg-[#e88418] text-white"
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <style jsx>{`
         @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
           }
         }
         @keyframes slide-up {
@@ -579,9 +868,26 @@ const OrderHistory = () => {
         .animate-slide-up {
           animation: slide-up 0.3s ease-out;
         }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
         .scrollbar-thin {
           scrollbar-width: thin;
-          scrollbar-color: #f89320 #e5e7eb;
+        }
+        .scrollbar-thumb-orange-400 {
+          scrollbar-color: #f89320 #f1f5f9;
         }
         ::-webkit-scrollbar {
           width: 6px;
@@ -601,4 +907,5 @@ const OrderHistory = () => {
     </div>
   );
 };
-export default OrderHistory;
+
+export default BuyProducts;

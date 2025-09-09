@@ -534,7 +534,7 @@ function OrganizationPage() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 relative">
+    <div className="h-[calc(100vh-64px) ]  bg-gray-50 relative">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-4">
         <div className="flex items-center justify-between">
@@ -572,7 +572,7 @@ function OrganizationPage() {
       </header>
 
       {/* Main Content */}
-      <main className="p-3 mx-auto">
+      <main className="p-3 scrollbar-hide ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredShops.map((shop) => (
             <div
