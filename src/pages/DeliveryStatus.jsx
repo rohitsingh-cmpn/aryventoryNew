@@ -688,14 +688,14 @@ export default function DeliveryStatusPage() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-65px)] p-4 font-sans bg-[#F6F6F6] text-gray-800">
+    <div className="flex h-[calc(100vh-65px)] p-4 font-sans  text-gray-800">
       <main className="flex-1 flex overflow-hidden">
-        <aside className="hidden bg-white rounded-2xl lg:block w-80 flex-shrink-0 p-8  border-r border-gray-200">
+        <aside className="hidden  rounded-2xl lg:block w-80 flex-shrink-0 p-8  border-r border-gray-200">
           <FilterPanel />
         </aside>
 
         <div className="flex flex-col p-4  w-full">
-          <header className="flex items-center justify-between pl-4 pb-2 bg-[#F6F6F6]  flex-shrink-0">
+          <header className="flex items-center justify-between pl-4 pb-2   flex-shrink-0">
             <h1 className="text-3xl font-bold">Delivery Status</h1>
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -715,7 +715,7 @@ export default function DeliveryStatusPage() {
                   <SearchIcon />
                 </div>
               </div>
-              <div className="p-1 bg-gray-100 rounded-lg flex space-x-1"> <button
+              <div className="p-1 rounded-lg flex space-x-1"> <button
                   onClick={() => setView("grid")}
                   className={`p-2 rounded-md ${
                     view === "grid" ? "bg-white shadow-sm" : ""

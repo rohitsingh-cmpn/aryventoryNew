@@ -73,11 +73,24 @@ const MyCart = () => {
   };
 
   const CartView = () => (
-    <div className="bg-gray-50 h-[calc(100vh-58px)] w-full p-2 xl:p-5">
+    <div className=" h-[calc(100vh-58px)] w-full p-2 xl:p-5">
       <div className="w-full">
-        <h1 className="text-2xl font-semibold text-gray-800 ml-3 mb-4">
-          Cart Items
-        </h1>
+        {/* Left - Back Button */}
+        <div className="flex items-center mb-2 lg:mb-4">
+          <div>
+           <button
+              onClick={() => navigate(-1)}
+              className="p-1 bg-[#F89320] hover:bg-orange-300 rounded-lg transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 text-white" />
+            </button>
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-800 ml-3 ">
+              Cart Items
+            </h1>
+          </div>
+        </div>
 
         {/* Desktop Table View - Hidden on mobile */}
         <div className="hidden md:block bg-white rounded-lg border border-gray-200 overflow-hidden">

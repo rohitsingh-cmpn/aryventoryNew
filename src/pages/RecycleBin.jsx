@@ -163,7 +163,7 @@ const RecyclePage = () => {
     selectedProducts.size < filteredProducts.length;
 
   return (
-    <div className="flex-1 bg-gray-50 h-[calc(100vh-58px)]">
+    <div className="flex-1 bg-gray-50 ">
       {/* Header */}
       <div className="flex px-3 py-3 items-center justify-between">
         <h2 className="text-xl font-medium text-gray-900">Recycled Products</h2>

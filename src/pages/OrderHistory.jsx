@@ -464,7 +464,7 @@ const OrderHistory = () => {
     setFilters({ date: null, month: null, year: null, status: null });
 
   return (
-    <div className="flex h-[calc(100vh-57px)]  bg-[#f7f8fa] w-full overflow-y-auto ">
+    <div className="flex h-[calc(100vh-57px)]   w-full overflow-y-auto ">
       {/* Main Content */}
       <main className="flex-1 p-4 ">
         {/* Main Layout */}

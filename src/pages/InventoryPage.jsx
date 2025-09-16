@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import AddInventory from "./AddInventory";
 
-export default function DeliveryStatus() {
+export default function InventoryPage() {
   const [expandedSections, setExpandedSections] = useState({
     categories: true,
     brands: false,
@@ -384,11 +384,11 @@ export default function DeliveryStatus() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[calc(100vh-px)] flex flex-col bg-gray-50">
+    <div className="h-[calc(100vh-56px)] flex flex-col bg-gray-50">
       {/* Add Inventory Modal */}
       {addInventory && (
         <div
-          className="z-50 fixed backdrop-blur-sm bg-black/30 bg-opacity-50 top-0 right-0 h-full w-full flex justify-end rounded-r-2xl"
+          className="z-60 fixed backdrop-blur-sm bg-black/30 bg-opacity-50 top-0 right-0 h-full w-full flex justify-end rounded-r-2xl"
           onClick={() => setAddInventory(false)}
         >
           <div

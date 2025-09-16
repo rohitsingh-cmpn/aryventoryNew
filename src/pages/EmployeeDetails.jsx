@@ -30,7 +30,7 @@ const initialEmployees = [
     id: 2,
     name: "Lucky Mobile Shop",
     phone: "8542770348",
-    role: "Sales Representative",
+    role: "Staff",
     profile:
       "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
     attendance: { present: 20, absent: 5, leaves: 1, lateArrival: 3 },
@@ -606,7 +606,7 @@ function EmployeeDetails() {
                   >
                     <option value="">Select Role</option>
                     <option value="Manager">Manager</option>
-                    <option value="Sales Representative">Staff</option>
+                    <option value="Staff">Staff</option>
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
                 </div>
@@ -738,8 +738,8 @@ function EmployeeDetails() {
                   >
                     <option value="">Select Role</option>
                     <option value="Manager">Manager</option>
-                    <option value="Sales Representative">
-                      Sales Representative
+                    <option value="Staff">
+                      Staff
                     </option>
                     <option value="Shopkeeper">Shopkeeper</option>
                   </select>

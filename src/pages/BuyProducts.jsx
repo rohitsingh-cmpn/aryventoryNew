@@ -209,7 +209,10 @@ const ProductCard = memo(
               </h3>
             </div>
             <div>
-              <ChevronRight />
+              <div className="hover:bg-gray-100  rounded-sm bg-white" >
+                {" "}
+                <ChevronRight className="w-6 h-6  " />
+              </div>
             </div>
           </div>
           <div className="flex items-center justify-between mb-2">
@@ -497,8 +500,8 @@ const BuyProducts = () => {
   );
 
   return (
-    <div className="bg-[#f6f6f6] flex h-[calc(100vh-64px)] overflow-hidden justify-center w-full">
-      <div className="bg-[#f6f6f6] h-full w-full relative flex flex-col">
+    <div className="body  flex h-[calc(100vh-64px)] overflow-hidden justify-center w-full">
+      <div className=" h-full w-full relative flex flex-col">
         <main className="p-4 flex flex-col flex-1">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             {/* Desktop Filter Sidebar */}
@@ -628,7 +631,7 @@ const BuyProducts = () => {
             <div className="flex-1">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex flex-row justify-between items-center sm:items-center">
-                  <h1 className="mr-5 font-['Montserrat',Helvetica] text-2xl text-black">
+                  <h1 className="title">
                     Buy Products
                   </h1>
                 </div>

@@ -42,7 +42,7 @@ const SidebarItem = ({ icon, label, route, isOpen, onClick }) => {
         ${
           isActive
             ? "bg-white text-orange-500 font-semibold"
-            : "hover:bg-orange-300"
+            : "hover:bg-orange-300 "
         }
       `}
     >
@@ -101,7 +101,7 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0
         ${isShrinked ? "lg:w-22" : "lg:w-64"} w-64
-        p-2
+        p-2 
         top-[53px] lg:top-0
         h-[calc(100vh-53px)] lg:h-screen
       `}
@@ -137,7 +137,7 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
         </div>
 
         {/* Sidebar Items */}
-        <div className="overflow-y-auto scrollbar-hide h-full">
+        <div className=" scrollbar-hide overflow-y-auto h-full lg:overflow-y-visible">
           <div className="flex flex-col gap-2 text-lg">
             {sideItem.map((item, i) => (
               <SidebarItem
@@ -165,7 +165,7 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
               alt="Avatar"
               className="w-10 h-10 rounded-full border border-white"
             />
-            <div >
+            <div>
               <div className="font-bold text-lg">Aryventory</div>
               <span className="text-xs text-white/80">Version 1.3.1</span>
             </div>

@@ -11,6 +11,7 @@ import {
   Hash,
   User,
   Edit,
+  ArrowLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -169,14 +170,14 @@ const AddShopModal = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 transition-opacity"
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-55 transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed top-14 right-0 h-full w-full sm:w-[35%] sm:min-w-[400px] bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out">
-        <div className="flex min-h-full p-4">
-          <div className="relative bg-white rounded-lg shadow-xl w-full max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      <div className="fixed top-0 right-0 h-full w-full sm:w-[50%] sm:min-w-[500px] xl:w-[40%] z-60 shadow-lg transform transition-transform  duration-300 ease-in-out">
+        <div className="flex h-full ">
+          <div className=" bg-white  shadow-xl w-full  overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">
@@ -184,9 +185,9 @@ const AddShopModal = ({
               </h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="cut-button"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 " />
               </button>
             </div>
 
@@ -534,17 +535,20 @@ function OrganizationPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-64px) ]  bg-gray-50 relative">
+    <div className="h-[calc(100vh-64px)] relative">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-4">
+      <header className="px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-[#F89320] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">A</span>
+            <div>
+              <button
+                onClick={() => navigate(-1)}
+                className="p-2 bg-[#F89320] hover:bg-orange-300 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 text-white" />
+              </button>
             </div>
-            <h1 className="text-xl font-semibold text-gray-900">
-              Organization
-            </h1>
+            <h1 className="title">Organization</h1>
           </div>
           <div className="flex items-center space-x-4">
             {/* <div className="relative">

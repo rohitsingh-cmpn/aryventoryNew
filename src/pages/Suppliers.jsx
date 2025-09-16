@@ -136,7 +136,7 @@ function App() {
   );
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)] scrollbar-hide overflow-auto bg-gray-50">
+    <div className="flex flex-col h-[calc(100vh-64px)] scrollbar-hide overflow-auto bg-gray-100">
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <div className="border-gray-200 px-4 md:px-8 py-6">
@@ -286,7 +286,7 @@ function App() {
       {/* Add Supplier Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-60 p-4"
           onClick={() => setIsModalOpen(false)}
         >
           <div
@@ -343,7 +343,7 @@ function App() {
       {/* Edit Supplier Modal */}
       {isEditModalOpen && (
         <div
-          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 backdrop-blur-sm bg-black/30 bg-opacity-50 flex items-center justify-center z-60 p-4"
           onClick={() => {
             setIsEditModalOpen(false);
           }}

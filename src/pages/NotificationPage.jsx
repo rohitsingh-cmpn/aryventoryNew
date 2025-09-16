@@ -1,24 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+// NotificationFullPage.js
+import React, { useState, useEffect } from "react";
 import { Calendar, Package, AlertCircle, Users, ArrowLeft } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
-
-// Custom hook to detect mobile screens
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-
-    return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
-
-  return isMobile;
-};
+import { useNavigate } from "react-router-dom";
 
 const NotificationItem = ({ notification, isPopup, index }) => {
   const getIcon = () => {
@@ -91,24 +74,10 @@ const NotificationItem = ({ notification, isPopup, index }) => {
   );
 };
 
-const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
+const NotificationFullPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const popupRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const isMobile = useIsMobile();
-
-  // Determine if we're in full page mode based on route
-  const isFullPage = location.pathname === "/notification-page";
-
-  // For mobile, always show full page instead of popup
-  useEffect(() => {
-    if (isMobile && isOpen && !isFullPage) {
-      setIsOpen(false);
-      navigate("/notification-page");
-    }
-  }, [isMobile, isOpen, isFullPage, navigate, setIsOpen]);
 
   // Generate notifications with proper timestamps
   const generateNotifications = () => {
@@ -186,20 +155,6 @@ const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
 
   const [notifications, setNotifications] = useState(generateNotifications());
 
-  useEffect(() => {
-    // Only add click listener for popup mode
-    if (!isFullPage && isOpen) {
-      const handleClickOutside = (event) => {
-        if (popupRef.current && !popupRef.current.contains(event.target)) {
-          setIsOpen(false);
-        }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [isOpen, setIsOpen, isFullPage]);
-
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
     setShowDatePicker(false);
@@ -230,75 +185,54 @@ const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
     });
   };
 
-  // For full page, always show content
-  if (!isOpen && !isFullPage) return null;
-
-  const isPopup = !!Nav && !isFullPage;
-  const displayNotifications = isPopup
-    ? notifications.slice(0, 3)
-    : notifications;
-
   return (
-    <div
-      className={`flex-1 ${isPopup ? "h-full" : "h-screen"} bg-white ${
-        isPopup
-          ? "flex flex-col shadow-2xl rounded-2xl p-2 outline-none w-full max-w-md md:max-w-lg mx-auto animate-scale-in"
-          : ""
-      }`}
-      ref={popupRef}
-    >
-      {!isPopup && (
-        <div className="bg-white px-4 md:px-8 py-3 border-b border-gray-200 flex items-center justify-between">
-          {/* Left - Back Button */}
-          <div>
-            <button
-              onClick={() => navigate(-1)}
-              className="p-2 bg-[#F89320] hover:bg-orange-300 rounded-lg transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 text-white" />
-            </button>
-          </div>
-
-          {/* Center - Title */}
-          <h1 className="text-xl md:text-2xl font-semibold text-gray-900 text-center flex-1">
-            Notifications
-          </h1>
-
-          {/* Right - Date Picker */}
-          <div className="relative">
-            <button
-              onClick={() => setShowDatePicker(!showDatePicker)}
-              className="bg-orange-400 hover:bg-orange-300 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg flex items-center gap-2 transition-colors"
-            >
-              <Calendar className="w-4 h-4" />
-              <span className="truncate">{formatDate(selectedDate)}</span>
-            </button>
-
-            {showDatePicker && (
-              <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-56">
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent"
-                />
-              </div>
-            )}
-          </div>
+    <div className="flex-1 h-screen ">
+      <div className=" px-4 md:px-4 py-3  flex items-center justify-between">
+        {/* Left - Back Button */}
+        <div>
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 bg-[#F89320] hover:bg-orange-300 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
         </div>
-      )}
 
-      <div
-        className={`p-3 md:p-8 space-y-3 md:space-y-4 overflow-y-auto ${
-          isPopup ? "max-h-[calc(100vh-200px)]" : "flex-1"
-        }`}
-      >
-        {displayNotifications.length > 0 ? (
-          displayNotifications.map((notification, index) => (
+        {/* Center - Title */}
+        <h1 className="title pl-3 flex-1">
+          Notifications
+        </h1>
+
+        {/* Right - Date Picker */}
+        <div className="relative">
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="bg-orange-400 hover:bg-orange-300 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg flex items-center gap-2 transition-colors"
+          >
+            <Calendar className="w-4 h-4" />
+            <span className="truncate">{formatDate(selectedDate)}</span>
+          </button>
+
+          {showDatePicker && (
+            <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-56">
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="p-3 space-y-3 md:space-y-4 overflow-y-auto flex-1">
+        {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
             <NotificationItem
               key={notification.id}
               notification={notification}
-              isPopup={isPopup}
+              isPopup={false}
               index={index}
             />
           ))
@@ -314,19 +248,6 @@ const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
         )}
       </div>
 
-      {isPopup && (
-        <button
-          onClick={() => {
-            setIsOpen(false);
-            navigate("/notification-page");
-          }}
-          className="text-sm italic ml-auto mr-4 mt-2 text-[#F89320] hover:underline transition-colors"
-        >
-          see detail...
-        </button>
-      )}
-
-      {/* Add global styles for animations */}
       <style jsx global>{`
         @keyframes fadeInUp {
           from {
@@ -348,17 +269,6 @@ const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
           }
         }
 
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
         .animate-fade-in-up {
           animation: fadeInUp 0.5s ease-out forwards;
         }
@@ -366,13 +276,9 @@ const NotificationPage = ({ Nav, isOpen, setIsOpen }) => {
         .animate-fade-in {
           animation: fadeIn 0.3s ease-out forwards;
         }
-
-        .animate-scale-in {
-          animation: scaleIn 0.3s ease-out forwards;
-        }
       `}</style>
     </div>
   );
 };
 
-export default NotificationPage;
+export default NotificationFullPage;

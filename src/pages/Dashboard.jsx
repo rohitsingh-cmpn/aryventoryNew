@@ -509,7 +509,7 @@ const MacbookPro = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-[#F6F6F6] p-4 w-full h-[calc(100vh-65px)] overflow-y-auto scrollbar-hide">
+    <div className=" p-2 w-full h-[calc(100vh-65px)] overflow-y-auto scrollbar-hide">
       <main className="grid grid-cols-4 w-full h-full gap-5">
         <div className="grid grid-cols-4 w-full col-span-4 gap-4">
           {statCards.map((stat, index) => (
